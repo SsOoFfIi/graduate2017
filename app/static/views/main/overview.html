@@ -1,0 +1,180 @@
+<!--相关工作的概况,无需权限-->
+<div class="overview-page">
+    <style>
+        .page-body {
+            background: none !important;
+            padding: 0 !important;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+        .header-fullname{
+            font-size: 30px;
+        }
+    </style>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="well margin-bottom-20 no-padding bg_white">
+                <div class="profile-header row">
+                    <div style="max-width: 175px;"
+                         class="col-xs-2 text-center padding-left-30 no-padding-right margin-top-30 margin-bottom-30">
+                        <img ng-src="{{userData.image || '/static/assets/img/mp_default_logo.jpg'}}" alt=""
+                             class="header-avatar">
+                    </div>
+                    <div style="height: 100px;"
+                         class="col-xs-6 profile-info no-padding-left margin-top-30 margin-bottom-20 text-center">
+                        <div class="col-xs-12 no-padding-left margin-top-20">
+                            <span class="header-fullname" ng-bind="userData.name"></span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-10"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                                <!--<i class="fa fa-check"></i>-->
+                                {{userData.username || "userName"}}
+                            </span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-5"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                                <!--<i class="fa fa-check"></i>-->
+                                {{userData.gender||"gender"}}
+                            </span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-5"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                                <!--<i class="fa fa-check"></i>-->
+                                {{userData.college || "college"}}
+                            </span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-5"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                            <!--<i class="fa fa-check"></i>-->
+                            {{userData.className || "class"}}
+                        </span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-5"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                            <!--<i class="fa fa-check"></i>-->
+                            {{userData.grade || "grade"}}
+                        </span>
+                        </div>
+                        <div class="col-xs-12 no-padding-left header-information darkgray margin-top-10">
+                            欢迎使用学生管理可视化系统
+                        </div>
+                    </div>
+                    <div style="height: 100px;"
+                         class="col-xs-3 pull-left no-padding-left margin-top-50">
+                        <form>
+                            <div class="input-group">
+                                <input class="form-control" style="width: 250px;" ng-model="table.id" type="text" maxlength="25" placeholder="表格序列号">
+                                <!--<span class="input-group-btn">-->
+                            <!--<ripple class="btn" on-click="changePath()" type="submit"><i class="fa fa-search grey"></i></ripple>-->
+                        <!--</span>-->
+                            </div>
+                            <div class="input-group margin-top-10">
+                                <input class="form-control" style="width: 250px;" ng-model="table.pwd" type="password" maxlength="25" placeholder="表格密码">
+                                <span class="input-group-btn">
+                            <ripple class="btn" ng-click="changePath()" type="submit"><i class="fa fa-search grey"></i></ripple>
+                        </span>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="well margin-bottom-20 no-padding bg_white padding-20">
+                <h4 class="block bordered-bottom-1 bordered-lightgray row" style="">历史纪录信息区</h4>
+                <!--<div ng-if="!tableLoaded">-->
+                       <!--<div class="widget flat">-->
+                           <!--<div class="widget-body no-padding bg-white">-->
+                               <!--<div class="row block-center">-->
+                               <!--</div>-->
+                           <!--</div>-->
+                       <!--</div>-->
+                <!--</div>-->
+                <div >
+                <div class="widget flat">
+                    <div class="widget-body no-padding bg-white">
+                        <div class="row">
+                            <div class="col-xs-3" style="width: 250px">
+                                <form class="form-horizontal margin-bottom-20">
+
+                                    <div class="input-group">
+                                        <input class="form-control" ng-model="data.num" maxlength="20" placeholder="按序号搜索"
+                                               type="number">
+                                        <span class="input-group-btn">
+                                    <ripple class="btn" ng-click="getHistory()" type="submit"><i
+                                            class="fa fa-search gray"></i></ripple>
+                                </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div ng-if="tableList.length" class="bordered-1 bordered-lightgray no-border-bottom">
+                            <table class="table table-hover" id="simpledatatable">
+                                <thead class="bordered-bottom-1 bordered-lightgray bg-seashell">
+                                <tr>
+                                    <th width="20"></th>
+                                    <th >
+                                        标识号
+                                    </th>
+                                    <th class="text-align-center">
+                                        拥有类型
+                                    </th>
+                                    <th class="text-align-center">
+                                        表名
+                                    </th>
+                                    <th class="text-align-center">
+                                        用户
+                                    </th>
+                                    <th class="text-align-center">
+                                        类型
+                                    </th>
+                                    <th class="text-align-center">
+                                        人数
+                                    </th>
+                                     <th class="text-align-center">
+                                        创建日期
+                                    </th>
+                                    <th class="text-align-center">
+                                        截至修改时间
+                                    </th>
+                                    <!--<th style="width: 200px">-->
+                                        <!--操作-->
+                                    <!--</th>-->
+                                    <th width="20"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="assistant in tableList" ng-class="{darkgray: assistant.disable == '1'}">
+                                    <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                                    <td class="text-align-center" ng-bind="assistant.serialNum"></td>
+                                    <td class="text-align-center" ng-bind="assistant.ownType"></td>
+                                    <td class="text-align-center" ng-bind="assistant.tableName"></td>
+                                    <!--<td class="text-align-center" ng-bind="storeMap[assistant.customerStoreId + '']||'-'"></td>-->
+                                    <td class="text-align-center" ng-bind="assistant.ownerName"></td>
+                                    <td class="text-align-center" ng-bind="tableType(assistant.tableType)"></td>
+                                    <td class="text-align-center" ng-bind="assistant.count"></td>
+                                    <td class="text-align-center" ng-bind="assistant.createDate"></td>
+                                    <td class="text-align-center" ng-bind="assistant.deadlineDate"></td>
+
+                                    <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                                </tr>
+                                <tr ng-if="tableList.length == 0">
+                                    <td class="no-data" style="padding: 100px 0;" colspan="9" >
+                                        <div style="font-size: 30px;height: 400px;text-align: center;color: grey;">您还没有历史信息</div>
+                                     </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            <tm-pagination conf="paginationConf"></tm-pagination>
+                        </div>
+                        <div ng-if="!tableLoaded">
+                              <div style="font-size: 30px;height: 400px;text-align: center;color: grey;">请输入正确的表序号</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</div>

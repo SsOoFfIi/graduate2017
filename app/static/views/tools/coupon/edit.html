@@ -1,0 +1,269 @@
+<div class="memberCardPage">
+    <div class="col-xs-12">
+        <div class="col-xs-12 margin-bottom-20 bordered-bottom-1 bordered-lightgray">
+            <h4 class="block no-margin-bottom" style="margin-top: -14px;">优惠券</h4>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="steps clearfix">
+                    <li style="width: 33.33%">3.优惠券生成与发布</li>
+                    <li style="width: 33.33%" class="current">2.填写优惠券内容</li>
+                    <li style="width: 33.33%">1.选择优惠券类型</li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-7 col-md-6 col-lg-4 coupon-preview-wrapper">
+                <style type="text/css">
+                    .member-card-form-wrapper {
+                        float: none;
+                        width: auto;
+                        margin-left: 386px;
+                        margin-top: 47px;
+                    }
+
+                    .coupon-preview-wrapper {
+                        max-width: 372px;
+                        position: absolute;
+                        top: 47px;
+                    }
+                    .coupon_preview_area {
+                        width: 340px;
+                        height: 572px;
+                        border-top: none;
+                        position: relative;
+                        background: url("/assets/img/coupon_bg.png") no-repeat 100%;
+                        background-size: cover;
+                    }
+                    .coupon_preview_area .preview_header {
+                        color: #fff;
+                        background-color: #383838;
+                        text-align: center;
+                        height: 45px;
+                        line-height: 45px;
+                    }
+                    .coupon_preview_area .coupon-header {
+                        margin: 22px 10px;
+                        height: 148px;
+                        text-align: center;
+                    }
+                    .coupon_preview_area .coupon-header .top {
+                        text-align: left;
+                        padding: 6px 6px 0;
+                    }
+                    .coupon_preview_area .coupon-header .top .logo{
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 60px;
+                        position: relative;
+                    }
+                    .coupon_preview_area .coupon-header .name {
+                        font-size: 12px;
+                        color: #999;
+                    }
+                    .coupon_preview_area .coupon-header .title {
+                        margin-bottom: 4px;
+                    }
+                    .coupon_preview_area .coupon-header .detail {
+                        font-size: 24px;
+                        margin: 5px 0 15px;
+                    }
+                    .coupon_preview_area .coupon-header .condition {
+                        text-align: left;
+                        color: #333;
+                        padding: 0 20px;
+                        line-height: 15px;
+                        font-size: 12px;
+                        margin: 0;
+                    }
+                    .coupon_preview_area .coupon-header .condition label {
+                        float: left;
+                        font-size: 12px;
+                    }
+                    .coupon_preview_area .coupon-header .time {
+                        text-align: left;
+                        color: #333;
+                        padding: 0 20px;
+                        font-size: 12px;
+                    }
+                    .coupon_preview_area .coupon-body {
+                        text-align: center;
+                        padding-top: 10px;
+                    }
+                    .edit-alert {
+                        height: 50px;
+                        line-height: 50px;
+                        border: solid 1px #ffa604;
+                        background: #ffeed0;
+                        padding-left: 2rem;
+                        color: #6f6e67;
+                        margin-bottom: 1.5rem;
+                    }
+                    .edit-alert a {
+                        color: #ffaf25;
+                        margin: 0 .5rem;
+                    }
+                    .memberCardForm {
+                        position: relative;
+                        min-height: 572px;
+                    }
+                    .memberCardForm .triangle, .memberCardForm .triangle:before {
+                        position: absolute;
+                        left: -32px;
+                        top: 250px;
+                        display: block;
+                        border: 16px solid transparent;
+                        border-right-color: lightgrey;
+                    }
+                    .memberCardForm .triangle:before {
+                        content: "";
+                        position: absolute;
+                        left: -15px;
+                        border-right-color: #fafafa;
+                        top: -16px;
+                    }
+                </style>
+
+                <div class="coupon_preview_area">
+                    <div class="preview_header">
+                        优惠券
+                    </div>
+                    <div class="coupon-preview">
+                        <div class="coupon-header">
+                            <div class="top">
+                                <img class="logo" ng-src="{{userData.wechatHeadPicture || 'assets/img/mp_default_logo.jpg'}}">
+                                <span class="name" ng-bind="userData.wechatName"></span>
+                            </div>
+                            <p class="title" ng-bind="data.title || '优惠券标题'"></p>
+                            <p class="detail" ng-if="data.type == 0">{{data.typeValue ? '送' + data.typeValue : '优惠券内容'}}</p>
+                            <p class="detail" ng-if="data.type == 1">{{data.typeValue ? data.typeValue+'元代金券' : '优惠券内容'}}</p>
+                            <p class="detail" ng-if="data.type == 2">{{data.typeValue ? data.typeValue + '折' : '优惠券内容'}}</p>
+                            <p class="detail" ng-if="data.type == 3">{{data.typeValue ? '送' + data.typeValue : '优惠券内容'}}</p>
+                            <p class="condition clearfix"><label>使用条件：</label><span class="darkgray" ng-bind="(data.conditionCommodity ? data.conditionCommodity : '全品类') + '，' + (data.conditionConsume ? '消费满'+data.conditionConsume+'元可用' : '无消费限制')"></span></p>
+                            <p class="time">有效日期：<span class="darkgray"><span ng-bind="date.startDate.unix()*1000 | date: 'yyyy.MM.dd'"></span>-<span ng-bind="date.endDate.unix()*1000 | date: 'yyyy.MM.dd'"></span></span></p>
+                        </div>
+                        <div class="coupon-body">
+                            <img src="/assets/img/coupon_body.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-6 col-lg-8 no-padding-left member-card-form-wrapper padding-bottom-50 margin-bottom-40">
+                <form role="form" name="memberCardForm" class="memberCardForm form-horizontal padding-top-40 bordered-1 bordered-lightgray" style="background-color: #fafafa;" novalidate>
+                    <div class="triangle"></div>
+                    <div ng-if="data.status != 8" class="alert alert-warning alert-dismissible fade in margin-left-20 margin-right-20" role="alert">
+                        优惠券已生效，内容无法修改！
+                    </div>
+                    <div class="form-group col-lg-12" ng-class="{'has-error':  (memberCardForm.$submitted || memberCardForm.title.$dirty) && memberCardForm.title.$invalid}">
+                        <label class="col-lg-2 control-label" for="title"><span class="red">*</span>优惠券标题</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="title" name="title" required placeholder="请输入优惠券标题(10字符以内)"
+                               ng-model="data.title" maxlength="10" style="width: 400px" ng-disabled="data.status != 8">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12 no-margin-bottom">
+                        <label class="col-lg-2 control-label"><span class="red">*</span>优惠券类型</label>
+                        <div class="col-lg-10 margin-bottom-10">
+                            <div class="radio" style="display: inline-block;margin-right: 2rem;"> <label> <input ng-disabled="data.status != 8" type="radio" name="type" ng-model="data.type" value="1" ng-change="data.typeValue = ''"> <span class="text">代金券</span> </label> </div>
+                            <div class="radio" style="display: inline-block;margin-right: 2rem;"> <label> <input ng-disabled="data.status != 8" type="radio" name="type" ng-model="data.type" value="2" ng-change="data.typeValue = ''"> <span class="text">折扣券</span> </label> </div>
+                            <div class="radio" style="display: inline-block;margin-right: 2rem;"> <label> <input ng-disabled="data.status != 8" type="radio" name="type" ng-model="data.type" value="3" ng-change="data.typeValue = ''"> <span class="text">赠品券</span> </label> </div>
+                            <div class="radio" style="display: inline-block;margin-right: 2rem;"> <label> <input ng-disabled="data.status != 8" type="radio" name="type" ng-model="data.type" value="0" ng-change="data.typeValue = ''"> <span class="text">其他</span> </label> </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12" ng-class="{'has-error': (memberCardForm.$submitted || memberCardForm.typeValue.$dirty) && memberCardForm.typeValue.$invalid}">
+                        <label class="col-lg-2 control-label"></label>
+                        <div class="col-lg-10 margin-bottom-10" ng-if="data.type == '1'">
+                            <label class="control-label">优惠</label><input ng-disabled="data.status != 8" type="text" name="typeValue" ng-model="data.typeValue" required ng-pattern="numberRegex" maxlength="5" class="form-control" style="display: inline-block;width: 80px;vertical-align: middle;margin: 0 .5rem;"><label class="control-label">元</label>
+                        </div>
+                        <div class="col-lg-10 margin-bottom-10" ng-if="data.type == '2'">
+                            <label class="control-label">打</label><input ng-disabled="data.status != 8" type="text" name="typeValue" ng-model="data.typeValue" required ng-pattern="discountRegex" maxlength="3" class="form-control" style="display: inline-block;width: 80px;vertical-align: middle;margin: 0 .5rem;"><label class="control-label">折</label>
+                        </div>
+                        <div class="col-lg-10 margin-bottom-10" ng-if="data.type == '3'">
+                            <label class="control-label">送</label><input ng-disabled="data.status != 8" type="text" name="typeValue" ng-model="data.typeValue" required class="form-control" style="display: inline-block;width: 300px;vertical-align: middle;margin: 0 .5rem;" maxlength="10" placeholder="10个字以内">
+                        </div>
+                        <div class="col-lg-10 margin-bottom-10" ng-if="data.type == 0">
+                            <label class="control-label">送</label><input ng-disabled="data.status != 8" type="text" name="typeValue" ng-model="data.typeValue" required maxlength="10" class="form-control" style="display: inline-block;width: 300px;vertical-align: middle;margin: 0 .5rem;" placeholder="10个字以内">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12" ng-class="{'has-error': (memberCardForm.$submitted || memberCardForm.totalCount.$dirty) && memberCardForm.totalCount.$invalid}">
+                        <label class="col-lg-2 control-label"><span class="red">*</span>优惠券数量</label>
+                        <div class="col-lg-10 margin-bottom-10">
+                        <input ng-disabled="data.status != 8" type="text" name="totalCount" ng-model="data.totalCount" required ng-readonly="data.isImport" ng-pattern="digitsRegex" maxlength="5" class="form-control" style="display: inline-block;width: 80px;vertical-align: middle;margin: 0 .5rem;"><label class="control-label">张</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12 no-margin-bottom">
+                        <label class="col-lg-2 control-label"><span class="red">*</span>使用条件</label>
+                        <div class="col-lg-10 margin-bottom-10">
+                            <div class="radio" style="display: inline-block;">
+                                <label>
+                                    <input ng-disabled="data.status != 8" type="radio" name="conditionConsumeRadio" value="1" ng-model="conditionConsumeRadio" ng-click="data.conditionConsume = 0">
+                                    <span class="text">不限制</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12" ng-class="{'has-error': (memberCardForm.$submitted || memberCardForm.conditionConsume.$dirty) && memberCardForm.conditionConsume.$invalid}">
+                        <label class="col-lg-2 control-label"></label>
+                        <div class="col-lg-10 margin-bottom-10">
+                            <div class="radio" style="display: inline-block;">
+                                <label>
+                                    <input ng-disabled="data.status != 8" type="radio" name="conditionConsumeRadio" value="2" ng-model="conditionConsumeRadio">
+                                    <span class="text">消费满</span>
+                                </label>
+                            </div>
+                            <input type="text" name="conditionConsume" ng-model="data.conditionConsume" ng-disabled="conditionConsumeRadio == 1 || data.status != 8" required ng-pattern="conditionConsumeRadio == 1 ? '.+' : digitsRegex" maxlength="5" class="form-control" style="display: inline-block;width: 80px;vertical-align: middle;margin: 0 .5rem;"><label class="control-label">元</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12 no-margin-bottom">
+                        <label class="col-lg-2 control-label"><span class="red">*</span>优惠商品</label>
+                        <div class="col-lg-10 margin-bottom-10">
+                            <div class="radio" style="display: inline-block;">
+                                <label>
+                                    <input ng-disabled="data.status != 8" type="radio" name="conditionCommodityRadio" ng-value="1" ng-model="conditionCommodityRadio" ng-change="data.conditionCommodity = ''">
+                                    <span class="text">全品类</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12" ng-class="{'has-error': (memberCardForm.$submitted || memberCardForm.conditionCommodity.$dirty) && memberCardForm.conditionCommodity.$invalid}">
+                        <label class="col-lg-2 control-label"></label>
+                        <div class="col-lg-10 margin-bottom-10">
+                            <div class="radio" style="display: inline-block;">
+                                <label>
+                                    <input ng-disabled="data.status != 8" type="radio" name="conditionCommodityRadio" ng-value="2" ng-model="conditionCommodityRadio" ng-change="data.conditionCommodity = ''">
+                                    <span class="text">指定品类</span>
+                                </label>
+                            </div>
+                            <input type="text" name="conditionCommodity" ng-disabled="conditionCommodityRadio == 1 || data.status != 8" ng-model="data.conditionCommodity" ng-required="conditionCommodityRadio == 2" maxlength="12" placeholder="12个字以内" class="form-control" style="display: inline-block;width: 250px;vertical-align: middle;margin: 0 .5rem;">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12" ng-class="{'has-error': date.endDate.unix() < minEndDate && data.status ==8}">
+                        <label class="col-lg-2 control-label" for="title"><span class="red">*</span>有效期</label>
+                        <div class="col-lg-8">
+                            <input ng-disabled="data.status != 8" id="date" date-range-picker readonly class="form-control date-picker" type="text" style="width: 330px;"
+                                   ng-model="date" format="yyyy/MM/dd" options="opts"/>
+                            <label ng-if="date.endDate.unix() < minEndDate && data.status ==8" class="help-block">无法创建已过期的优惠券</label>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12" ng-class="{'has-error': (memberCardForm.$submitted || memberCardForm.useIntroduce.$dirty) && memberCardForm.useIntroduce.$invalid}">
+                        <label class="col-lg-2 control-label" for="useIntroduce"><span class="red">*</span>使用须知</label>
+                        <div class="col-lg-8">
+                            <textarea ng-disabled="data.status != 8" rows="4" class="form-control" name="useIntroduce" id="useIntroduce" required style="width: 400px"
+                                   ng-model="data.useIntroduce" maxlength="200" placeholder="200字以内"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label"></label>
+                        <div class="col-lg-8">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="action-fixed text-align-center padding-top-20 padding-bottom-20 bordered-top-1 bordered-lightgray">
+                <ripple ng-show="data.status == 8" ng-disabled="memberCardForm.$invalid || disableBtn || date.endDate.unix() < minEndDate" type="submit" class="btn btn-lg btn-default margin-right-20" style="width: 100px;" ng-click="saveCoupon()">保存</ripple>
+                <ripple ng-show="data.status == 8" ng-disabled="memberCardForm.$invalid || disableBtn || date.endDate.unix() < minEndDate" type="submit" class="btn btn-lg btn-success" ng-click="publish()">立即生效</ripple>
+                <a ng-show="data.status != 8" type="submit" class="btn btn-lg btn-success" ui-sref="app.tools.coupon.list">确定</a>
+            </div>
+        </div>
+    </div>
+</div>

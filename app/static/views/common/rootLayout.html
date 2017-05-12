@@ -1,0 +1,371 @@
+<!-- Loading Container -->
+<div class="loading-container" data-ng-include=" '/static/views/loading.html' "></div>
+<!--  /Loading Container -->
+<!-- Navbar -->
+<div class="navbar {{settings.fixed.navbar ? 'navbar-fixed-top' : ''}}" data-ng-include=" '/static/views/common/navbar.html' "></div>
+<!-- /Navbar -->
+
+<div class="main-container container-fluid" ui-view></div>
+<div class="loading-mask loading" ng-show="showLoading">
+    <div>
+        <img src="/static/img/loading.gif">
+        <p class="darkgray">正在努力为您加载</p>
+    </div>
+</div>
+<script type="text/ng-template" id="addTextMessageModal.html">
+    <form name="changePasswordForm" class="form-horizontal send-text-message-form" role="form">
+        <div class="modal-header">
+            <h3 class="modal-title">发送文字消息</h3>
+        </div>
+        <div class="modal-body">
+            <div class="widget no-margin-bottom">
+                <div class="form-group" ng-class="{'has-error':changePasswordForm.oldpwd.$invalid}">
+                    <div class="col-sm-12">
+                        <textarea required maxlength="300" rows="9"
+                               ng-model="data.message" name="message"
+                               class="form-control"></textarea>
+                    </div>
+                </div>
+                <div on-emotion-select="onEmotionSelect(id, title)" class="emotion-picker top"></div>
+                <span class="pull-right">还可以输入{{300-data.message.length}}字</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <ripple class="btn btn-lg btn-success" ng-disabled="changePasswordForm.$invalid" ng-click="ok()">确定</ripple>
+            <ripple class="btn btn-lg btn-default" ng-click="cancel()">取消</ripple>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template" id="addImageMessageModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">选择图片</h3>
+    </div>
+    <div class="modal-body">
+        <div class="widget no-margin-bottom">
+            <div class="row">
+                <div class="col-xs-6 col-sm-4 col-md-3" ng-repeat="image in imageList" ng-click="$parent.selectedImage = image">
+                    <div class="thumbnail cursor-pointer">
+                        <img ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + image.mediaId}}"
+                             data-holder-rendered="true"
+                             style="height: 160px; width: 100%; display: block;">
+                        <i ng-if="$parent.selectedImage.mediaId == image.mediaId" class="fa fa-check-circle-o fa-3x success" style="position: absolute;right: 18px; top: 0;"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="no-data" ng-if="imageList.length == 0">没有数据</div>
+                <tm-pagination conf="paginationConf"></tm-pagination>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <ripple class="btn btn-lg btn-success" ng-disabled="!selectedImage" ng-click="ok()">确定</ripple>
+        <ripple class="btn btn-lg btn-default" ng-click="cancel()">取消</ripple>
+    </div>
+</script>
+<script type="text/ng-template" id="addNewsMessageModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">选择微信图文</h3>
+    </div>
+    <div class="modal-body">
+        <div class="widget no-margin-bottom">
+            <div class="row">
+                <div class="col-lg-12 no-padding-left">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 no-padding">
+                        <div class="col-lg-12 no-padding-right" ng-repeat="news in newsList" ng-if="$index%3==0" ng-click="$parent.$parent.selectedNews = news">
+                            <div class="news-area">
+                                <div class="appmsg_content no-padding">
+                                    <div class="js_appmsg_item has_thumb">
+                                        <div class="cover_appmsg_item" style="margin: 14px;">
+                                            <div class="appmsg_info">
+                                                <em class="appmsg_date" style="color:#8d8d8d" ng-bind="news.updateTime * 1000 | date : 'yyyy-MM-dd HH:mm'"></em>
+                                            </div>
+                                            <div class="pic">
+                                                <h4 class="appmsg_title" style="padding-top:0">
+                                                    <a href="{{news.content.articles[0].url}}" target="_blank">{{news.content.articles[0].title}}</a>
+                                                </h4>
+                                                <div class="appmsg_thumb_wrp">
+                                                    <img width="100%" ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + news.content.articles[0].thumbMediaId}}">
+                                                </div>
+                                            </div>
+                                            <div class="nopic hide">
+                                                <h4 class="single_msg_title">
+                                                    <a href="" style="color:#8d8d8d" target="_blank">新建素材</a>
+                                                </h4>
+                                                <p class="appmsg_desc hide"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="appmsg_item js_appmsg_item has_thumb" ng-repeat="article in news.content.articles" ng-if="$index > 0">
+                                        <img class="js_appmsg_thumb appmsg_thumb" ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + article.thumbMediaId}}">
+                                        <h4 class="appmsg_title">
+                                            <a class="sub_title" href="{{article.url}}" style="color:#8d8d8d" target="_blank">{{article.title}}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <i ng-if="$parent.$parent.selectedNews.mediaId == news.mediaId" class="fa fa-check-circle-o fa-3x success" style="position: absolute;right: 4px; top: 0;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 no-padding">
+                        <div class="col-lg-12 no-padding-right" ng-repeat="news in newsList" ng-if="$index%3==1" ng-click="$parent.$parent.selectedNews = news">
+                            <div class="news-area">
+                                <div class="appmsg_content no-padding">
+                                    <div class="js_appmsg_item has_thumb">
+                                        <div class="cover_appmsg_item" style="margin: 14px;">
+                                            <div class="appmsg_info">
+                                                <em class="appmsg_date" style="color:#8d8d8d" ng-bind="news.updateTime * 1000 | date : 'yyyy-MM-dd HH:mm'"></em>
+                                            </div>
+                                            <div class="pic">
+                                                <h4 class="appmsg_title" style="padding-top:0">
+                                                    <a href="{{news.content.articles[0].url}}" target="_blank">{{news.content.articles[0].title}}</a>
+                                                </h4>
+                                                <div class="appmsg_thumb_wrp">
+                                                    <img width="100%" ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + news.content.articles[0].thumbMediaId}}">
+                                                </div>
+                                            </div>
+                                            <div class="nopic hide">
+                                                <h4 class="single_msg_title">
+                                                    <a href="" style="color:#8d8d8d" target="_blank">新建素材</a>
+                                                </h4>
+                                                <p class="appmsg_desc hide"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="appmsg_item js_appmsg_item has_thumb" ng-repeat="article in news.content.articles" ng-if="$index > 0">
+                                        <img class="js_appmsg_thumb appmsg_thumb" ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + article.thumbMediaId}}">
+                                        <h4 class="appmsg_title">
+                                            <a class="sub_title" href="{{article.url}}" style="color:#8d8d8d" target="_blank">{{article.title}}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <i ng-if="$parent.$parent.selectedNews.mediaId == news.mediaId" class="fa fa-check-circle-o fa-3x success" style="position: absolute;right: 4px; top: 0;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 no-padding">
+                        <div class="col-lg-12 no-padding-right" ng-repeat="news in newsList" ng-if="$index%3==2" ng-click="$parent.$parent.selectedNews = news">
+                            <div class="news-area">
+                                <div class="appmsg_content no-padding">
+                                    <div class="js_appmsg_item has_thumb">
+                                        <div class="cover_appmsg_item" style="margin: 14px;">
+                                            <div class="appmsg_info">
+                                                <em class="appmsg_date" style="color:#8d8d8d" ng-bind="news.updateTime * 1000 | date : 'yyyy-MM-dd HH:mm'"></em>
+                                            </div>
+                                            <div class="pic">
+                                                <h4 class="appmsg_title" style="padding-top:0">
+                                                    <a href="{{news.content.articles[0].url}}" target="_blank">{{news.content.articles[0].title}}</a>
+                                                </h4>
+                                                <div class="appmsg_thumb_wrp">
+                                                    <img width="100%" ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + news.content.articles[0].thumbMediaId}}">
+                                                </div>
+                                            </div>
+                                            <div class="nopic hide">
+                                                <h4 class="single_msg_title">
+                                                    <a href="" style="color:#8d8d8d" target="_blank">新建素材</a>
+                                                </h4>
+                                                <p class="appmsg_desc hide"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="appmsg_item js_appmsg_item has_thumb" ng-repeat="article in news.content.articles" ng-if="$index > 0">
+                                        <img class="js_appmsg_thumb appmsg_thumb" ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + article.thumbMediaId}}">
+                                        <h4 class="appmsg_title">
+                                            <a class="sub_title" href="{{article.url}}" style="color:#8d8d8d" target="_blank">{{article.title}}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <i ng-if="$parent.$parent.selectedNews.mediaId == news.mediaId" class="fa fa-check-circle-o fa-3x success" style="position: absolute;right: 4px; top: 0;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="no-data" ng-if="imageList.length == 0">没有数据</div>
+                <tm-pagination conf="paginationConf"></tm-pagination>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <ripple class="btn btn-lg btn-success" ng-disabled="!selectedNews" ng-click="ok()">确定</ripple>
+        <ripple class="btn btn-lg btn-default" ng-click="cancel()">取消</ripple>
+    </div>
+</script>
+<script type="text/ng-template" id="addLinkArticleModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">选择高级图文</h3>
+    </div>
+    <div class="modal-body">
+        <div class="widget no-margin-bottom">
+            <div class="row">
+                <div class="col-lg-12 no-padding-left">
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 no-padding">
+                        <div class="col-lg-12 no-padding-right" ng-repeat="news in newsList" ng-if="$index%3==0" ng-click="$parent.$parent.selectedNews = news">
+                            <div class="news-area">
+                                <div class="appmsg_content no-padding">
+                                    <div class="js_appmsg_item has_thumb">
+                                        <div class="cover_appmsg_item" style="margin: 14px;">
+                                            <div class="appmsg_info">
+                                                <em class="appmsg_date" style="color:#8d8d8d" ng-bind="news.ltime * 1000 | date : 'yyyy-MM-dd HH:mm'"></em>
+                                            </div>
+                                            <div class="pic">
+                                                <h4 class="appmsg_title" style="padding-top:0">
+                                                    <a href="{{news.content[0].url}}" target="_blank">{{news.content[0].title}}</a>
+                                                </h4>
+                                                <div class="appmsg_thumb_wrp">
+                                                    <img width="100%" ng-src="{{news.content[0].localurl}}">
+                                                </div>
+                                            </div>
+                                            <div class="nopic hide">
+                                                <h4 class="single_msg_title">
+                                                    <a href="" style="color:#8d8d8d" target="_blank">新建素材</a>
+                                                </h4>
+                                                <p class="appmsg_desc hide"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="appmsg_item js_appmsg_item has_thumb" ng-repeat="article in news.content" ng-if="$index > 0">
+                                        <img class="js_appmsg_thumb appmsg_thumb" ng-src="{{article.localurl}}">
+                                        <h4 class="appmsg_title">
+                                            <a class="sub_title" href="{{article.url}}" style="color:#8d8d8d" target="_blank">{{article.title}}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <i ng-if="$parent.$parent.selectedNews.mediaId == news.mediaId" class="fa fa-check-circle-o fa-3x success" style="position: absolute;right: 4px; top: 0;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 no-padding">
+                        <div class="col-lg-12 no-padding-right" ng-repeat="news in newsList" ng-if="$index%3==1" ng-click="$parent.$parent.selectedNews = news">
+                            <div class="news-area">
+                                <div class="appmsg_content no-padding">
+                                    <div class="js_appmsg_item has_thumb">
+                                        <div class="cover_appmsg_item" style="margin: 14px;">
+                                            <div class="appmsg_info">
+                                                <em class="appmsg_date" style="color:#8d8d8d" ng-bind="news.ltime * 1000 | date : 'yyyy-MM-dd HH:mm'"></em>
+                                            </div>
+                                            <div class="pic">
+                                                <h4 class="appmsg_title" style="padding-top:0">
+                                                    <a href="{{news.content[0].url}}" target="_blank">{{news.content[0].title}}</a>
+                                                </h4>
+                                                <div class="appmsg_thumb_wrp">
+                                                    <img width="100%" ng-src="{{news.content[0].localurl}}">
+                                                </div>
+                                            </div>
+                                            <div class="nopic hide">
+                                                <h4 class="single_msg_title">
+                                                    <a href="" style="color:#8d8d8d" target="_blank">新建素材</a>
+                                                </h4>
+                                                <p class="appmsg_desc hide"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="appmsg_item js_appmsg_item has_thumb" ng-repeat="article in news.content" ng-if="$index > 0">
+                                        <img class="js_appmsg_thumb appmsg_thumb" ng-src="{{article.localurl}}">
+                                        <h4 class="appmsg_title">
+                                            <a class="sub_title" href="{{article.url}}" style="color:#8d8d8d" target="_blank">{{article.title}}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <i ng-if="$parent.$parent.selectedNews.mediaId == news.mediaId" class="fa fa-check-circle-o fa-3x success" style="position: absolute;right: 4px; top: 0;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 no-padding">
+                        <div class="col-lg-12 no-padding-right" ng-repeat="news in newsList" ng-if="$index%3==2" ng-click="$parent.$parent.selectedNews = news">
+                            <div class="news-area">
+                                <div class="appmsg_content no-padding">
+                                    <div class="js_appmsg_item has_thumb">
+                                        <div class="cover_appmsg_item" style="margin: 14px;">
+                                            <div class="appmsg_info">
+                                                <em class="appmsg_date" style="color:#8d8d8d" ng-bind="news.ltime * 1000 | date : 'yyyy-MM-dd HH:mm'"></em>
+                                            </div>
+                                            <div class="pic">
+                                                <h4 class="appmsg_title" style="padding-top:0">
+                                                    <a href="{{news.content[0].url}}" target="_blank">{{news.content[0].title}}</a>
+                                                </h4>
+                                                <div class="appmsg_thumb_wrp">
+                                                    <img width="100%" ng-src="{{news.content[0].localurl}}">
+                                                </div>
+                                            </div>
+                                            <div class="nopic hide">
+                                                <h4 class="single_msg_title">
+                                                    <a href="" style="color:#8d8d8d" target="_blank">新建素材</a>
+                                                </h4>
+                                                <p class="appmsg_desc hide"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="appmsg_item js_appmsg_item has_thumb" ng-repeat="article in news.content" ng-if="$index > 0">
+                                        <img class="js_appmsg_thumb appmsg_thumb" ng-src="{{article.localurl}}">
+                                        <h4 class="appmsg_title">
+                                            <a class="sub_title" href="{{article.url}}" style="color:#8d8d8d" target="_blank">{{article.title}}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <i ng-if="$parent.$parent.selectedNews.mediaId == news.mediaId" class="fa fa-check-circle-o fa-3x success" style="position: absolute;right: 4px; top: 0;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="no-data" ng-if="imageList.length == 0">没有数据</div>
+                <tm-pagination conf="paginationConf"></tm-pagination>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <ripple class="btn btn-lg btn-success" ng-disabled="!selectedNews" ng-click="ok()">确定</ripple>
+        <ripple class="btn btn-lg btn-default" ng-click="cancel()">取消</ripple>
+    </div>
+</script>
+<script type="text/ng-template" id="newFeatureModal.html">
+    <div class="modal-body">
+        <style type="text/css" rel="stylesheet">
+            .newFeatureModal .modal-body {
+                position: relative;
+                max-height: inherit;
+                padding: 68px 77px 30px;
+                background: url('/assets/img/border-top.png') repeat-x;
+            }
+            .newFeatureModal .modal-body .postmark{
+                position: absolute;
+                right: 55px;
+                top: 70px;
+            }
+            .newFeatureModal .modal-body p{
+                padding-left: 45px;
+                font-size: 16px;
+            }
+            .newFeatureModal .modal-body .contact{
+                height: 163px;
+                background: url('/assets/img/newfeature-img.png') no-repeat;
+                background-position: right;
+                padding-right: 120px;
+            }
+            .newFeatureModal .modal-body .contact p{
+                font-size: 14px;
+            }
+        </style>
+        <div class="widget">
+            <img class="postmark" src="/assets/img/postmark.png">
+            <h2 class="smaller no-margin-top">Hi, {{userData.wechatName}}</h2>
+            <p class="margin-top-30 margin-bottom-30">在您愉快地提升连锁营销的时候，我们在背后默默地为您提供了更好用的功能。</p>
+            <p style="line-height: 30px;">
+                心康云与第一药店管理学院共同研发了几个新功能，助您实现精准会员营销，提升销售业绩：<br>
+                1、会员画像，助您实现精准营销，提升销售业绩；&emsp;<a class="blue" href="javascript:;" ng-click="gotoMember()">查看&nbsp;&gt;</a><br>
+                2、加强 群发消息 能力，通过画像和标签组合筛选，实现精准群发；&emsp;<a class="blue" href="javascript:;" ng-click="gotoMessage()">查看&nbsp;&gt;</a><br>
+            </p>
+            <p class="margin-top-60">感谢有您的陪伴，我们会努力提供更好的服务！</p>
+            <div class="text-align-right contact darkgray">
+                <p class="padding-top-50">产品经理：白术</p>
+                <p>反馈电话：020-37362621</p>
+            </div>
+            <div class="text-align-center">
+                <ripple class="btn btn-success btn-lg" ng-click="ok()">知道了，么么哒</ripple>
+            </div>
+        </div>
+    </div>
+</script>

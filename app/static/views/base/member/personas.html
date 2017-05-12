@@ -1,0 +1,200 @@
+<!--用户画像-->
+<div class="personasPage">
+    <style type="text/css" rel="stylesheet">
+        .personasPage .items .item {
+            -webkit-transition: all .2s;
+            -moz-transition: all .2s;
+            -ms-transition: all .2s;
+            -o-transition: all .2s;
+            transition: all .2s;
+        }
+
+        .personasPage .items .item:hover {
+            -webkit-box-shadow: 0 0 10px 2px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0 0 10px 2px rgba(0, 0, 0, .1);
+            box-shadow: 0 0 10px 2px rgba(0, 0, 0, .1);
+        }
+
+        .personasPage .items .item-bottom a {
+            padding: 15px;
+            text-align: center;
+            display: block;
+        }
+
+        .personasPage .items .item-top {
+            padding: 30px;
+            height: 400px;
+        }
+
+        .personasPage .items .item-icon {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            top: 77px;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        .personasPage .items .item-icon i {
+            font-size: 42px;
+        }
+
+        .personasPage .items .item-desc {
+        }
+
+        .personasPage .items .item-desc .total-count {
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .personasPage .items .item-desc h2 {
+            font-weight: normal;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .personasPage .items .item-desc p {
+            margin-bottom: 0;
+        }
+
+        .personasPage .pie-chart {
+            margin: auto;
+        }
+
+        .personasPage .pie-chart div {
+            margin: auto;
+        }
+    </style>
+    <div class="col-xs-12 col-md-12">
+        <h4 class="block no-margin-bottom" style="margin-top: -14px;">会员管理</h4>
+        <div class="tabbable">
+            <ul class="nav nav-tabs tabs-flat" id="myTab">
+                <li class="active">
+                    <a href="javascript:;">
+                        重要会员
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="app.base.member.list">
+                        所有会员
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="tab-content tabs-flat padding-bottom-20 no-padding-top no-padding-left no-padding-right">
+            <div class="well with-header bg_white no-padding-left no-padding-right no-padding-top margin-top-20
+         margin-bottom-20 no-border no-box-shadow">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="col-xs-3 items no-padding-left margin-bottom-20 padding-right-30"
+                             style="min-width: 300px;">
+                            <div class="item col-xs-12 bordered-1 bordered-lightgray no-padding cursor-pointer"
+                                 ui-sref="app.base.member.personasDetail({type: 1,total:channelInfluenceData.total,important:channelInfluenceData.importantValue})">
+                                <div class="item-top">
+                                    <div class="pie-chart" id="pieChart" style="height: 150px; width: 150px;"></div>
+                                    <svg class="item-icon" xmlns="http://www.w3.org/2000/svg" width="19.995"
+                                         height="19.995" viewBox="0 0 59 59">
+                                        <path style="fill: #2371f3;fill-rule: evenodd;"
+                                              d="M119.06,2936.84H112.1L102.969,2926l25.016,0.08-8.925,10.76h0Zm-18.592,13.98a21.253,21.253,0,0,1,14.122-6.19l-15.47-18.55L86,2938.14l13.075,14.21q0.659-.795,1.394-1.53h0Zm23.307-4.54a20.98,20.98,0,0,1,6.756,4.54q0.733,0.735,1.395,1.53L145,2938.14l-13.12-12.06-15.471,18.55a21.2,21.2,0,0,1,7.366,1.65h0Zm-8.275.35a19.185,19.185,0,1,0,19.229,19.19,19.209,19.209,0,0,0-19.229-19.19h0Zm6.394,26.99-6.456-5.06-6.648,5.14,2.833-8.13-6.187-4.85h7.875l2.294-6.59,2.126,6.59h7.833l-6.267,4.85,2.6,8.05h0Z"
+                                              transform="translate(-86 -2926)"/>
+                                    </svg>
+                                    <div class="item-desc">
+                                        <p class="total-count primary margin-top-10">
+                                            共{{channelInfluenceData.importantValue}}人</p>
+                                        <h2 class="item-name padding-top-5 margin-bottom-30">重要价值会员</h2>
+                                        <p class="darkgray">定义：购买力和忠诚度贡献最大，且活跃较高的会员；</p>
+                                        <p class="darkgray">策略：保持与这部分会员的联系和影响力。</p>
+                                    </div>
+                                </div>
+                                <div class="item-bottom bg-seashell bordered-top-1 bordered-lightgray">
+                                    <a ui-sref="app.base.member.personasDetail({type: 1,total:channelInfluenceData.total,important:channelInfluenceData.importantValue})">查看详情<i
+                                            class="fa fa-angle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3 items no-padding-left margin-bottom-20 padding-right-30"
+                             style="min-width: 300px;">
+                            <div class="item col-xs-12 bordered-1 bordered-lightgray no-padding cursor-pointer"
+                                 ui-sref="app.base.member.personasDetail({type: 2,total:channelInfluenceData.total,important:channelInfluenceData.importantMaintenance})">
+                                <div class="item-top">
+                                    <div class="pie-chart" id="pieChart2" style="height: 150px; width: 150px;"></div>
+                                    <svg class="item-icon" xmlns="http://www.w3.org/2000/svg" width="19.997"
+                                         height="19.997" viewBox="0 0 53 53">
+                                        <path style="fill: #2371f3;fill-rule: evenodd;"
+                                              d="M251.75,2956.5v-23.85a2.5,2.5,0,0,0-2.65-2.65H214.65a2.5,2.5,0,0,0-2.65,2.65v37.1l10.6-10.6h26.5A2.5,2.5,0,0,0,251.75,2956.5Zm10.6-15.9h-5.3v23.85H222.6v5.3a2.5,2.5,0,0,0,2.65,2.65H254.4L265,2983v-39.75A2.5,2.5,0,0,0,262.35,2940.6Zm-38.312,1.48a2.38,2.38,0,1,1-2.377,2.38A2.382,2.382,0,0,1,224.038,2942.08Zm8.45,0a2.38,2.38,0,1,1-2.423,2.38A2.4,2.4,0,0,1,232.488,2942.08Zm8.42,0a2.38,2.38,0,1,1-2.408,2.38A2.4,2.4,0,0,1,240.908,2942.08Z"
+                                              transform="translate(-212 -2930)"/>
+                                    </svg>
+                                    <div class="item-desc">
+                                        <p class="total-count primary margin-top-10">
+                                            共{{channelInfluenceData.importantMaintenance}}人</p>
+                                        <h2 class="item-name padding-top-5 margin-bottom-30">重要保持会员</h2>
+                                        <p class="darkgray">定义：曾经有较高的忠诚度，但近期不够活跃的会员；</p>
+                                        <p class="darkgray">策略：电话回访跟进等激活措施。</p>
+                                    </div>
+                                </div>
+                                <div class="item-bottom bg-seashell bordered-top-1 bordered-lightgray">
+                                    <a ui-sref="app.base.member.personasDetail({type: 2,total:channelInfluenceData.total,important:channelInfluenceData.importantMaintenance})">查看详情<i
+                                            class="fa fa-angle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3 items no-padding-left margin-bottom-20 padding-right-30"
+                             style="min-width: 300px;">
+                            <div class="item col-xs-12 bordered-1 bordered-lightgray no-padding cursor-pointer"
+                                 ui-sref="app.base.member.personasDetail({type: 3,total:channelInfluenceData.total,important:channelInfluenceData.importantDevelopment})">
+                                <div class="item-top">
+                                    <div class="pie-chart" id="pieChart3" style="height: 150px; width: 150px;"></div>
+                                    <svg class="item-icon" xmlns="http://www.w3.org/2000/svg" width="19.998" height="20"
+                                         viewBox="0 0 60 60.006">
+                                        <path style="fill: #2371f3;fill-rule: evenodd;"
+                                              d="M380.889,2929a8.4,8.4,0,1,1,0,16.8,8.558,8.558,0,0,1-6.09-2.53l-2.057,2.09a12.288,12.288,0,0,1,.243,17.24l3.5,3.17a9.554,9.554,0,0,1,6.032-2.14,9.356,9.356,0,1,1-9.487,9.35,9.26,9.26,0,0,1,2.26-6.05l-3.532-3.2a12.736,12.736,0,0,1-16.551-.57l-1.753,1.78a11.367,11.367,0,0,1,2.017,6.48,11.735,11.735,0,1,1-11.731-11.57,11.781,11.781,0,0,1,8.672,3.78l1.658-1.68a12.272,12.272,0,0,1-.653-14.83l-3.844-3.49a7.015,7.015,0,0,1-4.963,2.04,6.9,6.9,0,1,1,6.99-6.89,6.733,6.733,0,0,1-1,3.54l3.85,3.49a12.707,12.707,0,0,1,17.042-1.54l2.254-2.29a8.285,8.285,0,0,1-1.374-4.58,8.459,8.459,0,0,1,8.519-8.4h0ZM364,2954.85c-1.971,0-6,1.03-6,3V2960h12v-2.15C370,2955.88,365.97,2954.85,364,2954.85Zm0-1.71a2.57,2.57,0,1,0-2.57-2.57A2.528,2.528,0,0,0,364,2953.14Z"
+                                              transform="translate(-332 -2925.997)"/>
+                                    </svg>
+                                    <div class="item-desc">
+                                        <p class="total-count primary margin-top-10">
+                                            共{{channelInfluenceData.importantDevelopment}}人</p>
+                                        <h2 class="item-name padding-top-5 margin-bottom-30">重要发展会员</h2>
+                                        <p class="darkgray">定义：有比较高的活跃度和购买力，但尚未形成粘性的会员；</p>
+                                        <p class="darkgray">策略：通过促销活动养成购买习惯。</p>
+                                    </div>
+                                </div>
+                                <div class="item-bottom bg-seashell bordered-top-1 bordered-lightgray">
+                                    <a ui-sref="app.base.member.personasDetail({type: 3,total:channelInfluenceData.total,important:channelInfluenceData.importantDevelopment})">查看详情<i
+                                            class="fa fa-angle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3 items no-padding-left margin-bottom-20 padding-right-30"
+                             style="min-width: 300px;">
+                            <div class="item col-xs-12 bordered-1 bordered-lightgray no-padding cursor-pointer"
+                                 ui-sref="app.base.member.personasDetail({type: 4,total:channelInfluenceData.total,important:channelInfluenceData.importantRetention})">
+                                <div class="item-top">
+                                    <div class="pie-chart" id="pieChart4" style="height: 150px; width: 150px;"></div>
+                                    <svg class="item-icon" xmlns="http://www.w3.org/2000/svg" width="19.998" height="20"
+                                         viewBox="0 0 56 56.007">
+                                        <path style="fill: #2371f3;fill-rule: evenodd;"
+                                              d="M486.07,2963.27v12.85a0.889,0.889,0,0,0,.89.88h6.556a0.885,0.885,0,0,0,.892-0.88V2959l-6.667,5.69-1.671-1.42h0Zm-28.022,12.85a0.889,0.889,0,0,0,.891.88h6.555a0.889,0.889,0,0,0,.891-0.88v-13.11l-8.339,6.82v6.29h0Zm14.007-17.74v17.74a0.863,0.863,0,0,0,.261.62,0.881,0.881,0,0,0,.632.26h6.557a0.891,0.891,0,0,0,.891-0.88v-17.63l-4.169-3.51-4.172,3.4h0Zm28.025,17.74a0.861,0.861,0,0,0,.259.62,0.883,0.883,0,0,0,.632.26h6.558a0.889,0.889,0,0,0,.892-0.88v-29.07l-8.342,7.12v21.95h0ZM498.642,2932a0.3,0.3,0,0,0-.3.3,0.283,0.283,0,0,0,.088.2l6.269,6.11-16.958,14.46-11.512-9.71L458,2958.26v6.43l18.231-14.89,11.512,9.71,20.484-17.47,5.178,5.05a0.29,0.29,0,0,0,.221.28,0.287,0.287,0,0,0,.335-0.14,0.284,0.284,0,0,0-.049-0.35v-14.59a0.289,0.289,0,0,0-.291-0.29H498.642Z"
+                                              transform="translate(-458 -2926.497)"/>
+                                    </svg>
+                                    <div class="item-desc">
+                                        <p class="total-count primary margin-top-10">
+                                            共{{channelInfluenceData.importantRetention}}人</p>
+                                        <h2 class="item-name padding-top-5 margin-bottom-30">重要挽留会员</h2>
+                                        <p class="darkgray">定义：购买力较高，但粘性很差的会员，应认真分析原因；</p>
+                                        <p class="darkgray">策略：通过优惠活动、赠送抵用券等方式重新激活。</p>
+                                    </div>
+                                </div>
+                                <div class="item-bottom bg-seashell bordered-top-1 bordered-lightgray">
+                                    <a ui-sref="app.base.member.personasDetail({type: 4,total:channelInfluenceData.total,important:channelInfluenceData.importantRetention})">查看详情<i
+                                            class="fa fa-angle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,245 @@
+<div class="row storePage">
+    <div class="col-xs-12">
+        <h4 class="block bordered-bottom-1 bordered-lightgray" style="margin-top: -14px;">心康助手管理</h4>
+    </div>
+    <div class="col-xs-12">
+        <div class="widget flat">
+            <div class="widget-body bg-white no-padding">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <ui-select on-select="changePath()" ng-model="data.os" theme="select2" ng-required
+                                   search-enabled="false"
+                                   class="ui-select-container ui-select-bootstrap dropdown ">
+                            <ui-select-match placeholder="--请选择--">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="item.type as item in platform">
+                                {{item.name }}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="col-xs-5 margin-bottom-20 pull-right">
+                        <ripple type="button" class="btn btn-success pull-right" ng-disabled="permission(200000010001)"
+                                ng-click="newApp()"><i
+                                class="fa fa-plus"></i>&nbsp;发布新版本
+                        </ripple>
+                    </div>
+                </div>
+                <div class="bordered-1 bordered-lightgray" style="min-height: 400px;">
+                    <table class="table table-hover" id="simpledatatable">
+                        <thead class="bordered-bottom-1 bordered-lightgray bg-seashell">
+                        <tr>
+                            <th width="20"></th>
+                            <th style="width: 200px">
+                                版本名
+                            </th>
+                            <th class="text-align-center">
+                                版本号
+                            </th>
+                            <th class="text-align-center">
+                                发布时间
+                            </th>
+                            <th class="text-align-center">
+                                强制更新到最新版本
+                            </th>
+                            <th class="text-align-center" style="max-width: 200px">
+                                描述
+                            </th>
+                            <th class="text-align-center">
+                                操作
+                            </th>
+                            <th width="20"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="app in versions">
+                            <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                            <td style="width: 200px">{{app.versionName}}<span ng-if="app.isCurrent&&app.isCurrent=='1'"
+                                                                              class=" bordered-1 bordered-red margin-left-5"
+                                                                              style="color: red;">最新版本</span>
+                            </td>
+                            <td class="text-align-center" ng-bind="app.versionCode||'-'"></td>
+                            <td class="text-align-center" ng-bind="app.ctime * 1000 | date:'yyyy-MM-dd'||'-'"></td>
+                            <td class="text-align-center" ng-bind="app.isForceUpgrade=='1'?'强制':'非强制'"></td>
+
+                            <td class="text-align-center" style="max-width: 200px" ng-bind="app.description||'-'"></td>
+                            <td class="text-align-center">
+                                <ripple class="btn btn-xs btn-default" ng-click="newApp(app)"
+                                        ng-disabled="permission(200000010002)">编辑
+                                </ripple>
+                            </td>
+
+                            <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                        </tr>
+                        <tr ng-if="!versions||versions.length == 0">
+                            <td class="no-data" style="padding: 200px 0;" colspan="9">没有数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <tm-pagination conf="paginationConf"></tm-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+<!--发布新版app-->
+<script type="text/ng-template" id="newAppModalContent.html">
+    <form name="newAppForm" class="form-horizontal" novalidate role="form">
+        <div class="modal-header">
+            <h3 class="modal-title" ng-bind="title"></h3>
+        </div>
+        <div class="modal-body">
+            <div class="widget">
+                <div ng-if="data.app.os=='ANDROID'" class="form-group "
+                     ng-class="{'has-error':  (courseForm.$submitted || courseForm.url.$dirty) && courseForm.url.$invalid}">
+                    <label class="col-xs-3 control-label no-padding-right"><span class="red">*</span>上传安装包</label>
+                    <div class="col-xs-6">
+                        <input type="hidden" ng-model="data.app.url" name="url" >
+                        <ripple class="btn btn-default" type="button" ngf-select="uploadFile($file, $invalidFiles)"
+                                ngf-accept="'application/vnd.android.package-archive'" ngf-max-size="150MB">上传安装包
+                        </ripple>
+                        <!--开始上传显示上传的信息-->
+                        <div ng-if="data.file.name"
+                             style="font-size: 16px; padding: 10px; margin-top: 10px; background-color: #efefef;">
+                            &emsp;{{data.file.name}}<span
+                                ng-if="data.file.size">{{'('+(data.file.size/1024/1024).toFixed(2)+'MB)'}}</span>
+                            &emsp;<span class="upload-progressbar" ng-if="!data.uploadComplete"
+                                        ng-style="{'opacity': data.uploadComplete ? 0 : 1 }">
+                                    <span ng-style="{'width': data.progressPercentage + '%'}"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error': (newAppForm.$submitted || newAppForm.name.$dirty) && newAppForm.name.$invalid}">
+                    <label for="name" class="col-xs-3 control-label no-padding-right"><span
+                            class="red">*</span>版本名</label>
+                    <div class="col-xs-6">
+                        <input type="text" ng-readonly="!isCreate||data.app.os=='ANDROID'" required ng-minlength="2"
+                               maxlength="30"
+                               ng-model="data.app.versionName "
+                               name="name"
+                               class="form-control" id="name" placeholder="版本名">
+                    </div>
+                    <p class="help-block">必填,2~30字符</p>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error': (newAppForm.$submitted || newAppForm.code.$dirty) && newAppForm.code.$invalid}">
+                    <label for="code" class="col-xs-3 control-label no-padding-right"><span
+                            class="red">*</span>版本号</label>
+                    <div class="col-xs-6">
+                        <input type="text" ng-readonly="!isCreate||data.app.os=='ANDROID'" required ng-minlength="2"
+                               maxlength="11"
+                               ng-model="data.app.versionCode"
+                               name="code"
+                               class="form-control" id="code" placeholder="版本号">
+                    </div>
+                    <p class="help-block">必填,2~30数字</p>
+                </div>
+                <div class="form-group" ng-if="isCreate">
+                    <label class="col-xs-3 control-label no-padding-right"><span class="red">*</span>平台</label>
+                    <div class="col-xs-8">
+                        <div class="radio col-xs-4 no-padding-left">
+                            <label>
+                                <input name="os" ng-model="data.app.os" type="radio" value="ANDROID">
+                                <span class="text ng-binding">Android</span>
+                            </label>
+                        </div>
+                        <div class="radio col-xs-4 no-padding-left">
+                            <label>
+                                <input name="os" ng-model="data.app.os" type="radio" value="IOS">
+                                <span class="text ng-binding">iOS</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label no-padding-right"><span class="red">*</span>强制更新到最新版本</label>
+                    <div class="col-xs-8">
+                        <div class="radio col-xs-4 no-padding-left">
+                            <label>
+                                <input  ng-model="data.app.isForceUpgrade" type="radio"
+                                       value="0">
+                                <span class="text ng-binding">非强制</span>
+                            </label>
+                        </div>
+                        <div class="radio col-xs-4 no-padding-left">
+                            <label>
+                                <input  ng-model="data.app.isForceUpgrade" type="radio"
+                                       value="1">
+                                <span class="text ng-binding">强制</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group "
+                     ng-class="{'has-error': (newAppForm.$submitted || newAppForm.description.$dirty) && newAppForm.description.$invalid}">
+                    <label class="col-xs-3 control-label no-padding-right" for="description"><span class="red">*</span>版本描述</label>
+                    <div class="col-xs-7">
+                            <textarea rows="6" class="form-control" name="description" id="description" required
+                                      placeholder="版本描述"
+                                      ng-model="data.app.description" maxlength="140"></textarea>
+                    </div>
+                    <p class="help-block darkgray">140字符以内</p>
+                </div>
+                <!--<div class="form-group">-->
+                <!--<label for="birthday" class="col-xs-3 control-label no-padding-right">生日</label>-->
+                <!--<div class="col-xs-6">-->
+                <!--<input id="birthday" date-time class="form-control" type="text" format="Y-MM-DD"-->
+                <!--view="year" min-view="date" ng-model="data.birthday" readonly/>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group"-->
+                <!--ng-class="{'has-error': (newAppForm.$submitted || newAppForm.customerStoreId.$dirty) && newAppForm.customerStoreId.$invalid}">-->
+                <!--<label class="col-xs-3 control-label no-padding-right"><span class="red">*</span>所属门店</label>-->
+                <!--<div class="col-xs-6">-->
+                <!--<input type="text" class="hidden" name="customerStoreId" required-->
+                <!--ng-model="data.assistant.customerStoreId">-->
+                <!--<ui-select ng-model="data.assistant.customerStoreId" theme="select2" ng-required-->
+                <!--class="ui-select-container ui-select-bootstrap dropdown ng-valid">-->
+                <!--<ui-select-match placeholder="&#45;&#45;请选择&#45;&#45;">{{$select.selected.name}}</ui-select-match>-->
+                <!--<ui-select-choices repeat="store.id as store in data.storeList | filter: $select.search">-->
+                <!--<span ng-bind-html="store.name | highlight: $select.search"></span>-->
+                <!--<small class="darkgray" style="display: block;"-->
+                <!--ng-bind-html="store.provinceName + store.cityName + store.areaName + store.street | highlight: $select.search"></small>-->
+                <!--</ui-select-choices>-->
+                <!--</ui-select>-->
+                <!--</div>-->
+                <!--<p class="help-block">必选</p>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                <!--<label class="col-xs-3 control-label no-padding-right"><span class="red">*</span>职位</label>-->
+                <!--<div class="col-xs-8">-->
+                <!--<div class="radio col-xs-3 no-padding-left">-->
+                <!--<label>-->
+                <!--<input name="position" ng-model="data.assistant.position" type="radio" value="店长">-->
+                <!--<span class="text ng-binding">店长</span>-->
+                <!--</label>-->
+                <!--</div>-->
+                <!--<div class="radio col-xs-3 no-padding-left">-->
+                <!--<label>-->
+                <!--<input name="position" ng-model="data.assistant.position" type="radio" value="店员">-->
+                <!--<span class="text ng-binding">店员</span>-->
+                <!--</label>-->
+                <!--</div>-->
+                <!--<div class="radio col-xs-3 no-padding-left">-->
+                <!--<label>-->
+                <!--<input name="position" ng-model="data.assistant.position" type="radio" value="其他">-->
+                <!--<span class="text ng-binding">其他</span>-->
+                <!--</label>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                <!--<label class="col-xs-2 control-label no-padding-right"></label>-->
+                <!--<div class="col-xs-8">-->
+                <!--<div class="help-block">添加成功后，心康云会替你通知店员下载心康助手App :)</div>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <ripple class="btn btn-lg btn-success" ng-disabled="newAppForm.$invalid" ng-click="ok()">{{isCreate?'发布':'保存'}}</ripple>
+            <ripple class="btn btn-lg btn-default" ng-click="cancel()">取消</ripple>
+        </div>
+    </form>
+</script>
+

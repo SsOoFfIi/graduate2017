@@ -1,0 +1,137 @@
+<div class="testSettingsPage">
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom text-align-center bordered-bottom-1 bordered-lightgray" style="margin-top: -14px;height:52px;line-height:34px;">
+            <a class="btn pull-left ripple" href="javascript:history.back();"><i class="fa fa-arrow-left"></i>&emsp;返回</a>
+            设置课后练习
+        </h4>
+    </div>
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="steps clearfix">
+                    <li class="current">2.测评规则</li>
+                    <li>1.设置题目</li>
+                </ul>
+            </div>
+            <div class="col-xs-4 test-preview-wrapper">
+                <style type="text/css">
+                    .settings-form-wrapper {
+                        float: none;
+                        width: auto;
+                        margin-left: 386px;
+                        margin-top: 47px;
+                    }
+
+                    .test-preview-wrapper {
+                        max-width: 372px;
+                        position: absolute;
+                        top: 47px;
+                    }
+                    .test_preview_area {
+                        width: 340px;
+                        height: 572px;
+                        border-top: none;
+                        position: relative;
+                        background-size: cover;
+                    }
+                    .test_preview_area .preview_header {
+                        color: #fff;
+                        background-color: #383838;
+                        text-align: center;
+                        height: 45px;
+                        line-height: 45px;
+                    }
+                    .test_preview_area .test-preview-content {
+                        min-height: 528px;
+                    }
+                    .test_preview_area .test-preview-content .questions{
+                        list-style: none;
+                        margin: 0;
+                        padding: 0;
+                        max-height: 457px;
+                        overflow-y: auto;
+                    }
+                    .test_preview_area .test-preview-content .questions .question{
+                        height: 50px;
+                        line-height: 50px;
+                        white-space:nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        padding: 0 20px;
+                        position: relative;
+                    }
+                    .settingsForm {
+                        position: relative;
+                        min-height: 572px;
+                    }
+                    .settingsForm .triangle, .settingsForm .triangle:before {
+                        position: absolute;
+                        left: -32px;
+                        top: 250px;
+                        display: block;
+                        border: 16px solid transparent;
+                        border-right-color: lightgrey;
+                    }
+                    .settingsForm .triangle:before {
+                        content: "";
+                        position: absolute;
+                        left: -15px;
+                        border-right-color: #fafafa;
+                        top: -16px;
+                    }
+                </style>
+
+                <div class="test_preview_area">
+                    <div class="preview_header">
+                        测试题
+                    </div>
+                    <div class="test-preview-content bordered-1 bordered-lightgray no-border-top">
+                        <ul class="questions">
+                            <li class="question bordered-bottom-1 bordered-lightgray" ng-repeat="question in $parent.savedQuestions">
+                                {{question.question}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 no-padding-left settings-form-wrapper padding-bottom-50 margin-bottom-40">
+                <form role="form" name="settingsForm" class="settingsForm form-horizontal padding-top-40 bordered-1 bordered-lightgray" style="background-color: #fafafa;" novalidate>
+                    <div class="triangle"></div>
+                    <div class="form-group col-xs-12" ng-class="{'has-error':  (settingsForm.$submitted || settingsForm.duration.$dirty) && settingsForm.duration.$invalid}">
+                        <label class="col-xs-3 control-label" for="duration"><span class="red">*</span>考试时长</label>
+                        <div class="col-xs-2">
+                            <input type="number" class="form-control" id="duration" name="duration" required pattern="[1-9]\d*"
+                                   ng-model="data.duration" max="120">
+                        </div>
+                        <p class="help-block">分钟(正整数, 最大120)</p>
+                    </div>
+                    <div class="form-group col-xs-12" ng-class="{'has-error':  (settingsForm.$submitted || settingsForm.chooseCount.$dirty) && settingsForm.chooseCount.$invalid}">
+                        <label class="col-xs-3 control-label" for="chooseCount"><span class="red">*</span>每次抽题数</label>
+                        <div class="col-xs-2">
+                            <input type="number" class="form-control" id="chooseCount" name="chooseCount" required pattern="[1-9]\d*"
+                                   ng-model="data.chooseCount" ng-max="$parent.savedQuestions.length" max="$parent.savedQuestions.length">
+                        </div>
+                        <p class="help-block">共{{$parent.savedQuestions.length}}道题，随机分配{{data.chooseCount || 0}}道题(填正整数)</p>
+                    </div>
+                    <div class="form-group col-xs-12" ng-class="{'has-error':  (settingsForm.$submitted || settingsForm.passScore.$dirty) && settingsForm.passScore.$invalid}">
+                        <label class="col-xs-3 control-label" for="passScore"><span class="red">*</span>及格分</label>
+                        <div class="col-xs-2">
+                            <input type="number" class="form-control" id="passScore" name="passScore" required pattern="[1-9]\d*"
+                                   ng-model="data.passScore" maxlength="3" max="100">
+                        </div>
+                        <p class="help-block">分(正整数)，总分100分</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label"></label>
+                        <div class="col-xs-8">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="action-fixed text-align-center padding-top-20 padding-bottom-20 bordered-top-1 bordered-lightgray">
+                <a class="btn btn-lg ripple" href="javascript:history.back();">上一步</a>
+                <ripple ng-disabled="settingsForm.$invalid" type="submit" class="btn btn-lg btn-success" ng-click="saveQuestions()">保存课后练习</ripple>
+            </div>
+        </div>
+    </div>
+</div>

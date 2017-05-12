@@ -1,0 +1,433 @@
+<div>
+    <style scoped type="text/css">
+        .emotion-picker{
+            position: relative;
+            display: inline-block;
+        }
+        .emotion_panel {
+            position: absolute;
+            z-index: 10001;
+            font-size: 12px;
+            line-height: 1.334;
+            color: #5f5f5f;
+            background: #fff;
+            border: 1px solid #e7e7eb;
+            padding: 5px;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+            -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+            -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+        }
+        .right .emotion_panel {
+            right: 0;
+        }
+        .top .emotion_panel {
+            bottom: 26px;
+        }
+        .emotion_preview {
+            border: 1px solid #999;
+            position: absolute;
+            top: 0;
+            right: -52px;
+            background: #fff;
+            overflow: hidden;
+            z-index: 2;
+        }
+        .emotion_preview img {
+            display: block;
+            margin: 8px 12px;
+        }
+        .emotion_preview span {
+            display: block;
+            padding: 3px;
+            text-align: center;
+            white-space: nowrap;
+            background-color: #ECECEC;
+        }
+        .emotions {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            width: 390px;
+            overflow: hidden;
+            background: url(/assets/img/emotion/all.png) 0 0 no-repeat;
+        }
+        .emotions li {
+            margin: 0;
+            padding: 0;
+            float: left;
+        }
+        .emotions li a {
+            display: block;
+            width: 24px;
+            height: 24px;
+            margin: 0;
+            padding: 1px;
+            text-decoration: none;
+            float: left;
+            box-sizing: content-box;
+        }
+        .emotions li a:hover {
+            padding: 0;
+            border: 1px solid #2E8DED;
+        }
+        /*link editor css*/
+        .link_panel {
+            position: absolute;
+            z-index: 10001;
+            font-size: 12px;
+            line-height: 1.334;
+            color: #5f5f5f;
+            background: #fff;
+            border: 1px solid #e7e7eb;
+            padding: 15px;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+            -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+            -moz-box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
+        }
+        .link_panel > h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .link_panel .form-horizontal .control-label {
+            float: left;
+            width: 65px;
+            text-align: left;
+        }
+        .link_panel .form-horizontal .controls {
+            margin-left: 70px;
+        }
+        .link_panel .form-horizontal .last-item {
+            margin-bottom: 0;
+        }
+        .link_panel .btn-cancel {
+            margin-left: 10px;
+        }
+        .last-item .checkbox {
+            margin-top: -8px;
+        }
+    </style>
+    <div class="emotion_trigger"><a href="javascript:;" ng-click="show = !show"><i class="fa fa-smile font-160 darkgray"></i></a></div>
+    <div id="emotion_panel" class="emotion_panel" ng-if="show">
+        <div id="emotion_preview" class="emotion_preview" ng-if="hoverId">
+            <img ng-src="/assets/img/emotion/e{{hoverId}}.gif" id="emotion_preview_img">
+            <span id="emotion_preview_title" ng-bind="hoverTitle"></span>
+        </div>
+        <ul class="emotions">
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="0" data-id="100" data-title="微笑" title="微笑"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="1" data-id="101" data-title="撇嘴" title="撇嘴"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="2" data-id="102" data-title="色" title="色"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="3" data-id="103" data-title="发呆" title="发呆"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="4" data-id="104" data-title="得意" title="得意"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="5" data-id="105" data-title="流泪" title="流泪"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="6" data-id="106" data-title="害羞" title="害羞"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="7" data-id="107" data-title="闭嘴" title="闭嘴"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="8" data-id="108" data-title="睡" title="睡"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="9" data-id="109" data-title="大哭" title="大哭"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="10" data-id="110" data-title="尴尬" title="尴尬"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="11" data-id="111" data-title="发怒" title="发怒"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="12" data-id="112" data-title="调皮" title="调皮"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="13" data-id="113" data-title="呲牙" title="呲牙"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="14" data-id="114" data-title="惊讶" title="惊讶"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="15" data-id="115" data-title="难过" title="难过"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="16" data-id="116" data-title="酷" title="酷"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="17" data-id="117" data-title="冷汗" title="冷汗"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="18" data-id="118" data-title="抓狂" title="抓狂"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="19" data-id="119" data-title="吐" title="吐"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="20" data-id="120" data-title="偷笑" title="偷笑"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="21" data-id="121" data-title="可爱" title="可爱"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="22" data-id="122" data-title="白眼" title="白眼"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="23" data-id="123" data-title="傲慢" title="傲慢"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="24" data-id="124" data-title="饥饿" title="饥饿"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="25" data-id="125" data-title="困" title="困"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="26" data-id="126" data-title="惊恐" title="惊恐"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="27" data-id="127" data-title="流汗" title="流汗"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="28" data-id="128" data-title="憨笑" title="憨笑"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="29" data-id="129" data-title="大兵" title="大兵"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="30" data-id="130" data-title="奋斗" title="奋斗"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="31" data-id="131" data-title="咒骂" title="咒骂"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="32" data-id="132" data-title="疑问" title="疑问"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="33" data-id="133" data-title="嘘" title="嘘"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="34" data-id="134" data-title="晕" title="晕"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="35" data-id="135" data-title="折磨" title="折磨"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="36" data-id="136" data-title="衰" title="衰"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="37" data-id="137" data-title="骷髅" title="骷髅"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="38" data-id="138" data-title="敲打" title="敲打"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="39" data-id="139" data-title="再见" title="再见"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="40" data-id="140" data-title="擦汗" title="擦汗"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="41" data-id="141" data-title="抠鼻" title="抠鼻"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="42" data-id="142" data-title="鼓掌" title="鼓掌"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="43" data-id="143" data-title="糗大了" title="糗大了"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="44" data-id="144" data-title="坏笑" title="坏笑"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="45" data-id="145" data-title="左哼哼" title="左哼哼"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="46" data-id="146" data-title="右哼哼" title="右哼哼"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="47" data-id="147" data-title="哈欠" title="哈欠"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="48" data-id="148" data-title="鄙视" title="鄙视"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="49" data-id="149" data-title="委屈" title="委屈"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="50" data-id="150" data-title="快哭了" title="快哭了"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="51" data-id="151" data-title="阴险" title="阴险"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="52" data-id="152" data-title="亲亲" title="亲亲"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="53" data-id="153" data-title="吓" title="吓"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="54" data-id="154" data-title="可怜" title="可怜"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="55" data-id="155" data-title="菜刀" title="菜刀"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="56" data-id="156" data-title="西瓜" title="西瓜"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="57" data-id="157" data-title="啤酒" title="啤酒"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="58" data-id="158" data-title="篮球" title="篮球"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="59" data-id="159" data-title="乒乓" title="乒乓"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="60" data-id="160" data-title="咖啡" title="咖啡"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="61" data-id="161" data-title="饭" title="饭"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="62" data-id="162" data-title="猪头" title="猪头"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="63" data-id="163" data-title="玫瑰" title="玫瑰"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="64" data-id="164" data-title="凋谢" title="凋谢"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="65" data-id="165" data-title="示爱" title="示爱"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="66" data-id="166" data-title="爱心" title="爱心"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="67" data-id="167" data-title="心碎" title="心碎"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="68" data-id="168" data-title="蛋糕" title="蛋糕"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="69" data-id="169" data-title="闪电" title="闪电"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="70" data-id="170" data-title="炸弹" title="炸弹"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="71" data-id="171" data-title="刀" title="刀"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="72" data-id="172" data-title="足球" title="足球"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="73" data-id="173" data-title="瓢虫" title="瓢虫"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="74" data-id="174" data-title="便便" title="便便"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="75" data-id="175" data-title="月亮" title="月亮"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="76" data-id="176" data-title="太阳" title="太阳"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="77" data-id="177" data-title="礼物" title="礼物"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="78" data-id="178" data-title="拥抱" title="拥抱"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="79" data-id="179" data-title="强" title="强"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="80" data-id="180" data-title="弱" title="弱"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="81" data-id="181" data-title="握手" title="握手"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="82" data-id="182" data-title="胜利" title="胜利"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="83" data-id="183" data-title="抱拳" title="抱拳"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="84" data-id="184" data-title="勾引" title="勾引"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="85" data-id="185" data-title="拳头" title="拳头"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="86" data-id="186" data-title="差劲" title="差劲"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="87" data-id="187" data-title="爱你" title="爱你"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="88" data-id="188" data-title="NO" title="NO"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="89" data-id="189" data-title="OK" title="OK"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="90" data-id="190" data-title="爱情" title="爱情"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="91" data-id="191" data-title="飞吻" title="飞吻"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="92" data-id="192" data-title="跳跳" title="跳跳"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="93" data-id="193" data-title="发抖" title="发抖"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="94" data-id="194" data-title="怄火" title="怄火"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="95" data-id="195" data-title="转圈" title="转圈"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="96" data-id="196" data-title="磕头" title="磕头"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="97" data-id="197" data-title="回头" title="回头"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="98" data-id="198" data-title="跳绳" title="跳绳"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="99" data-id="199" data-title="挥手" title="挥手"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="100" data-id="200" data-title="激动" title="激动"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="101" data-id="201" data-title="街舞" title="街舞"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="102" data-id="202" data-title="献吻" title="献吻"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="103" data-id="203" data-title="左太极" title="左太极"></a>
+            </li>
+            <li>
+                <a class="js_emotion" ng-mouseenter="hover($event)" ng-click="select()" href="javascript:void(0);" data-index="104" data-id="204" data-title="右太极" title="右太极"></a>
+            </li>
+        </ul>
+    </div>
+</div>

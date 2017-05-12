@@ -1,0 +1,120 @@
+<div class="row comment-page">
+    <style type="text/css">
+        .comment-page input[date-range-picker] {
+            background: url(/assets/img/caret-down.png) no-repeat 195px center;
+        }
+        .comment form.well {
+            border-radius: 0;
+            padding: 10px;
+            background-color: #fff;
+            border: solid 1px #e5e5e5;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+        .comment form.well textarea{
+            border: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            background: none;
+        }
+        .comment form.well .reply-footer {
+            border-top: 1px solid #e5e5e5;
+            margin-left: -10px;
+            margin-right: -10px;
+            padding: 0 10px;
+        }
+        .comment .comment {
+            margin-left: 0 !important;
+            padding-top: 0;
+        }
+    </style>
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom margin-bottom-20 bordered-bottom-1 bordered-lightgray" style="margin-top: -14px;">消息管理</h4>
+    </div>
+    <div class="col-xs-12 col-md-12">
+        <div class="widget flat">
+            <div class="widget-body bg-white no-padding">
+                <div class="row">
+                    <form class="form-horizontal ng-pristine ng-valid ng-valid-maxlength margin-bottom-20" role="form">
+                        <div class="col-xs-3 margin-bottom-20" style="width: 250px">
+                            <input id="date" date-range-picker readonly class="form-control date-picker" type="text"
+                                   ng-model="date" format="yyyy/MM/dd" options="opts"/>
+                        </div>
+                        <div class="col-xs-3 input-group" style="width: 250px">
+                            <input class="form-control" ng-model="data.content" maxlength="20" placeholder="消息内容" type="text">
+                            <span class="input-group-btn">
+                                    <ripple class="btn" ng-click="load()" type="submit"><i class="fa fa-search gray"></i></ripple>
+                                </span>
+                        </div>
+                    </form>
+                    <div class="col-md-12">
+                        <div class="comment" ng-repeat="comment in commentList">
+                            <img ng-src="{{comment.headimgurl}}" alt="" class="comment-avatar">
+                            <div class="comment-body">
+                                <div class="comment-text no-padding">
+                                    <div class="comment">
+                                        <div class="comment-body">
+                                            <div class="comment-text no-border-left no-border-top no-border-right" ng-class="{'no-border-bottom': comment.replies.length == 0 && !comment.showReplyForm}">
+                                                <div class="comment-header">
+                                                    <span style="color: #333;" ng-bind="comment.nickname"></span>
+                                                    <span>{{comment.ctime * 1000 | date : 'yyyy-MM-dd HH:mm:ss'}}</span>
+                                                    <a href="javascript:;" class="pull-right"><i class="fa fa-reply" ng-click="comment.showReplyForm = ! comment.showReplyForm">&nbsp;回复</i></a>
+                                                </div>
+                                                <span ng-bind-html="comment.contentDescr"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row margin-left-50">
+                                        <div class="col-xs-12">
+                                            <div class="padding-bottom-10 clearfix" ng-show="!!comment.showReplyForm">
+                                                <div class="col-lg-12">
+                                                    <form method="post" class="well padding-bottom-10 margin-top-10 margin-bottom-10" onsubmit="return false;">
+                                                            <span class="input-icon icon-right">
+                                                                <textarea rows="4" class="form-control" placeholder="填写回复内容" ng-model="comment.replyContent" maxlength="600"></textarea>
+                                                            </span>
+                                                        <div class="padding-top-10 reply-footer">
+                                                            <div on-emotion-select="onEmotionSelect(id, title, comment)" class="emotion-picker"></div>
+                                                            <span class="gray pull-right">还可以输入{{600 - comment.replyContent.length}}字，按回车换行</span>
+                                                        </div>
+                                                    </form>
+                                                    <div>
+                                                        <ripple class="btn btn-success" ng-click="reply(comment)">
+                                                            发送
+                                                        </ripple>
+                                                        <ripple class="btn btn-default margin-right-10" ng-click="comment.showReplyForm = false">
+                                                            取消
+                                                        </ripple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <div class="comment" ng-repeat="reply in comment.replies">
+                                                    <div class="comment-body">
+                                                        <div class="comment-text no-padding-left no-border-left no-border-right no-border-bottom" ng-class="{'no-border-top': $first}">
+                                                            <div class="comment-header">
+                                                                <span style="color: #333;">回复</span>
+                                                                <span>{{reply.time * 1000 | date : 'yyyy-MM-dd HH:mm:ss'}}</span>
+                                                            </div>
+                                                            <span ng-bind-html="reply.content"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="no-data" ng-if="commentList.length == 0">没有数据</div>
+                        <tm-pagination conf="paginationConf"></tm-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+          

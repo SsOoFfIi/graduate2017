@@ -1,0 +1,173 @@
+<div class="memberCardPage">
+    <div ui-view autoscroll="false"></div>
+    <div class="col-xs-12 col-md-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="steps clearfix">
+                    <li style="width: 33.33%" class="current">3.优惠券生成与发布</li>
+                    <li style="width: 33.33%">2.填写优惠券内容</li>
+                    <li style="width: 33.33%">1.选择优惠券类型</li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-7 col-md-6 col-lg-4 coupon-preview-wrapper">
+                <style type="text/css">
+                    .member-card-form-wrapper {
+                        float: none;
+                        width: auto;
+                        margin-left: 372px;
+                        margin-top: 47px;
+                    }
+
+                    .coupon-preview-wrapper {
+                        max-width: 372px;
+                        position: absolute;
+                        top: 47px;
+                    }
+                    .coupon_preview_area {
+                        width: 340px;
+                        height: 572px;
+                        border-top: none;
+                        position: relative;
+                        background: url("/assets/img/coupon_bg.png") no-repeat 100%;
+                        background-size: cover;
+                    }
+                    .coupon_preview_area .preview_header {
+                        color: #fff;
+                        background-color: #383838;
+                        text-align: center;
+                        height: 45px;
+                        line-height: 45px;
+                    }
+                    .coupon_preview_area .coupon-header {
+                        margin: 22px 10px;
+                        height: 148px;
+                        text-align: center;
+                    }
+                    .coupon_preview_area .coupon-header .top {
+                        text-align: left;
+                        padding: 6px 6px 0;
+                    }
+                    .coupon_preview_area .coupon-header .top .logo{
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 60px;
+                        position: relative;
+                    }
+                    .coupon_preview_area .coupon-header .name {
+                        font-size: 12px;
+                        color: #999;
+                    }
+                    .coupon_preview_area .coupon-header .title {
+                        margin-bottom: 4px;
+                    }
+                    .coupon_preview_area .coupon-header .detail {
+                        font-size: 24px;
+                        margin: 5px 0 15px;
+                    }
+                    .coupon_preview_area .coupon-header .condition {
+                        text-align: left;
+                        color: #333;
+                        padding: 0 20px;
+                        line-height: 15px;
+                        font-size: 12px;
+                        margin: 0;
+                    }
+                    .coupon_preview_area .coupon-header .condition label {
+                        float: left;
+                        font-size: 12px;
+                    }
+                    .coupon_preview_area .coupon-header .time {
+                        text-align: left;
+                        color: #333;
+                        padding: 0 20px;
+                        font-size: 12px;
+                    }
+                    .coupon_preview_area .coupon-body {
+                        text-align: center;
+                        padding-top: 10px;
+                    }
+                    .content-wrapper {
+                        position: relative;
+                        background-color: #fafafa;
+                        min-height: 572px;
+                    }
+                    .content-wrapper .triangle, .content-wrapper .triangle:before {
+                        position: absolute;
+                        left: -32px;
+                        top: 150px;
+                        display: block;
+                        border: 16px solid transparent;
+                        border-right-color: lightgrey;
+                    }
+                    .content-wrapper .triangle:before {
+                        content: "";
+                        position: absolute;
+                        left: -15px;
+                        border-right-color: #fafafa;
+                        top: -16px;
+                    }
+                    .content-wrapper h2 {
+                        font-size: 24px;
+                    }
+                    .content-wrapper h2 i {
+                        font-weight: normal;
+                    }
+                    .content-wrapper .copy_link input{
+                        border: none;
+                        width: 450px;
+                        background: none;
+                    }
+                    .content-wrapper .qrcode img{
+                        vertical-align: middle;
+                        width: 10rem;
+                    }
+                    .content-wrapper .qrcode a{
+                        color: #2371f3;
+                    }
+                    .content-wrapper .qrcode a:hover{
+                        color: #186cb6;
+                    }
+                </style>
+
+                <div class="coupon_preview_area">
+                    <div class="preview_header">
+                        优惠券
+                    </div>
+                    <div class="coupon-preview">
+                        <div class="coupon-header">
+                            <div class="top">
+                                <img class="logo" ng-src="{{userData.wechatHeadPicture || 'assets/img/mp_default_logo.jpg'}}">
+                                <span class="name" ng-bind="userData.wechatName"></span>
+                            </div>
+                            <p class="title" ng-bind="$parent.publishedCouponData.title || '优惠券标题'"></p>
+                            <p class="detail" ng-if="$parent.publishedCouponData.type == 0">{{'送' + $parent.publishedCouponData.typeValue}}</p>
+                            <p class="detail" ng-if="$parent.publishedCouponData.type == 1">{{$parent.publishedCouponData.typeValue+'元代金券'}}</p>
+                            <p class="detail" ng-if="$parent.publishedCouponData.type == 2">{{$parent.publishedCouponData.typeValue + '折'}}</p>
+                            <p class="detail" ng-if="$parent.publishedCouponData.type == 3">{{'送' + $parent.publishedCouponData.typeValue}}</p>
+                            <p class="condition clearfix"><label>使用条件：</label><span class="darkgray" ng-bind="($parent.publishedCouponData.conditionCommodity ? $parent.publishedCouponData.conditionCommodity : '全品类') + '，' + ($parent.publishedCouponData.conditionConsume ? '消费满'+$parent.publishedCouponData.conditionConsume+'元可用' : '无消费限制')"></span></p>
+                            <p class="time">有效日期：<span class="darkgray"><span ng-bind="$parent.publishedCouponData.startDatetime * 1000 | date: 'yyyy.MM.dd'"></span>-<span ng-bind="$parent.publishedCouponData.endDatetime * 1000 | date: 'yyyy.MM.dd'"></span></span></p>
+                        </div>
+                        <div class="coupon-body">
+                            <img src="/assets/img/coupon_body.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-6 col-lg-8 no-padding-left member-card-form-wrapper padding-bottom-50 margin-bottom-40">
+                <div class="content-wrapper form-horizontal padding-40 bordered-1 bordered-lightgray">
+                    <div class="triangle"></div>
+                    <h2 class="no-margin-top margin-bottom-20"><i class="fa fa-check-circle-o"></i>&nbsp;优惠券已生效，请进行推广</h2>
+                    <div class="copy_link">
+                        优惠券链接:&emsp;<input id="urlShared" readonly value="{{$parent.publishedCouponData.urlShared}}">&emsp;<ripple ng-click="copyUrl('#urlShared')" class="btn btn-sm btn-default">复制</ripple><br><br><br>
+                    </div>
+                    <div class="qrcode">
+                        <img ng-src="{{$parent.publishedCouponData.urlQrCode}}"><a target="_blank" href="{{$parent.publishedCouponData.urlQrCode}}" download="二维码">下载二维码</a>
+                    </div>
+                </div>
+            </div>
+            <div class="action-fixed text-align-center padding-top-20 padding-bottom-20 bordered-top-1 bordered-lightgray">
+                <ripple class="btn btn-lg btn-success" style="width: 100px;" ng-click="$parent.getCouponData()">完成</ripple>
+            </div>
+        </div>
+    </div>
+</div>

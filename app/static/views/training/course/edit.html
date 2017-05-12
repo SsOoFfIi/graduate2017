@@ -1,0 +1,206 @@
+<div class="memberCardPage">
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom text-align-center bordered-bottom-1 bordered-lightgray" style="margin-top: -14px;height:52px;line-height:34px;">
+            <ripple class="btn pull-left" ui-sref="app.training.course" ui-sref-opts="{reload:true}"><i class="fa fa-arrow-left"></i>&emsp;返回</ripple>
+            新建课程
+        </h4>
+    </div>
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-4 course-preview-wrapper">
+                <style type="text/css">
+                    .course-form-wrapper {
+                        float: none;
+                        width: auto;
+                        margin-left: 386px;
+                        margin-top: 47px;
+                    }
+                    .course-form-wrapper .tooltip-inner {
+                        text-align: left;
+                        width: 150px;
+                        padding: 10px;
+                        box-shadow: 0 0 5px rgba(0,0,0,.2);
+                    }
+                    .course-form-wrapper .tooltip-inner a {
+                        color: #4374e0;
+                    }
+
+                    .course-preview-wrapper {
+                        max-width: 372px;
+                        position: absolute;
+                        top: 47px;
+                    }
+                    .course_preview_area {
+                        width: 340px;
+                        height: 572px;
+                        border-top: none;
+                        position: relative;
+                        background-size: cover;
+                    }
+                    .course_preview_area .preview_header {
+                        color: #fff;
+                        background-color: #383838;
+                        text-align: center;
+                        height: 45px;
+                        line-height: 45px;
+                    }
+                    .course_preview_area .course-preview-content {
+                        min-height: 528px;
+                    }
+                    .course_preview_area .course-cover {
+                        height: 203px;
+                        background-position: center;
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                    }
+                    .courseForm {
+                        position: relative;
+                        min-height: 572px;
+                    }
+                    .courseForm .triangle, .courseForm .triangle:before {
+                        position: absolute;
+                        left: -32px;
+                        top: 250px;
+                        display: block;
+                        border: 16px solid transparent;
+                        border-right-color: lightgrey;
+                    }
+                    .courseForm .triangle:before {
+                        content: "";
+                        position: absolute;
+                        left: -15px;
+                        border-right-color: #fafafa;
+                        top: -16px;
+                    }
+                    .upload-progressbar {
+                        display: inline-block;
+                        width: 150px;
+                        height: 12px;
+                        vertical-align: middle;
+                        font-size: 0;
+                        background-color: #fff;
+                        box-shadow: 0 0 2px 0 rgba(0,0,0,.2);
+                        -webkit-transition: all .2s;
+                        -moz-transition: all .2s;
+                        -ms-transition: all .2s;
+                        -o-transition: all .2s;
+                        transition: all .2s;
+                    }
+                    .upload-progressbar span {
+                        display: block;
+                        width: 60%;
+                        height: 100%;
+                        background: lightgray;
+                        -webkit-transition: all .2s;
+                        -moz-transition: all .2s;
+                        -ms-transition: all .2s;
+                        -o-transition: all .2s;
+                        transition: all .2s;
+                    }
+                    .default-cover-imgs {
+                        list-style: none;
+                        padding: 0;
+                        margin: 0;
+                    }
+                    .default-cover-imgs li {
+                        display: inline-block;
+                        margin-right: 12px;
+                        margin-bottom: 12px;
+                        cursor: pointer;
+                        border: solid 1px transparent;
+                        -webkit-transition: border-color .2s;
+                        -moz-transition: border-color .2s;
+                        -ms-transition: border-color .2s;
+                        -o-transition: border-color .2s;
+                        transition: border-color .2s;
+                    }
+                    .default-cover-imgs li.selected{
+                        border-color: #2371f3;
+                    }
+                </style>
+
+                <div class="course_preview_area">
+                    <div class="preview_header">
+                        学习课程
+                    </div>
+                    <div class="course-preview-content bordered-1 bordered-lightgray no-border-top">
+                        <div class="course-cover" ng-style="{'background-image':'url('+data.coverUrl+')'}">
+                        </div>
+                        <div class="course-body">
+                            <h4 class="no-margin padding-10 padding-left-20 padding-right-20 bordered-top-1 bordered-bottom-3 bordered-seashell">{{data.name || '课程名称'}}</h4>
+                            <div class="course-detail">
+                                <h5 class="text-align-center padding-10">课程重点</h5>
+                                <div class="darkgray padding-left-20 padding-right-20 padding-bottom-20" ng-bind-html="convertString(data.point)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 no-padding-left course-form-wrapper padding-bottom-50 margin-bottom-40">
+                <form role="form" name="courseForm" class="courseForm form-horizontal padding-top-40 bordered-1 bordered-lightgray" style="background-color: #fafafa;" novalidate>
+                    <div class="triangle"></div>
+                    <div ng-if="!saved">
+                        <div class="form-group col-xs-12" ng-class="{'has-error':  (courseForm.$submitted || courseForm.name.$dirty) && courseForm.name.$invalid}">
+                            <label class="col-xs-2 control-label" for="name"><span class="red">*</span>课程名称</label>
+                            <div class="col-xs-6">
+                                <input type="text" class="form-control" id="name" name="name" required placeholder="请输入课程名称"
+                                       ng-model="data.name" maxlength="20">
+                            </div>
+                            <p class="help-block darkgray">20字符以内</p>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label class="col-xs-2 control-label">封面图片</label>
+                            <div class="col-xs-8">
+                                <ul class="default-cover-imgs">
+                                    <li ng-repeat="coverImg in defaultCoverImgs track by $index" ng-click="data.coverUrl = coverImg" ng-class="{selected: data.coverUrl == coverImg}"><img ng-src="{{coverImg}}" style="max-width: 100px;"></li>
+                                </ul>
+                                <div>
+                                    <ripple class="btn btn-default" type="button" ngf-select="uploadCover($file, $invalidFiles)" ngf-accept="'.jpg,.jpeg,.png'">替换封面</ripple>
+                                    <label class="help-inline darkgray">&emsp;建议尺寸600px*360px，大小不超过300KB，支持jpg/jpeg/png格式</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12" ng-class="{'has-error':  (courseForm.$submitted || courseForm.fileUrl.$dirty) && courseForm.fileUrl.$invalid}">
+                            <label class="col-xs-2 control-label"><span class="red">*</span>上传课件</label>
+                            <div class="col-xs-6">
+                                <input type="hidden" ng-model="data.fileUrl" name="fileUrl" required>
+                                <ripple class="btn btn-default" type="button" ngf-select="uploadFile($file, $invalidFiles)" ngf-accept="'.pdf,.mp4'" ngf-max-size="150MB">上传课件</ripple>
+                                <label class="help-inline darkgray">&emsp;不超过150M，支持MP4或PDF文件，如何<a href="javascript:;" class="tooltip-white cursor-pointer" trigger="focus" tooltip data-placement="right"
+                                                                                                      data-original-title="视频转MP4的方法：<br><a href='http://www.pcgeshi.com/download.html' target='_blank'>格式工厂</a><br><a href='http://www.pcgeshi.com/faq.html' target='_blank'>常见问题</a>"><span class="primary">转换MP4格式</span>
+                                    &nbsp;<i style="vertical-align: top;" class="fa fa-info-circle font-130 darkgray"></i></a></label>
+                                <div ng-if="file.name" style="font-size: 16px; padding: 10px; margin-top: 10px; background-color: #efefef;">
+                                    <i class="fa" ng-class="{'fa-file-pdf-o': file.name.endsWith('pdf'), 'fa-file-video-o': file.name.endsWith('mp4')}"></i>
+                                    &emsp;{{file.name}}<span ng-if="file.size">{{'('+(file.size/1024/1024).toFixed(2)+'MB)'}}</span>
+                                    &emsp;<span class="upload-progressbar" ng-if="!uploadComplete" ng-style="{'opacity': uploadComplete ? 0 : 1 }">
+                                    <span ng-style="{'width': progressPercentage + '%'}"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12" ng-class="{'has-error': (courseForm.$submitted || courseForm.point.$dirty) && courseForm.point.$invalid}">
+                            <label class="col-xs-2 control-label" for="point"><span class="red">*</span>课程重点</label>
+                            <div class="col-xs-6">
+                            <textarea rows="6" class="form-control" name="point" id="point" required placeholder="告知店员本课程重要知识点"
+                                      ng-model="data.point" maxlength="140"></textarea>
+                            </div>
+                            <p class="help-block darkgray">140字符以内</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label"></label>
+                            <div class="col-xs-8">
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="saved" class="padding-left-50">
+                        <h1><i class="fa fa-check-circle-o"></i>&nbsp;&nbsp;保存成功，您可以：</h1>
+                        <div class="margin-top-20 padding-left-50"><a class="btn btn-lg btn-success" type="button" ui-sref="app.training.course.addQuestions({id: data.id})">添加课后练习</a>&emsp;或者&emsp;<ripple class="btn btn-lg" type="button" ng-click="showCourseStartModal(data.id)">立即开始</ripple></div>
+                        <p class="margin-top-20 darkgray padding-left-50">1、添加课后测评加强店员对知识的巩固</p>
+                        <p class="darkgray padding-left-50">2、点击右边“立即开始”即可让店员进行学习</p>
+                    </div>
+                </form>
+            </div>
+            <div ng-if="!saved" class="action-fixed text-align-center padding-top-20 padding-bottom-20 bordered-top-1 bordered-lightgray">
+                <ripple ng-disabled="courseForm.$invalid || disableBtn || (progressPercentage > 0 && progressPercentage < 100)" type="submit" class="btn btn-lg btn-success" ng-click="saveCourse()">保存课程</ripple>
+            </div>
+        </div>
+    </div>
+</div>

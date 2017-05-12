@@ -1,0 +1,71 @@
+<!-- Page Container -->
+<div class="page-container">
+    <!-- Page Sidebar -->
+    <div class="page-sidebar {{settings.fixed.sidebar ? 'sidebar-fixed' : ''}}" id="sidebar">
+        <div class="sidebar-collapse">
+            <a>
+                <i class="collapse-icon fa fa-bars"></i>
+            </a>
+        </div>
+        <ul class="nav sidebar-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.tools.marketingTools">
+                    <i class="menu-icon fa fa-coupon blue"></i>
+                    <span class="menu-text"> 营销工具 </span>
+                </a>
+            </li>
+            <!--<li ui-sref-active="active">-->
+                <!--<a ui-sref="app.base.store">-->
+                    <!--<i class="menu-icon fa fa-tag"></i>-->
+                    <!--<span class="menu-text"> 支持工具 </span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <li ui-sref-active="active" class="open">
+                <a>
+                    <i class="menu-icon fa fa-puzzle-piece yellow"></i>
+                    <span class="menu-text"> 我的应用 </span>
+                </a>
+
+                <ul class="submenu">
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.tools.coupon" ui-sref-opts="{reload:true}">
+                            <span class="menu-text"> 优惠券 </span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.tools.activateGift" ui-sref-opts="{reload:true}">
+                            <span class="menu-text"> 激活有礼 </span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.tools.record" ui-sref-opts="{reload:true}">
+                            <span class="menu-text"> 购药记录 </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://wj.qq.com/login.html" target="_blank">
+                            <span class="menu-text"> 问卷投票 </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- /Page Sidebar -->
+    <!-- Page Content -->
+    <div class="page-content">
+        <!-- Page Breadcrumb -->
+        <!--<div class="page-breadcrumbs page-header {{settings.fixed.breadcrumbs ? 'breadcrumbs-fixed' : ''}}" data-ng-include=" 'view?view=/common/breadcrumbs' "></div>-->
+        <!-- /Page Breadcrumb -->
+        <!-- Page Header -->
+        <!--<div class="page-header position-relative page-header-fixed" data-ng-include=" 'view?view=/common/header' "></div>-->
+        <!-- /Page Header -->
+        <!-- Page Body -->
+        <div class="page-body no-margin-right bg-white padding-20" ui-view>
+            <!-- Your Content Goes Here -->
+        </div>
+        <!-- /Page Body -->
+    </div>
+    <!-- /Page Content -->
+</div>
+<!-- /Page Container -->

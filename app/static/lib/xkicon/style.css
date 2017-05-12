@@ -1,0 +1,167 @@
+@font-face {
+  font-family: 'xkicon';
+  src:
+    url('fonts/xkicon.ttf?n09ric') format('truetype'),
+    url('fonts/xkicon.woff?n09ric') format('woff'),
+    url('fonts/xkicon.svg?n09ric#xkicon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.fa {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'xkicon', 'FontAwesome' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fa-angle-right:before {
+  content: "\e900";
+}
+.fa-arrow-left:before {
+  content: "\e901";
+}
+.fa-bar-chart:before {
+  content: "\e902";
+}
+.fa-bell:before {
+  content: "\e903";
+}
+.fa-caret-down:before {
+  content: "\e904";
+}
+.fa-caret-left:before {
+  content: "\e905";
+}
+.fa-caret-right:before {
+  content: "\e906";
+}
+.fa-check:before {
+  content: "\e907";
+}
+.fa-checkbox-checked:before {
+  content: "\e908";
+}
+.fa-checkbox-unchecked:before {
+  content: "\e909";
+}
+.fa-commenting:before {
+  content: "\e90a";
+}
+.fa-complete:before {
+  content: "\e90b";
+}
+.fa-coupon:before {
+  content: "\e90c";
+}
+.fa-exclamation-circle:before {
+  content: "\e90d";
+}
+.fa-gear:before {
+  content: "\e90e";
+}
+.fa-image:before {
+  content: "\e90f";
+}
+.fa-imagetext:before {
+  content: "\e910";
+}
+.fa-info-circle:before {
+  content: "\e911";
+}
+.fa-key:before {
+  content: "\e912";
+}
+.fa-keyboard:before {
+  content: "\e913";
+}
+.fa-link-news:before {
+  content: "\e914";
+}
+.fa-list:before {
+  content: "\e915";
+}
+.fa-lock:before {
+  content: "\e916";
+}
+.fa-microphone:before {
+  content: "\e917";
+}
+.fa-pencil:before {
+  content: "\e918";
+}
+.fa-pie-chart:before {
+  content: "\e919";
+}
+.fa-plus:before {
+  content: "\e91a";
+}
+.fa-power-off:before {
+  content: "\e91b";
+}
+.fa-puzzle-piece:before {
+  content: "\e91c";
+}
+.fa-question:before {
+  content: "\e91d";
+}
+.fa-radio-checked:before {
+  content: "\e91e";
+}
+.fa-radio-unchecked:before {
+  content: "\e91f";
+}
+.fa-reply:before {
+  content: "\e920";
+}
+.fa-search:before {
+  content: "\e921";
+}
+.fa-shield:before {
+  content: "\e922";
+}
+.fa-smile:before {
+  content: "\e923";
+}
+.fa-tag:before {
+  content: "\e924";
+}
+.fa-text:before {
+  content: "\e925";
+}
+.fa-th:before {
+  content: "\e926";
+}
+.fa-th-large:before {
+  content: "\e927";
+}
+.fa-times:before {
+  content: "\e928";
+}
+.fa-trash:before {
+  content: "\e929";
+}
+.fa-user:before {
+  content: "\e92a";
+}
+.fa-user-square:before {
+  content: "\e92b";
+}
+.fa-video:before {
+  content: "\e92c";
+}
+.fa-wrench:before {
+  content: "\e92d";
+}
+.fa-graduation-cap:before {
+  content: "\e92e";
+}
+

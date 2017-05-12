@@ -1,0 +1,134 @@
+<!--会员管理-->
+<div>
+    <style type="text/css">
+        .page-body {
+            background-color: #fff;
+        }
+
+        .table-header {
+            background-color: #fafafa;
+            border: solid 1px #ddd;
+            padding: 6px 0;
+            border-bottom: none;
+        }
+
+        .table.no-td-border td {
+            border-left: none;
+            border-right: none;
+        }
+
+        .member-header {
+
+        }
+
+        .member-header span {
+            float: left;
+
+        }
+
+        .member-header .tooltip {
+            margin-left: 5px;
+            float: left;
+            opacity: 1;
+            position: relative;
+            z-index: 0;
+            padding-top: 3px;
+        }
+
+        .member-header .tooltip .tooltip-inner {
+            padding: 0 5px;
+        }
+    </style>
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom" style="margin-top: -14px;">会员管理</h4>
+    </div>
+    <div class="col-xs-12">
+        <div class="tabbable">
+            <ul class="nav nav-tabs tabs-flat" id="myTab">
+                <li>
+                    <a ui-sref="app.base.member.personas">
+                        重要会员
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="javascript:;">
+                        所有会员
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="tab-content tabs-flat padding-bottom-20 no-padding-top no-padding-left no-padding-right">
+            <member-filter on-filter="onFilter(filterParams)" member-count="paginationConf.totalItems"></member-filter>
+            <div class="widget flat">
+                <div class="widget-body bg-white no-padding">
+                    <div>
+                        <div class="col-xs-12 table-header">
+                            <div class="col-xs-4" style="line-height: 32px;">
+                                <span>共有{{paginationConf.totalItems}}位会员</span>
+                            </div>
+                            <div ng-if="false" class="col-xs-8">
+                                <!--<a class="btn btn-success pull-right margin-left-10 margin-right-10">同步粉丝</a>-->
+                                <form class="form-horizontal">
+                                    <div class="input-group pull-right" style="width: 250px">
+                                        <input type="text" class="form-control" ng-model="filterData.nickName"
+                                               placeholder="输入昵称">
+                                        <span class="input-group-btn">
+                                        <ripple class="btn btn-default" type="submit" ng-click="load()"><i
+                                                class="fa fa-search"></i></ripple>
+                                    </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <table class="table table-hover bordered-1 bordered-lightgray" id="simpledatatable">
+                            <tbody>
+                            <tr ng-repeat="member in memberList">
+                                <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                                <td width="60" class="text-center">
+                                    <img src="{{member.headimgurl||'assets/img/default_member_avatar.png'}}" width="50">
+                                </td>
+                                <td>
+                                    <!--<a class="btn btn-link" ng-click="editUser(member)" ng-bind="member.nickname"></a>-->
+                                    <div class="member-header clearfix">
+                                        <span ng-class="{'tooltip-red':member.personas=='重要价值会员', 'tooltip-green':member.personas=='重要保持会员', 'tooltip-blue':member.personas=='重要发展会员', 'tooltip-yellow':member.personas=='重要挽留会员' }"
+                                              style="line-height: 26px;"><span ng-if="member.mobile">{{member.mobile}}</span><span ng-if="member.name">（{{member.name}}）</span></span>
+                                        <div ng-if="member.personas" class="tooltip right" role="tooltip">
+                                            <div class="tooltip-arrow"></div>
+                                            <div class="tooltip-inner"> {{member.personas}}</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <!--<span class="label label-white" ng-if="false">会员</span>-->
+                                        <span class="label label-white" ng-bind="storeMap[member.storeId + '']"></span>
+                                        <span class="label label-white" ng-if="member.storeUserName" ng-bind="member.storeUserName + '跟进'"></span>
+                                        <span class="label label-white" ng-bind="member.sex"
+                                              ng-if="member.sex && member.sex != '未知'"></span>
+                                        <span class="label label-white" ng-if="member.province">{{member.province}} {{member.city}}</span>
+                                        <span class="label label-white" ng-if="member.birthday"
+                                              ng-bind="getAge(member.birthday)"></span>
+                                        <span class="label label-white" ng-if="member.constellation">{{member.constellation}}</span>
+                                        <span class="label label-white" ng-if="member.recency">{{'最后一次购药距今' +toDays(member.recency)+ '天'}}</span>
+                                        <span class="label label-white" ng-if="member.frequency">{{'共购药'+member.frequency + '次'}}</span>
+                                        <span class="label label-white" ng-if="member.monetary">{{'消费总额'+member.monetary + '元'}}</span>
+                                        <span class="label label-white" ng-if="member.unitPrice">{{'客单价'+member.unitPrice + '元'}}</span>
+                                    </div>
+                                </td>
+                                <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                            </tr>
+                            <tr ng-if="memberList.length == 0">
+                                <td class="text-align-center padding-top-50 padding-bottom-50">
+                                    没有数据
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-12">
+                        <tm-pagination conf="paginationConf"></tm-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

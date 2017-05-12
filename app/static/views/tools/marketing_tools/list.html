@@ -1,0 +1,70 @@
+<div class="marketingToolsListPage">
+    <style type="text/css" rel="stylesheet">
+        .marketingToolsListPage .tools-item .item{
+            -webkit-transition: all .2s;
+            -moz-transition: all .2s;
+            -ms-transition: all .2s;
+            -o-transition: all .2s;
+            transition: all .2s;
+        }
+        .marketingToolsListPage .tools-item .item:hover{
+            -webkit-box-shadow: 0 0 4px 1px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0 0 4px 1px rgba(0, 0, 0, .1);
+            box-shadow: 0 0 4px 1px rgba(0, 0, 0, .1);
+        }
+        .marketingToolsListPage .tools-item .item-bottom{
+            padding: 9px 10px;
+        }
+        .marketingToolsListPage .tools-item .item-top{
+            height: 122px;
+            padding: 15px;
+        }
+        .marketingToolsListPage .tools-item .item-icon{
+            width: 80px;
+            height: 80px;
+            float: left;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 5px;
+        }
+        .marketingToolsListPage .tools-item .item-icon i {
+            font-size: 42px;
+        }
+        .marketingToolsListPage .tools-item .item-desc{
+            margin-left: 100px;
+        }
+        .marketingToolsListPage .tools-item .item-desc h5{
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .marketingToolsListPage .tools-item .item-desc p{
+            margin-bottom: 0;
+        }
+    </style>
+    <div class="col-xs-12 col-md-12">
+        <h4 class="block no-margin-bottom bordered-bottom-1 bordered-lightgray" style="margin-top: -14px;">营销工具</h4>
+        <div class="well with-header bg_white no-padding-left no-padding-right no-padding-top margin-top-20
+         margin-bottom-20 no-border no-box-shadow">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div ng-repeat="item in data" class="col-xs-4 tools-item no-padding-left margin-bottom-20 padding-right-20">
+                        <div class="item col-xs-12 bordered-1 bordered-lightgray no-padding cursor-pointer" ui-sref="app.tools.detail({index: $index})">
+                            <div class="item-top">
+                                <img class="item-icon" src="/assets/img/tools/{{item.icon}}.png">
+                                <div class="item-desc">
+                                    <h5 class="item-name padding-top-5">{{item.name}}</h5>
+                                    <p class="darkgray">{{item.creator}}</p>
+                                    <p class="darkgray">{{item.summary}}</p>
+                                </div>
+                            </div>
+                            <div class="item-bottom bg-seashell">
+                                <a class="pull-right" ui-sref="app.tools.detail({index: $index})">开启<i class="fa fa-angle-right"></i></a>
+                                <span class="darkgray"><span class="red">146</span>家药店正在使用</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

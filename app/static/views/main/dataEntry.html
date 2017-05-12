@@ -1,0 +1,202 @@
+
+<div class="dataEntry-page">
+    <style>
+         .page-body {
+            background: none !important;
+            padding: 0 !important;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+
+         .middle{
+             width: 100%;
+             height: 400px;
+         }
+         /*渐变和阴影*/
+         .box{
+             width: 100%;
+             height: 390px;
+             margin-top: 5px;
+             background: -webkit-linear-gradient(top,#fff,#ebebeb);
+             background: -moz-linear-gradient(top,#fff,#ebebeb);
+             background: linear-gradient(top,#fff,#ebebeb);
+             -webkit-box-shadow: 0 0 5px rgba(231,231,235,.5) ;
+             -moz-box-shadow: 0 0 5px rgba(231,231,235,.5);
+             box-shadow: 0 0 5px rgba(231,231,235,.5);
+         }
+        .modal-body-font{
+            font-size: large;
+        }
+        .header-fullname{
+            font-size: 30px;
+        }
+    </style>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="well margin-bottom-20 no-padding bg_white">
+                <div class="profile-header row">
+                    <div style="max-width: 175px;"
+                         class="col-xs-2 text-center padding-left-30 no-padding-right margin-top-30 margin-bottom-30">
+                        <img ng-src="{{userData.image || '/static/assets/img/mp_default_logo.jpg'}}" alt=""
+                             class="header-avatar">
+                    </div>
+                    <div style="height: 100px;"
+                         class="col-xs-6 profile-info no-padding-left margin-top-30 margin-bottom-20 text-center">
+                        <div class="col-xs-12 no-padding-left margin-top-20">
+                            <span class="header-fullname" ng-bind="userData.name"></span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-10"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                                <!--<i class="fa fa-check"></i>-->
+                                {{userData.username || "userName"}}
+                            </span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-5"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                                <!--<i class="fa fa-check"></i>-->
+                                {{userData.gender||"gender"}}
+                            </span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-5"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                                <!--<i class="fa fa-check"></i>-->
+                                {{userData.college || "college"}}
+                            </span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-5"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                            <!--<i class="fa fa-check"></i>-->
+                            {{userData.className || "class"}}
+                        </span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-5"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                            <!--<i class="fa fa-check"></i>-->
+                            {{userData.grade || "grade"}}
+                        </span>
+                        </div>
+                        <div class="col-xs-12 no-padding-left header-information darkgray margin-top-10">
+                            欢迎使用学生管理可视化系统
+                        </div>
+                    </div>
+                    <div style="height: 100px;"
+                         class="col-xs-3 pull-left no-padding-left margin-top-50">
+                        <form>
+                            <div class="input-group">
+                                <input class="form-control" style="width: 250px;" ng-model="table.id" type="text" maxlength="25" placeholder="表格序列号">
+                            </div>
+                            <div class="input-group margin-top-10">
+                                <input class="form-control" style="width: 250px;" ng-model="table.pwd" type="password" maxlength="25" placeholder="表格密码">
+                                <span class="input-group-btn">
+                            <ripple class="btn" ng-click="load()" type="submit"><i class="fa fa-search grey"></i></ripple>
+                        </span>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well  margin-bottom-20 no-padding bg_white">
+            <div class="row">
+        <div class="middle bordered-lightgray bordered-1">
+            <div class=" block-center">
+                <div style="width: 80%;margin: 0 auto;">
+                   <div class="col-xs-12  text-center">
+                    <div class="modal-header">
+                        <h3 class="modal-title "><b>表格数据录入与删除</b></h3>
+                    </div>
+                    <div class="modal-body modal-body-font" ng-if="subjectName">
+                            <div class="col-xs-12 block-center">
+                                <label class="col-xs-3 control-label no-padding-right"><h4>序号</h4></label>
+                                <div class="col-xs-9" ng-bind="num">
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <label class="col-xs-3 control-label no-padding-right"><h4>表名</h4></label>
+                                <div class="col-xs-9" ng-bind="userrowData.tableName">
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <label class="col-xs-3 control-label no-padding-right"><h4>类型</h4></label>
+                                <div class="col-xs-9" ng-bind="userrowData.ownType">
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <label class="col-xs-3 control-label no-padding-right"><h4>人数</h4></label>
+                                <div class="col-xs-9" ng-bind="userrowData.count">
+                                </div>
+                            </div>
+                        <div class="col-xs-12" ng-if="subjectArray">
+                                <label class="col-xs-3 control-label no-padding-right"><h4>已选科目</h4></label>
+                                <div class="col-xs-9" ng-bind="subjectArray">
+                                </div>
+                            </div>
+
+                        <div class="col-xs-12 modal-footer margin-10">
+                            <ripple class="btn btn-lg btn-success" ng-click="insertData()">录入</ripple>
+                            <ripple class="btn btn-lg btn-default" ng-click="delete()">删除</ripple>
+                        </div>
+
+                    </div>
+                       <div ng-if="!subjectName">
+                           <div class="col-xs-12 margin-10">
+                               Tips:请在右上角输入你想录入数据的表格序号
+                           </div>
+                       </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+<script type="text/ng-template" id="editTableData.html">
+    <form name="editTableDataForm" class="form-horizontal"  novalidate role="form">
+        <div class="modal-header">
+            <h3 class="modal-title" ng-bind="title"></h3>
+        </div>
+        <div class="modal-body" >
+            <div class="widget">
+                  <div class="form-group" ng-if="data.row=false" ng-repeat="name in subjectName">
+                    <label class="col-xs-3 control-label no-padding-right">{{name}}</label>
+                    <div class="col-xs-8">
+                        <div class="radio col-xs-3 no-padding-left">
+                            <label>
+                                <input name={{name}} ng-model="subjectBoolean[name]" type="radio" ng-value=true>
+                                <span class="text ng-binding">是</span>
+                            </label>
+                        </div>
+                        <div class="radio col-xs-3 no-padding-left">
+                            <label>
+                                <input name={{name}} ng-model="subjectBoolean[name]" type="radio" ng-value=false>
+                                <span class="text ng-binding">否</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                  <div ng-if="data.row=true" ng-repeat="name in subjectName">
+                    <label class="col-xs-3 control-label no-padding-right">{{name}}</label>
+                    <div class="col-xs-8">
+                        <div class="radio col-xs-3 no-padding-left">
+                            <label>
+                                <input name={{name}} ng-model="subjectBoolean[name]" type="radio" ng-value=1>
+                                <span class="text ng-binding">是</span>
+                            </label>
+                        </div>
+                        <div class="radio col-xs-3 no-padding-left">
+                            <label>
+                                <input name={{name}} ng-model="subjectBoolean[name]" type="radio" ng-value=0>
+                                <span class="text ng-binding">否</span>
+                            </label>
+                        </div>
+                    </div>
+            </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <ripple class="btn btn-lg btn-success" ng-click="ok()">保存</ripple>
+            <ripple class="btn btn-lg btn-default" ng-click="cancel()">取消</ripple>
+        </div>
+    </form>
+</script>
+

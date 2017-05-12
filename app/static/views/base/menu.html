@@ -1,0 +1,457 @@
+<div class="row">
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom bordered-bottom-1 bordered-lightgray" style="margin-top: -14px;">自定义菜单</h4>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="alert bg-seashell slate-gray" style="height: 60px; line-height: 60px; padding: 0 12px;">
+                    <i class="fa fa-info-circle darkgray"></i>&emsp;由于微信接口延迟，菜单修改后最长可能需要30分钟微信才会更新。如需即时查看，可先取消关注，再重新关注。
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="widget flat">
+                    <div class="widget-body bg-white">
+                        <div class="row">
+                            <div class="col-xs-12 menu-item-wrapper">
+                                <div class="widget bordered-1 bordered-lightgray bg-seashell padding-20">
+                                    <div class="triangle"></div>
+                                    <!--Widget Header-->
+                                    <div class="widget-body" style="background: none; min-height: 533px;">
+                                        <div ng-if="!selectedButton">
+                                            <ul style="padding-left: 20px;">
+                                                <li>点击左侧「加号」按钮添加菜单</li>
+                                                <li>菜单只有发布后才会在手机侧显示, 编辑完成后请及时发布菜单</li>
+                                            </ul>
+                                        </div>
+                                        <div ng-if="!!selectedButton">
+                                            <form role="form">
+                                                <div class="form-group" ng-class="{'has-error': !isNameValid(selectedButtonLevel)}">
+                                                    <label for="name">菜单名称<span class="darkgray">{{selectedButtonLevel == 1 ? '（不多于4个汉字或8个字母）': selectedButtonLevel == 2 ? '（不多于8个汉字或16个字母）' : ''}}</span></label>
+                                                    <input type="text" class="form-control" id="name"
+                                                           ng-model="selectedButton.name" maxlength="16"
+                                                           placeholder="请输入菜单名称">
+                                                </div>
+                                                <div class="form-group"
+                                                     ng-if="selectedButton.subButtons && selectedButton.subButtons.length > 0">
+                                                    <label>已有子菜单，无法设置动作</label>
+                                                </div>
+                                                <div class="form-group"
+                                                     ng-if="!selectedButton.subButtons || selectedButton.subButtons.length == 0">
+                                                    <label>菜单功能<span class="darkgray">（二选一）</span></label>
+                                                    <div class="widget margin-bottom-10 bordered-1 bordered-lightgray">
+                                                        <div class="widget-header">
+                                                                <span class="widget-caption">
+                                                                    <div class="radio no-margin">
+                                                                        <label>
+                                                                            <input name="form-field-radio" type="radio"
+                                                                                   ng-checked="selectedButton.type != 'view'"
+                                                                                   class="colored-blue" ng-click="selectedButton.type = 'selectAction'">
+                                                                            <span class="text"> 响应事件</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </span>
+                                                        </div>
+                                                        <div class="widget-body no-padding bg-white" ng-if="selectedButton.type != 'view'">
+                                                            <div class="form-group bordered-top-1 bordered-lightgray" style="padding: 12px 0; margin: 0 12px;">
+                                                                <div class="row">
+                                                                    <div class="col-xs-12">
+                                                                        <ripple class="btn btn-success" ng-click="selectMenuAction()">选择响应事件</ripple>
+                                                                        <div class="help-block margin-left-10" style="display: inline-block;" ng-if="selectedButton.type == 'pic_photo_or_album'">拍照或选择图片</div>
+                                                                        <div class="help-block margin-left-10" style="display: inline-block;" ng-if="selectedButton.type == 'pic_sysphoto'">拍照</div>
+                                                                        <div class="help-block margin-left-10" style="display: inline-block;" ng-if="selectedButton.type == 'location_select'">发送位置</div>
+                                                                        <div class="help-block margin-left-10" style="display: inline-block;" ng-if="selectedButton.type == 'click' && selectedButton.key.indexOf('mpnews') == 0">微信图文</div>
+                                                                        <div class="help-block margin-left-10" style="display: inline-block;" ng-if="selectedButton.type == 'click' && selectedButton.key.indexOf('news') == 0">高级图文</div>
+                                                                        <div class="help-block margin-left-10" style="display: inline-block;" ng-if="selectedButton.type == 'click' && selectedButton.key.indexOf('image') == 0">图片</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row margin-top-10">
+                                                                    <div class="col-xs-12" ng-if="selectedButton.type == 'click' && selectedButton.key.indexOf('image') == 0">
+                                                                        <img style="max-width:300px;" ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + selectedButton.key.split('imageMaterial_')[1]}}">
+                                                                    </div>
+                                                                    <div class="col-xs-12" ng-if="selectedButton.type == 'click' && selectedButton.key.indexOf('mpnews') == 0 && selectedButton.__data__">
+                                                                        <div ng-if="!selectedButton.__data__.isDeleted" class="news-area" style="max-width: 350px">
+                                                                            <div class="appmsg_content no-padding">
+                                                                                <div class="js_appmsg_item has_thumb">
+                                                                                    <div class="cover_appmsg_item" style="margin: 14px;">
+                                                                                        <div class="appmsg_info">
+                                                                                            <em class="appmsg_date" style="color:#8d8d8d" ng-if="selectedButton.__data__.updateTime" ng-bind="selectedButton.__data__.updateTime * 1000 | date : 'yyyy-MM-dd HH:mm'"></em>
+                                                                                        </div>
+                                                                                        <div class="pic">
+                                                                                            <h4 class="appmsg_title" style="padding-top:0">
+                                                                                                <a href="{{selectedButton.__data__.content.articles[0].url}}" target="_blank">{{selectedButton.__data__.content.articles[0].title}}</a>
+                                                                                            </h4>
+                                                                                            <div class="appmsg_thumb_wrp">
+                                                                                                <img width="100%" ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + selectedButton.__data__.content.articles[0].thumbMediaId}}">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="appmsg_item js_appmsg_item has_thumb" ng-repeat="article in selectedButton.__data__.content.articles" ng-if="$index > 0">
+                                                                                    <img class="js_appmsg_thumb appmsg_thumb" ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + article.thumbMediaId}}">
+                                                                                    <h4 class="appmsg_title">
+                                                                                        <a class="sub_title" href="{{article.url}}" style="color:#8d8d8d" target="_blank">{{article.title}}</a>
+                                                                                    </h4>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="red" ng-if="selectedButton.__data__.isDeleted">图文素材获取失败或已被删除!</div>
+                                                                    </div>
+                                                                    <div class="col-xs-12" ng-if="selectedButton.type == 'click' && selectedButton.key.indexOf('news') == 0 && selectedButton.__data__">
+                                                                        <div ng-if="!selectedButton.__data__.isDeleted" class="news-area" style="max-width: 350px">
+                                                                            <div class="appmsg_content no-padding">
+                                                                                <div class="js_appmsg_item has_thumb">
+                                                                                    <div class="cover_appmsg_item" style="margin: 14px;">
+                                                                                        <div class="appmsg_info">
+                                                                                            <em class="appmsg_date" style="color:#8d8d8d" ng-bind="selectedButton.__data__.ltime * 1000 | date : 'yyyy-MM-dd HH:mm'"></em>
+                                                                                        </div>
+                                                                                        <div class="pic">
+                                                                                            <h4 class="appmsg_title" style="padding-top:0">
+                                                                                                <a href="{{selectedButton.__data__.content[0].url}}" target="_blank">{{selectedButton.__data__.content[0].title}}</a>
+                                                                                            </h4>
+                                                                                            <div class="appmsg_thumb_wrp">
+                                                                                                <img width="100%" ng-src="{{selectedButton.__data__.content[0].localurl}}">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="appmsg_item js_appmsg_item has_thumb" ng-repeat="article in selectedButton.__data__.content" ng-if="$index > 0">
+                                                                                    <img class="js_appmsg_thumb appmsg_thumb" ng-src="{{article.localurl}}">
+                                                                                    <h4 class="appmsg_title">
+                                                                                        <a class="sub_title" href="{{article.url}}" style="color:#8d8d8d" target="_blank">{{article.title}}</a>
+                                                                                    </h4>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="red" ng-if="selectedButton.__data__.isDeleted">图文素材获取失败或已被删除!</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="widget bordered-1 bordered-lightgray">
+                                                        <div class="widget-header">
+                                                                <span class="widget-caption">
+                                                                    <div class="radio no-margin">
+                                                                        <label>
+                                                                            <input name="form-field-radio" type="radio"
+                                                                                   ng-model="selectedButton.type"
+                                                                                   ng-checked="selectedButton.type == 'view'"
+                                                                                   value="view"
+                                                                                   class="colored-blue">
+                                                                            <span class="text"> 跳转链接</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </span>
+                                                        </div>
+                                                        <div class="widget-body no-padding bg-white"
+                                                             ng-if="selectedButton.type == 'view'">
+                                                            <div class="form-group bordered-top-1 bordered-lightgray" style="padding: 12px 0; margin: 0 12px;">
+                                                                <label for="link">点击菜单跳转到以下链接</label>
+                                                                <input type="text" class="form-control" id="link"
+                                                                       ng-model="selectedButton.url"
+                                                                       placeholder="http://">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="position: relative">
+                                <style type="text/css">
+                                    .phone {
+                                        position: absolute;
+                                        top: 0;
+                                        width: 335px;
+                                        height: 575px;
+                                        padding: 0;
+                                        border: solid 1px #e7e7eb;
+                                    }
+
+                                    .phone .phone-header {
+                                        color: #fff;
+                                        background-color: #1b1c20;
+                                        text-align: center;
+                                        height: 45px;
+                                        line-height: 45px;
+                                    }
+
+                                    .phone-bottom {
+                                        position: absolute;
+                                        bottom: 0;
+                                        left: 0;
+                                        width: 100%;
+                                        height: 49px;
+                                        background-color: #fafafa;
+                                        border-top: solid 1px #dedede;
+                                        background-size: initial;
+                                    }
+
+                                    .phone-bottom > i{
+                                        position: absolute;
+                                        bottom: 9px;
+                                        left: 9px;
+                                        font-size: 26px;
+                                    }
+
+                                    .phone-bottom ul {
+                                        list-style: none;
+                                        margin: 0 0 0 44px;
+                                        padding: 0;
+                                        height: 50px;
+                                        position: relative;
+                                        margin-right: -1px;
+                                    }
+
+                                    .phone-bottom li {
+                                        display: inline-block;
+                                        position: absolute;
+                                        bottom: 0;
+                                        width: 33.3%;
+                                        margin-bottom: 2px;
+                                    }
+
+                                    .phone-bottom .border-left {
+                                        border-left: solid 1px #dedede;
+                                    }
+
+                                    .phone-bottom .border-right {
+                                        border-right: solid 1px #dedede;
+                                    }
+
+                                    .phone-bottom li:nth-child(1) {
+                                        left: 0;
+                                    }
+
+                                    .phone-bottom li:nth-child(2) {
+                                        left: 33.3%;
+                                    }
+
+                                    .phone-bottom li:nth-child(3) {
+                                        left: 66.6%;
+                                    }
+
+                                    .phone-bottom li a {
+                                        display: block;
+                                        position: relative;
+                                        width: 100%;
+                                        height: 50px;
+                                        line-height: 50px;
+                                        text-align: center;
+                                        text-decoration: none;
+                                        border-top: solid 1px #dedede;
+                                        border-bottom: solid 1px #dedede;
+                                        margin-bottom: -1px;
+                                    }
+
+                                    .phone-bottom a.menu {
+                                        color: #666;
+                                    }
+
+                                    .phone-bottom a.selected {
+                                        background-color: #efefef;
+                                    }
+
+                                    .phone-bottom li a .delete {
+                                        display: none;
+                                        position: absolute;
+                                        right: -8px;
+                                        top: -10px;
+                                        background-color: #dcdcdc;
+                                        padding: 3px;
+                                        border-radius: 15px;
+                                        cursor: pointer;
+                                        z-index: 1;
+                                        width: 19px;
+                                        height: 19px;
+                                    }
+
+                                    .phone-bottom a.selected .delete {
+                                        display: inline-block;
+                                    }
+
+                                    .phone-bottom li a.add-menu {
+                                        font-size: 30px;
+
+                                    }
+                                    .menu-item-wrapper {
+                                        padding-left: 375px;
+                                    }
+                                    .menu-item-wrapper .widget {
+                                        position: relative;
+                                    }
+                                    .menu-item-wrapper .triangle, .menu-item-wrapper .triangle:before {
+                                        position: absolute;
+                                        left: -32px;
+                                        top: 525px;
+                                        display: block;
+                                        border: 16px solid transparent;
+                                        border-right-color: lightgrey;
+                                    }
+                                    .menu-item-wrapper .triangle:before {
+                                        content: "";
+                                        position: absolute;
+                                        left: -15px;
+                                        border-right-color: #fafafa;
+                                        top: -16px;
+                                    }
+                                    .menu-item-wrapper .widget-caption {
+                                        float: none;
+                                        height: 50px;
+                                        line-height: 50px;
+                                    }
+                                </style>
+                                <div class="phone">
+                                    <div class="phone-header">
+                                        {{userData.wechatName}}
+                                    </div>
+                                    <div class="phone-bottom">
+                                        <i class="fa fa-keyboard"></i>
+                                        <ul>
+                                            <li ng-repeat="button in data.buttons"
+                                                ng-class="{'border-left': $index == 0 || data.buttons[$index-1].isDeleted || ((data.buttons[$index].subButtons || []).length >= (data.buttons[$index-1].subButtons || []).length), 'border-right': $index == 2 || data.buttons[$index+1].isDeleted || (data.buttons[$index].subButtons || []).length > (data.buttons[$index+1].subButtons || []).length}">
+                                                <a href="javascript:;" class="add-menu" ng-click="addMenu(button)"
+                                                   ng-if="!button.subButtons || button.subButtons.length < 5">+</a>
+                                                <a class="menu" href="javascript:;"
+                                                   ng-repeat="subBtn in button.subButtons"
+                                                   ng-class="{'selected': selectedButton == subBtn}"
+                                                   title="{{subBtn.name}}" ng-click="editMenu(subBtn, 2)">
+                                                    {{subBtn.name.length > 4 ? subBtn.name.substring(0, 4) + '...' :
+                                                    subBtn.name}}
+                                                    <i class="delete fa fa-times"
+                                                       ng-click="deleteMenu($parent.$index, $index)"></i>
+                                                </a>
+                                                <a class="menu" href="javascript:;" ng-click="editMenu(button, 1)"
+                                                   ng-class="{'selected': selectedButton == button}"
+                                                   ng-if="!button.isDeleted">
+                                                    {{button.name.length > 4 ? button.name.substring(0, 4) + '...' :
+                                                    button.name}}
+                                                    <i class="delete fa fa-times"
+                                                       ng-click="deleteMenu($index)"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 text-align-center">
+                                <ripple type="button" class="btn btn-lg btn-success" style="margin-right: 120px;" ng-click="createMenu()">发布自定义菜单</ripple>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="selectMenuActionModal.html">
+    <div class="modal-header">
+        <ripple type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="close()">×</ripple>
+        <h3 class="modal-title">选择菜单响应事件</h3>
+    </div>
+    <div class="modal-body">
+        <div class="widget no-margin-bottom">
+            <div class="no-data" ng-if="imageList.length == 0">没有数据</div>
+            <!--<tm-pagination conf="paginationConf"></tm-pagination>-->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="col-xs-3">
+                        <div class="thumbnail cursor-pointer bg-azure bordered-1" ng-click="selectAction('mpnews')">
+                            <img src="assets/img/material/material_news.png" alt="微信图文">
+                            <div class="caption text-center white">
+                                <span>微信图文</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="thumbnail cursor-pointer bg-azure bordered-1" ng-click="selectAction('news')">
+                            <img src="assets/img/material/material_news.png" alt="高级图文">
+                            <div class="caption text-center white">
+                                <span>高级图文</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="thumbnail cursor-pointer bg-azure bordered-1" ng-click="selectAction('picture')">
+                            <img src="assets/img/material/material_pics.png" alt="图片">
+                            <div class="caption text-center white">
+                                <span>图片</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="col-xs-3">-->
+                        <!--<div class="thumbnail cursor-pointer bg-azure bordered-1" ng-click="selectAction('text')">-->
+                            <!--<img src="assets/img/material/material_text.png" alt="文本消息">-->
+                            <!--<div class="caption text-center white">-->
+                                <!--<span>文本消息</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-3">-->
+                        <!--<div class="thumbnail cursor-pointer bg-azure bordered-1" ng-click="selectAction('keyword')">-->
+                            <!--<img src="assets/img/material/material_keyword.png" alt="关键词">-->
+                            <!--<div class="caption text-center white">-->
+                                <!--<span>关键词</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-3">-->
+                        <!--<div class="thumbnail cursor-pointer bg-azure bordered-1" ng-click="selectAction('voice')">-->
+                            <!--<img src="assets/img/material/material_voice.png" alt="语音">-->
+                            <!--<div class="caption text-center white">-->
+                                <!--<span>语音</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-3">-->
+                        <!--<div class="thumbnail cursor-pointer bg-azure bordered-1" ng-click="selectAction('pic_sysphoto')">-->
+                            <!--<img src="assets/img/material/material_photography.png" alt="拍照">-->
+                            <!--<div class="caption text-center white">-->
+                                <!--<span>拍照</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-3">-->
+                        <!--<div class="thumbnail cursor-pointer bg-azure bordered-1" ng-click="selectAction('pic_photo_or_album')">-->
+                            <!--<img src="assets/img/material/material_photos.png" alt="拍照或选择图片">-->
+                            <!--<div class="caption text-center white">-->
+                                <!--<span>拍照/选择图片</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-3">-->
+                        <!--<div class="thumbnail cursor-pointer bg-azure bordered-1" ng-click="selectAction('location_select')">-->
+                            <!--<img src="assets/img/material/material_location.png" alt="发送位置">-->
+                            <!--<div class="caption text-center white">-->
+                                <!--<span>发送位置</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="notifyModal.html">
+    <div class="modal-header">
+        <ripple type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</ripple>
+        <h4 class="modal-title">温馨提示</h4>
+    </div>
+    <div class="modal-body">
+        <style type="text/css" rel="stylesheet">
+        </style>
+        <h3 class="text-align-center">为了更好运营会员卡，建议您把其他平台的菜单手动同步</h3>
+        <p class="text-align-center darkgray">为了更好运营会员卡，建议您把其他平台的菜单手动同步</p>
+        <div class="col-xs-12 text-align-center">
+            <img src="/assets/img/menu_notify.jpg">
+        </div>
+    </div>
+    <div class="modal-footer col-xs-12 text-align-center bordered-top-1 bordered-lightgray">
+        <a class="btn btn-lg btn-success" href="https://mp.weixin.qq.com/" target="_blank">微信公众号平台</a>
+    </div>
+</script>

@@ -1,0 +1,20 @@
+<div class="row">
+    <div ui-view autoscroll="false"></div>
+</div>
+<script type="text/ng-template" id="courseStartModal.html">
+    <div class="modal-header">
+        <ripple type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</ripple>
+        <h4 class="modal-title">课程开始提示</h4>
+    </div>
+    <div class="modal-body">
+        <style type="text/css" rel="stylesheet">
+            .course-start-modal .modal-body p {
+                line-height: 25px;
+            }
+        </style>
+        <p>开始课程后将不能再编辑课程和添加课后练习。</p>
+    </div>
+    <div class="modal-footer">
+        <ripple class="btn btn-lg btn-success" ng-click="startCourse()">确定开始</ripple>
+    </div>
+</script>

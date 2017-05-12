@@ -1,0 +1,321 @@
+<div class="row message-page">
+    <style type="text/css">
+        .filter-wrapper .filter-category {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .filter-wrapper .filter-category.tab{
+            color: #999;
+        }
+
+        .filter.filter-wrapper .filter-category i {
+            color: #c8c8c8;
+            -webkit-transition: transform .3s;
+            -moz-transition: transform .3s;
+            -ms-transition: transform .3s;
+            -o-transition: transform .3s;
+            transition: transform .3s;
+        }
+
+        .filter-wrapper .filter-category.current {
+            color: #333;
+        }
+
+        .filter.filter-wrapper .filter-category.current i.fa {
+            -webkit-transform: rotateZ(180deg);
+            -moz-transform: rotateZ(180deg);
+            -ms-transform: rotateZ(180deg);
+            -o-transform: rotateZ(180deg);
+            transform: rotateZ(180deg);
+        }
+
+        .filter-wrapper ul.items {
+            padding-left: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+            list-style: none;
+            border-bottom: solid 1px #e5e5e5;
+        }
+
+        .filter-wrapper ul.items li {
+            display: inline-block;
+            padding: 2px 5px;
+            margin: 5px;
+            border: solid 1px #ececec;
+            cursor: pointer;
+        }
+
+        .filter-wrapper ul.items li.selected {
+            color: #fff;
+            background-color: #2371f3;
+            border-color: #2371f3;
+        }
+
+        .filter-wrapper ul.items li:hover i {
+            color: red;
+        }
+
+        .table-header{
+            background-color: #fafafa;
+            border: solid 1px #ddd;
+            padding: 6px 0;
+            border-bottom: none;
+        }
+        .table.no-td-border td{
+            border-left: none;
+            border-right: none;
+        }
+        .message-page .filter-label{
+            display: inline-block;
+            padding: 2px 5px;
+            margin: 0 5px 5px;
+            border: solid 1px #ececec;
+            cursor: default;
+        }
+        .operate-box {
+            border: dotted 2px #f0f0f0;
+        }
+        .operate-box a {
+            display:block;
+            padding: 70px 0;
+            text-decoration: none;
+            color: gray;
+        }
+        .operate-box:hover {
+            border-color: #cecece;
+        }
+    </style>
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom" style="margin-top: -14px;">群发消息</h4>
+    </div>
+    <div class="col-xs-12">
+        <div class="tabbable">
+            <ul class="nav nav-tabs tabs-flat" id="myTab">
+                <li class="active" ng-class="{active: currentTab == 1}">
+                    <a data-toggle="tab" href="#sendMessage" target="_self" ng-click="currentTab = 1">
+                        新建群发消息
+                    </a>
+                </li>
+                <li ng-class="{active: currentTab == 2}">
+                    <a data-toggle="tab" href="#sendHistory" target="_self" ng-click="loadHistory()">
+                        已发送
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content tabs-flat bg-white no-padding">
+                <div id="sendMessage" class="tab-pane" ng-class="{active: currentTab == 1}">
+                    <div class="widget flat">
+                        <div class="widget-body bg-white no-padding">
+                            <follower-filter on-filter="onFilter(filterParams)" member-count="selectedFollowersCount"></follower-filter>
+                            <section>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="tabbable">
+                                            <ul class="nav nav-tabs tabs-flat">
+                                                <div class="filter-wrapper" style="position: relative">
+                                                    <div class="bordered-1 bordered-lightgray">
+                                                        <a class="filter-category tab tab_appmsg"  data-toggle="tab" href="#image-text-message"
+                                                           ng-click="changeType('mpnews')" ng-class="{current: selectedType.key == 'mpnews'}"
+                                                           target="_self" aria-expanded="false"><i class="fa fa-imagetext font-130" style="vertical-align: sub;"></i>&nbsp;微信图文</a>
+                                                        <a class="filter-category tab tab_text" data-toggle="tab" href="#text-message" target="_self"
+                                                           ng-click="changeType('text')" ng-class="{current: selectedType.key == 'text'}"
+                                                           aria-expanded="false"><i class="fa fa-pencil font-120" style="vertical-align: sub;"></i>&nbsp;文字</a>
+                                                        <a class="filter-category tab tab_img" data-toggle="tab" href="#image-message" target="_self"
+                                                           ng-click="changeType('image')" ng-class="{current: selectedType.key == 'image'}"
+                                                           aria-expanded="false"><i class="fa fa-image font-130" style="vertical-align: sub;"></i>&nbsp;图片</a>
+                                                    </div>
+                                                </div>
+                                            </ul>
+
+                                            <div class="tab-content tabs-flat bg-white bordered-1 bordered-lightgray padding-top-30 padding-bottom-30" style="margin-top: -1px;">
+                                                <div id="image-text-message" class="tab-pane active">
+                                                    <div class="row" ng-if="!data.selectedNews">
+                                                        <div class="col-xs-12">
+                                                            <div class="col-xs-6">
+                                                                <div class="col-xs-12 text-center operate-box">
+                                                                    <a href="javascript:;" ng-click="selectNews()">
+                                                                        <span style="font-size: 70px;display: block;height: 80px;line-height: 80px;">＋</span>从素材库中选择</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-6">
+                                                                <div class="col-xs-12 text-center operate-box">
+                                                                    <a ui-sref="app.base.material.addArticle">
+                                                                        <span style="font-size: 70px;display: block;height: 80px;line-height: 80px;">＋</span>新建微信图文</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="news-preview margin-top-10" ng-if="data.selectedNews">
+                                                        <div class="news-area" style="max-width: 350px">
+                                                            <div class="appmsg_content no-padding">
+                                                                <div class="js_appmsg_item has_thumb">
+                                                                    <div class="cover_appmsg_item" style="margin: 14px;">
+                                                                        <div class="appmsg_info">
+                                                                            <em class="appmsg_date" style="color:#8d8d8d"
+                                                                                ng-bind="data.selectedNews.updateTime * 1000 | date : 'yyyy-MM-dd HH:mm'"></em>
+                                                                        </div>
+                                                                        <div class="pic">
+                                                                            <h4 class="appmsg_title" style="padding-top:0">
+                                                                                <a href="{{data.selectedNews.content.articles[0].url}}"
+                                                                                   target="_blank">{{data.selectedNews.content.articles[0].title}}</a>
+                                                                            </h4>
+                                                                            <div class="appmsg_thumb_wrp">
+                                                                                <img width="100%" ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + data.selectedNews.content.articles[0].thumbMediaId}}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="appmsg_item js_appmsg_item has_thumb"
+                                                                     ng-repeat="article in data.selectedNews.content.articles"
+                                                                     ng-if="$index > 0">
+                                                                    <img class="js_appmsg_thumb appmsg_thumb"
+                                                                         ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + article.thumbMediaId}}">
+                                                                    <h4 class="appmsg_title">
+                                                                        <a class="sub_title" href="{{article.url}}"
+                                                                           style="color:#8d8d8d" target="_blank">{{article.title}}</a>
+                                                                    </h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a class="btn btn-link padding-10" ng-click="data.selectedNews = undefined">删除</a>
+                                                    </div>
+                                                </div>
+
+                                                <div id="text-message" class="tab-pane">
+                                                    <div>
+                                                        <textarea style="width: 100%;" rows="10" maxlength="600"
+                                                                  ng-model="data.text"
+                                                                  class="margin-bottom-10"></textarea>
+                                                    </div>
+                                                    <div>
+                                                        <div on-emotion-select="onEmotionSelect(id, title)"
+                                                             class="emotion-picker top"></div>
+                                                        <span class="pull-right">还可输入{{600 - data.text.length}}字</span>
+                                                    </div>
+                                                </div>
+
+                                                <div id="image-message" class="tab-pane">
+                                                    <div class="row" ng-show="!data.selectedImage">
+                                                        <div class="col-xs-12">
+                                                            <div class="col-xs-6">
+                                                                <div class="col-xs-12 text-center operate-box">
+                                                                    <a href="javascript:;" ng-click="selectImage()">
+                                                                        <span style="font-size: 70px;display: block;height: 80px;line-height: 80px;">＋</span>从素材库中选择</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-6">
+                                                                <div class="col-xs-12 text-center operate-box">
+                                                                    <a href="javascript:;" class="uploadImageBtn">
+                                                                        <span style="font-size: 70px;display: block;height: 80px;line-height: 80px;">＋</span>上传图片</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="image-preview margin-top-10" ng-if="data.selectedImage">
+                                                        <img style="max-width:300px;"
+                                                             ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + data.selectedImage.mediaId}}">
+                                                        <a class="btn btn-link padding-10" ng-click="data.selectedImage = undefined">删除</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="margin-top-20">
+                                <ripple class="btn btn-success" ng-click="sendMessage()">发送消息</ripple>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+                <div id="sendHistory" class="tab-pane" ng-class="{active: currentTab == 2}">
+                    <div class="widget flat">
+                        <div class="widget-body bg-white padding-top-20 no-padding-left no-padding-right">
+                            <table class="table bordered-1 bordered-lightgray table-hover">
+                                <thead class="bordered-bottom-1 bordered-lightgray bg-seashell">
+                                <tr>
+                                    <th width="20"></th>
+                                    <th></th>
+                                    <th>
+                                        消息
+                                    </th>
+                                    <th width="300">
+                                        发送对象
+                                    </th>
+                                    <th class="text-center">
+                                        发送结果
+                                    </th>
+                                    <th class="text-center">
+                                        发送时间
+                                    </th>
+                                    <th width="60" class="text-center">
+                                        操作
+                                    </th>
+                                    <th width="20"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="data in tableData">
+                                    <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                                    <!-- 消息图片 -->
+                                    <td class="text-align-center">
+                                        <img style="width: 100px;height: 100px;" ng-if="data.type == 'text'"
+                                             src="/assets/img/text-icon.png">
+                                        <img style="width: 100px;height: 100px;" ng-if="data.type == 'mpnews'"
+                                             ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + data.articles[0].thumbMediaId}}">
+                                        <img style="width: 100px;height: 100px;" ng-if="data.type == 'image'"
+                                             ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + data.mediaId}}">
+                                    </td>
+                                    <!-- 消息内容 -->
+                                    <td ng-if="data.type == 'text'">【文本消息】{{data.titles}}</td>
+                                    <td ng-if="data.type == 'mpnews'">
+                                        <div style="margin-bottom: 3px;" ng-repeat="article in data.articles">【微信图文】<a href="{{article.url}}" target="_blank">{{article.title}}</a></div>
+                                    </td>
+                                    <td ng-if="data.type == 'image'">【图片消息】{{data.titles}}</td>
+
+                                    <!-- 发送对象 -->
+                                    <td>
+                                        <label class="filter-label" ng-repeat="storeId in data.tags.storeIds">{{storeMap[storeId]}}</label>
+                                        <label class="filter-label" ng-repeat="province in data.tags.province">{{province}}</label>
+                                        <label class="filter-label" ng-repeat="city in data.tags.city">{{city}}</label>
+                                        <label class="filter-label" ng-repeat="sex in data.tags.sex">{{sex}}</label>
+                                        <label class="filter-label" ng-repeat="age in data.tags.ages">{{(thisYear-age.maxBirth_yyyy)+'-'+(thisYear-age.minBirth_yyyy)+'岁'}}</label>
+                                        <label class="filter-label" ng-repeat="zodiacSign in data.tags.constellations">{{zodiacSign}}</label>
+                                        <label class="filter-label" ng-repeat="memberFlag in data.tags.memberFlag">{{memberFlag == 1? '会员' : '非会员'}}</label>
+                                    </td>
+
+
+                                    <!-- 发送结果 -->
+                                    <td width="120" class="text-center" ng-if="data.status == 'send success'">{{data.successCount}}/{{data.totalCount}}({{data.successRate}}%)</td>
+                                    <td width="120" class="text-center" ng-if="data.status == 'waiting'">正在发送</td>
+                                    <td width="120" class="text-center" ng-if="data.status == 'delete'">已删除&nbsp;<i class="fa fa-info-circle"
+                                                                                                  tooltip data-placement="top"
+                                                                                                  data-original-title="该文章已被您删除，您的粉丝在“查看历史消息”中将无法查看该文章"></i></td>
+                                    <td width="120" class="text-center" ng-if="data.status != 'send success' && data.status != 'waiting' && data.status != 'delete'">发送失败</td>
+
+                                    <!-- 发送时间 -->
+                                    <td width="160" class="text-center" ng-bind="data.ctime * 1000 | date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                    <!-- 操作 -->
+                                    <td class="text-center">
+                                        <a ng-if="data.type == 'mpnews' && data.canDelete && data.status != 'waiting' && data.status != 'delete'" class="cursor-pointer" ng-click="deleteMessage(data.id, data.msgId)">删除</a>
+                                        <a ng-if="data.type == 'mpnews' && !data.canDelete && data.status != 'delete'" class="gray"
+                                           tooltip data-placement="top"
+                                           data-original-title="根据微信官方规定,只能在发送成功30分钟内删除">删除</a>
+                                    </td>
+                                    <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="no-data" ng-if="tableData.length == 0">没有数据</div>
+                            <tm-pagination conf="paginationConf"></tm-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+          

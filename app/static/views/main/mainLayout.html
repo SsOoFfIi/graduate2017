@@ -1,0 +1,57 @@
+<!-- Page Container -->
+<div class="page-container">
+    <!-- Page Sidebar -->
+    <div class="page-sidebar {{settings.fixed.sidebar ? 'sidebar-fixed' : ''}}" id="sidebar">
+        <div class="sidebar-collapse">
+            <a>
+                <i class="collapse-icon fa fa-bars"></i>
+            </a>
+        </div>
+        <ul class="nav sidebar-menu">
+            <li ui-sref-active="active">
+                <a ui-sref="app.main.overview">
+                    <i class="menu-icon fa fa-pie-chart blue"></i>
+                    <span class="menu-text"> 概况 </span>
+                </a>
+            </li>
+
+                <li ui-sref-active="active">
+                    <a ui-sref="app.main.statistics">
+                        <i class="menu-icon fa fa-th-large green"></i>
+                        <span class="menu-text">统计信息</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.main.dataEntry">
+                        <i class="menu-icon fa fa-wrench yellow"></i>
+                        <span class="menu-text">数据录入与删除</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.main.form">
+                        <i class="menu-icon fa fa-user-square red"></i>
+                        <span class="menu-text">表格创建</span>
+                    </a>
+                </li>
+
+        </ul>
+
+
+    </div>
+    <!-- /Page Sidebar -->
+    <!-- Page Content -->
+    <div class="page-content">
+        <!-- Page Breadcrumb -->
+        <!--<div class="page-breadcrumbs page-header {{settings.fixed.breadcrumbs ? 'breadcrumbs-fixed' : ''}}" data-ng-include=" 'view?view=/common/breadcrumbs' "></div>-->
+        <!-- /Page Breadcrumb -->
+        <!-- Page Header -->
+        <!--<div class="page-header position-relative page-header-fixed" data-ng-include=" 'view?view=/common/header' "></div>-->
+        <!-- /Page Header -->
+        <!-- Page Body -->
+        <div class="page-body no-margin-right bg-white padding-20" ui-view>
+            <!-- Your Content Goes Here -->
+        </div>
+        <!-- /Page Body -->
+    </div>
+    <!-- /Page Content -->
+</div>

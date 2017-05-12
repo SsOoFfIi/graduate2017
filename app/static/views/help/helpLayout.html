@@ -1,0 +1,105 @@
+<!-- Loading Container -->
+<div class="loading-container" data-ng-include=" 'views/loading.html' "></div>
+<!--  /Loading Container -->
+<!-- Navbar -->
+<div class="navbar {{settings.fixed.navbar ? 'navbar-fixed-top' : ''}}" data-ng-include=" 'view?view=/common/navbar' "></div>
+<!-- /Navbar -->
+
+<div class="main-container container-fluid">
+    <!-- Page Container -->
+    <div class="page-container padding-top-30">
+        <style type="text/css" rel="stylesheet">
+            body:before {
+                background-color: #ececf0;
+            }
+            .page-container {
+                padding-top: 0 !important;
+            }
+            .page-body {
+                max-width: 1400px;
+                min-width: 1200px;
+                margin: -32px auto 0;
+                border-radius: 3px;
+            }
+            .page-sidebar,
+            .page-sidebar .sidebar-menu li.open,
+            .page-sidebar .sidebar-menu > li > a,
+            .page-sidebar .sidebar-menu > li.open > a,
+            .page-sidebar .sidebar-menu>li>.submenu{
+                background-color: #fbfbfb;
+            }
+            .page-sidebar .sidebar-menu a:hover {
+                background-color: #f1f1f1;
+            }
+            .page-sidebar {
+                width: 200px;
+                padding: 20px 0;
+                border-radius: 3px 0 0 3px;
+            }
+            .page-sidebar:before {
+                content: none;
+            }
+
+            .help-content{
+                margin-left: 200px;
+                padding: 30px 0 60px 0;
+            }
+            .help-content h1{
+                margin: 0 0 45px;
+                color: #444;
+                font-size: 18px;
+                text-align: center;
+            }
+            .help-content p{
+                margin: 28px 0;
+                line-height: 26px;
+            }
+            .help-content .header h1{
+                margin: 0;
+            }
+            .help-content .header p{
+                text-align: center;
+                margin: 10px 0 45px;
+            }
+        </style>
+        <!-- Page Body -->
+        <div class="page-body bg-white">
+            <div class="page-sidebar bordered-right-1 bordered-lightgray" id="sidebar">
+                <ul class="nav sidebar-menu" style="overflow: hidden; width: auto; height: 860px;">
+                    <li class="open" ui-sref-active="active">
+                        <a class="no-border">
+                            <i class="menu-icon fa fa-question yellow" style="font-size: 15px;"></i>
+                            <span class="menu-text"> 帮助中心 </span>
+                        </a>
+
+                        <ul class="submenu">
+                            <li ui-sref-active="active">
+                                <a ui-sref="app.help.news" ui-sref-opts="{reload:true}">
+                                    <span class="menu-text">系统公告</span>
+                                </a>
+                            </li>
+                            <li ui-sref-active="active">
+                                <a ui-sref="app.help.docs">
+                                    <span class="menu-text">运营指南</span>
+                                </a>
+                            </li>
+                            <li ui-sref-active="active">
+                                <a ui-sref="app.help.faq" ui-sref-opts="{reload:true}">
+                                    <span class="menu-text">常见问题</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- Your Content Goes Here -->
+            <!-- Page Content -->
+            <div class="help-content" ui-view>
+            </div>
+            <!-- /Page Content -->
+        </div>
+        <!-- /Page Body -->
+    </div>
+    <!-- /Page Container -->
+    <!-- Main Container -->
+</div>

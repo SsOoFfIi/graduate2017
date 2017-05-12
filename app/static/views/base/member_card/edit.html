@@ -1,0 +1,291 @@
+<div class="memberCardPage">
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom text-align-center" style="margin-top: -14px;height:52px;line-height:34px;">
+            <ripple class="btn pull-left" ui-sref="app.base.memberCard" ui-sref-opts="{reload:true}"><i class="fa fa-arrow-left"></i>&emsp;返回</ripple>
+            新建微信会员卡
+        </h4>
+    </div>
+    <div class="col-xs-12 col-md-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="steps clearfix">
+                    <li>2.设置公众号推送信息</li>
+                    <li class="current">1.填写基础信息</li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-7 col-md-6 col-lg-4 member-card-preview-wrapper">
+                <style type="text/css">
+                    .member-card-preview-wrapper {
+                        max-width: 372px;
+                        position: absolute;
+                        top: 47px;
+                    }
+                    .member-card-form-wrapper {
+                        float: none;
+                        width: auto;
+                        margin-left: 386px;
+                        margin-top: 47px;
+                    }
+                    .member_card_preview_area {
+                        width: 340px;
+                        border: solid 1px lightgray;
+                        border-top: none;
+                        padding-bottom: 100px;
+                    }
+                    .member_card_preview_area .member_card_header {
+                        color: #fff;
+                        background-color: #383838;
+                        text-align: center;
+                        height: 45px;
+                        line-height: 45px;
+                    }
+                    .member_card_preview_area .member_card {
+                        width: 295px;
+                        height: 165px;
+                        margin: 20px auto;
+                        border-radius: 5px;
+                        position: relative;
+                        background-color: #5164bd;
+                    }
+                    .member_card_preview_area .customer_logo {
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 32px;
+                        position: absolute;
+                        left: 15px;
+                        top: 15px;
+                    }
+                    .member_card_preview_area .customer_info {
+                        padding: 13px 57px;
+                        color: #fff;
+                        font-size: 14px;
+                    }
+                    .member_card_preview_area .qrcode{
+                        display: block;
+                        position: absolute;
+                        top: 15px;
+                        right: 10px;
+                        width: 25px;
+                    }
+                    .member_card_preview_area .customer_info .card_title{
+                        font-size: 12px;
+                    }
+                    .member_card_preview_area .card_no{
+                        font-size: 16px;
+                        color: #fff;
+                        position: absolute;
+                        left: 25px;
+                        bottom: 15px;
+                    }
+                    .member_card_preview_area .member_card_items {
+                        list-style: none;
+                        padding: 0;
+                        font-size: 0;
+                        text-align: center;
+                        width: 245px;
+                        margin: 15px auto;
+                    }
+                    .member_card_preview_area .member_card_items li{
+                        display: inline-block;
+                        width: 50%;
+                    }
+                    .member_card_preview_area .member_card_items li dl {
+                        margin-bottom: 0;
+                    }
+                    .member_card_preview_area .member_card_items li dt{
+                        display: inline;
+                        font-size: 14px;
+                        color: #9d9d9d;
+                        font-weight: normal;
+                    }
+                    .member_card_preview_area .member_card_items li dt img{
+                        width: 1.5rem;
+                        vertical-align: sub;
+                    }
+                    .member_card_preview_area .member_card_items li dd{
+                        display: inline;
+                        margin-top: 3px;
+                        font-size: 16px;
+                        color: #60c948;
+                    }
+                    .member_card_preview_area .divider {
+                        height: 4px;
+                        background-color: #f6f6f6;
+                        margin-bottom: 15px;
+                    }
+                    .member_card_preview_area .link-list{
+                        list-style: none;
+                        padding: 0 1rem;
+                    }
+                    .member_card_preview_area .link-list li {
+                        padding: 1rem;
+                        border-bottom: solid 1px #f4f4f4;
+                    }
+                    .member_card_preview_area .link-list li img{
+                        width: 3rem;
+                        margin-right: 2.5rem;
+                    }
+                    .member_card_preview_area .link-list li i{
+                        margin-top: 6px;
+                    }
+                    .logo-img{
+                        width: 60px;
+                        height: 60px;
+                        border: solid 1px #e9e9e9;
+                        margin-right: 10px;
+                    }
+                    .default-card-bg {
+                        width: 100px;
+                        height: 60px;
+                        margin-right: 10px;
+                        margin-bottom: 10px;
+                        cursor: pointer;
+                        border: solid 1px transparent;
+                        -webkit-transition: border-color .2s;
+                        -moz-transition: border-color .2s;
+                        -ms-transition: border-color .2s;
+                        -o-transition: border-color .2s;
+                        transition: border-color .2s;
+                    }
+                    .default-card-bg.selected{
+                        border-color: #2371f3;
+                    }
+                    .edit-alert {
+                        height: 50px;
+                        line-height: 50px;
+                        border: solid 1px #ffa604;
+                        background: #ffeed0;
+                        padding-left: 2rem;
+                        color: #6f6e67;
+                        margin-bottom: 1.5rem;
+                    }
+                    .edit-alert a {
+                        color: #ffaf25;
+                        margin: 0 .5rem;
+                    }
+                    .memberCardForm {
+                        position: relative;
+                    }
+                    .memberCardForm .triangle, .memberCardForm .triangle:before {
+                        position: absolute;
+                        left: -32px;
+                        top: 150px;
+                        display: block;
+                        border: 16px solid transparent;
+                        border-right-color: lightgrey;
+                    }
+                    .memberCardForm .triangle:before {
+                        content: "";
+                        position: absolute;
+                        left: -15px;
+                        border-right-color: #fafafa;
+                        top: -16px;
+                    }
+                </style>
+                <div class="member_card_preview_area">
+                    <div class="member_card_header">
+                        H5会员卡
+                    </div>
+                    <div class="member_card" ng-style="style">
+                        <img ng-if="data.logoUrlLocal" class="customer_logo" ng-src="{{data.logoUrlLocal}}">
+                        <div class="customer_info">
+                            <div class="brand_name" ng-bind="data.brandName"></div>
+                            <div class="card_title" ng-bind="data.title"></div>
+                        </div>
+                        <a href="javascript:;"><img class="qrcode" src="/assets/img/member_card_qrcode.png"></a>
+                        <div class="card_no">000 000 00000</div>
+                    </div>
+                    <ul class="member_card_items">
+                        <li>
+                            <dl>
+                                <dt><img src="/assets/img/integral_icon.png">&nbsp;&nbsp;积分&nbsp;&nbsp;</dt>
+                                <dd>0</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <div class="divider"></div>
+                    <ul class="link-list">
+                        <li><i class="fa fa-angle-right pull-right"></i><img src="/assets/img/coupon_icon.png">获得优惠券</li>
+                        <li><i class="fa fa-angle-right pull-right"></i><img src="/assets/img/member_card_icon.png">会员卡特权</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-6 col-lg-8 no-padding-left member-card-form-wrapper padding-bottom-50 margin-bottom-40">
+                <form role="form" name="memberCardForm" class="memberCardForm form-horizontal padding-top-40 bordered-1 bordered-lightgray" style="background-color: #fafafa;" novalidate>
+                    <div class="triangle"></div>
+                    <div class="form-group col-lg-12" ng-class="{'has-error': (memberCardForm.$submitted || memberCardForm.brandName.$dirty) && memberCardForm.brandName.$invalid}">
+                        <label class="col-lg-2 control-label" for="brandName"><span class="red">*</span>公司名称</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" name="brandName" id="brandName" required
+                                   ng-model="data.brandName" maxlength="12">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label class="col-lg-2 control-label"><span class="red">*</span>公司Logo</label>
+                        <div class="col-lg-8 margin-bottom-10">
+                            <img class="logo-img" ng-if="data.logoUrlLocal"
+                                 ng-src="{{data.logoUrlLocal}}">
+                            <a class="btn btn-sm uploadLogoBtn">上传图片</a>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12" ng-class="{'has-error':  (memberCardForm.$submitted || memberCardForm.title.$dirty) && memberCardForm.title.$invalid}">
+                        <label class="col-lg-2 control-label" for="title"><span class="red">*</span>会员卡标题</label>
+                        <div class="col-lg-8">
+                            <input type="text" class="form-control" id="title" name="title" required
+                               ng-model="data.title" maxlength="9">
+                            <span class="help-block">建议会员卡标题包含商户名或服务内容，如微信会员卡</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label class="col-lg-2 control-label"><span class="red">*</span>卡券背景</label>
+                        <div class="col-lg-10 no-padding-left margin-bottom-10">
+                            <div class="col-lg-12">
+                                <img class="default-card-bg" ng-repeat="bg in defaultCardBg" ng-class="{selected: bg.cosUrl == data.backgroundPicUrlLocal}"
+                                     ng-src="{{bg.cosUrl}}" ng-click="$parent.selectCardBg(bg)">
+                            </div>
+                            <div class="col-lg-12">
+                                <a class="btn btn-sm uploadBgBtn">上传自定义图片</a>
+                                <span class="upload_tips">请参照 <a href="https://mp.weixin.qq.com/cgi-bin/readtemplate?t=cardticket/card_cover_tmpl&type=info&lang=zh_CN" title="" target="_blank" style="color: #4083F4;">图片规范</a> 上传</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12" ng-class="{'has-error':  (memberCardForm.$submitted || memberCardForm.title.$dirty) && memberCardForm.title.$invalid}">
+                        <label class="col-lg-2 control-label" for="title">会员特权</label>
+                        <div class="col-lg-8">
+                        </div>
+                        <div class="col-xs-10 margin-top-5 margin-bottom-5 margin-left-40 bordered-bottom-1 bordered-lightgray"></div>
+                    </div>
+                    <div class="form-group col-lg-12" ng-class="{'has-error': (memberCardForm.$submitted || memberCardForm.privilegeIntroduce.$dirty) && memberCardForm.privilegeIntroduce.$invalid}">
+                        <label class="col-lg-2 control-label" for="privilegeIntroduce"><span class="red">*</span>特权说明</label>
+                        <div class="col-lg-8">
+                            <textarea rows="4" class="form-control" name="privilegeIntroduce" id="privilegeIntroduce" required
+                                   ng-model="data.privilegeIntroduce" maxlength="500"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12" ng-class="{'has-error': (memberCardForm.$submitted || memberCardForm.useIntroduce.$dirty) && memberCardForm.useIntroduce.$invalid}">
+                        <label class="col-lg-2 control-label" for="useIntroduce"><span class="red">*</span>使用须知</label>
+                        <div class="col-lg-8">
+                            <textarea rows="4" class="form-control" name="useIntroduce" id="useIntroduce" required
+                                   ng-model="data.useIntroduce" maxlength="500"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label class="col-lg-2 control-label" for="otherIntroduce">其他</label>
+                        <div class="col-lg-8">
+                            <textarea rows="4" class="form-control" name="otherIntroduce" id="otherIntroduce"
+                                   ng-model="data.otherIntroduce" maxlength="3000"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label"></label>
+                        <div class="col-lg-8">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="action-fixed text-align-center padding-top-20 padding-bottom-20 bordered-top-1 bordered-lightgray">
+                <ripple ng-disabled="memberCardForm.$invalid || !data.logoUrlLocal || !data.backgroundPicUrlLocal" type="submit" class="btn btn-lg btn-success" ng-click="saveMemberCard()">下一步</ripple>
+            </div>
+        </div>
+    </div>
+</div>

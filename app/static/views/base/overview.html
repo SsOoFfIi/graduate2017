@@ -1,0 +1,476 @@
+<div class="overview-page">
+    <style type="text/css" rel="stylesheet">
+        .page-body {
+            background: none !important;
+            padding: 0 !important;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+        .overview-page .header-fullname {
+            font-size: 24px;
+            vertical-align: middle;
+        }
+        .overview-page .profile-stats {
+            border: none;
+        }
+        .overview-page .profile-stats .vertical-line{
+            border-left: solid 1px #edecf1;
+            position: absolute;
+            top: 20px;
+            bottom: 20px;
+            left: 0;
+        }
+        .overview-page .nav-tabs>li>a,
+        .overview-page .nav-tabs>li>a:focus {
+            line-height: 21px;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            margin-top: -1px;
+        }
+        .overview-page .nav-tabs>li.active>a,
+        .overview-page .nav-tabs>li.active>a:hover,
+        .overview-page .nav-tabs>li.active>a:focus {
+            border: 1px solid #ddd;
+            border-bottom: none;
+            margin-top: -1px;
+            color: #2372F3;
+            line-height: 20px;
+            border-bottom: none;
+            background: #fff;
+        }
+        .overview-page .blur {
+            -webkit-filter: blur(2px);
+            filter: blur(2px);
+        }
+        .overview-page .member-disabled-mask {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            text-align: center;
+            line-height: 160px;
+            background-color: rgba(255,255,255,.9);
+        }
+        .overview-page .summary-data .increase-count {
+            font-size: 50px;
+            font-weight: bold;
+            color: #2372F3;
+        }
+        .overview-page .summary-data .increase-rate {
+            color: lightgrey;
+            vertical-align: top;
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 16px;
+            position: relative;
+            left: -20px;
+        }
+        .overview-page .summary-data .increase-rate.up {
+            color: red;
+        }
+        .overview-page .summary-data .increase-rate.down {
+            color: green;
+        }
+        .overview-page .summary-data .total-count {
+            font-size: 50px;
+            font-weight: bold;
+            color: #2372F3;
+            vertical-align: top;
+        }
+        .overview-page .summary-data .increase-progress {
+            color: #9d9d9d;
+            margin-top: 10px;
+        }
+        .overview-page .summary-data .increase-progress label {
+            display: inline-block;
+            width: 100px;
+        }
+        .overview-page .summary-data .increase-progress .progress {
+            display: inline-block;
+            height: 11px;
+            background-color: #2371F3;
+            margin: 0 10px;
+            border-radius: 0;
+            width: 0;
+            -webkit-transition: all .3s linear;
+            -moz-transition: all .3s linear;
+            -o-transition: all .3s linear;
+            transition: all .3s linear;
+        }
+        .overview-page .message-count {
+            text-align: center;
+            height: 205px;
+        }
+        .overview-page .message-count .count {
+            font-size: 50px;
+            font-weight: bold;
+        }
+        .overview-page .table thead tr th,
+        .overview-page .table tbody tr td{
+            padding: 12px 8px;
+        }
+        .overview-page .table tbody td {
+            border-top: none;
+            border-bottom: 1px solid #e7e7eb;
+        }
+        .overview-page .well .header{
+            background-color: #fafafa;
+            padding: 12px;
+        }
+        .overview-page .pagination-trigger {
+            color: #999999;
+            cursor: pointer;
+            padding: 6px;
+            margin: 3px;
+        }
+        .overview-page .pagination-trigger.disabled {
+            color: #E7E6EB;
+            cursor: default;
+        }
+        .overview-page .badge {
+            height: 18px;
+        }
+
+        @keyframes shake {
+            10%, 90% {
+                transform: translate3d(-1px, 0, 0);
+            }
+
+            20%, 80% {
+                transform: translate3d(2px, 0, 0);
+            }
+
+            30%, 50%, 70% {
+                transform: translate3d(-4px, 0, 0);
+            }
+
+            40%, 60% {
+                transform: translate3d(4px, 0, 0);
+            }
+        }
+
+        @keyframes shake1 {
+            42%, 58% {
+                transform: translate3d(-1px, 0, 0);
+            }
+
+            44%, 56% {
+                transform: translate3d(2px, 0, 0);
+            }
+
+            46%, 50%, 54% {
+                transform: translate3d(-4px, 0, 0);
+            }
+
+            48%, 52% {
+                transform: translate3d(4px, 0, 0);
+            }
+        }
+
+        @keyframes shake2 {
+            41%, 59% {
+                transform: rotate(0deg);
+            }
+            42%, 58% {
+                transform: rotate(-5deg);
+            }
+
+            44%, 56% {
+                transform: rotate(10deg);
+            }
+
+            46%, 50%, 54% {
+                transform: rotate(-20deg);
+            }
+
+            48%, 52% {
+                transform: rotate(20deg);
+            }
+        }
+        .overview-page .message-icon {
+            position: relative;
+            top: 6px;
+            animation: shake2 4s cubic-bezier(.36,.07,.19,.97) both infinite;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+        h5 .more{
+            color: #999;
+            text-decoration: none;
+            float: right;
+            margin-right: 8px;
+        }
+    </style>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="well margin-bottom-20 no-padding bg_white">
+                <div class="profile-header row">
+                    <div style="max-width: 175px;" class="col-xs-2 text-center padding-left-30 no-padding-right margin-top-30 margin-bottom-30">
+                        <img ng-src="{{userData.wechatHeadPicture || 'assets/img/mp_default_logo.jpg'}}" alt="" class="header-avatar">
+                    </div>
+                    <div style="height: 100px;" class="col-xs-6 profile-info no-padding-left margin-top-30 margin-bottom-20 text-center">
+                        <div class="col-xs-12 no-padding-left margin-top-20">
+                            <span class="header-fullname" ng-bind="userData.wechatName"></span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-10" style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                                <i class="fa fa-check"></i>
+                                互联网药店
+                            </span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-5" style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                                <i class="fa fa-check"></i>
+                                尊贵用户
+                            </span>
+                            <span href="#" class="btn-blue btn-sm btn-follow margin-left-5" style="background-color: #0C6DEF !important; padding: 6px 13px; font-size: 12px;">
+                                <i class="fa fa-check"></i>
+                                认证服务号
+                            </span>
+                        </div>
+                        <div class="col-xs-12 no-padding-left header-information darkgray margin-top-10">
+                            您受邀成为互联网药店尊贵用户
+                        </div>
+                    </div>
+                    <div style="height: 160px;" class="col-xs-4 profile-stats text-align-center pull-right no-padding-left">
+                        <div class="vertical-line"></div>
+                        <div class="stats-value font-170 margin-top-50" ng-bind="userData.serviceDays + '天'"></div>
+                        <div class="stats-title margin-top-10">心康云竭诚为您服务</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-init="showLink=1">
+        <div class="col-xs-12">
+            <div class="well margin-bottom-20 padding-20 bg_white">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <h5>
+                            昨天关键数据
+                            <a ng-if="showLink==1" class="more" ui-sref="app.base.memberData">更多 <i class="fa fa-angle-right"></i></a>
+                            <a ng-if="showLink==2" class="more" ui-sref="app.base.followerData">更多 <i class="fa fa-angle-right"></i></a>
+                        </h5>
+                        <div class="well with-header bg_white no-padding no-box-shadow bordered-1 bordered-lightgray" style="border-top: none;">
+                            <div class="tabbable summary-data clearfix">
+                                <ul class="nav nav-tabs tabs-flat bg-seashell">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#home1" target="_self" style="border-left: 0;" ng-click="showLink = 1">
+                                            &emsp;微信会员新增&emsp;
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a data-toggle="tab" href="#home2" target="_self" ng-click="showLink = 2">
+                                            &emsp;昨天粉丝新增&emsp;
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content tabs-flat no-padding-bottom">
+                                    <div id="home1" class="tab-pane in active clearfix">
+                                        <div class="col-xs-5 text-center margin-top-20 margin-bottom-20" ng-class="{blur: !data.member}">
+                                            <div>
+                                                <span class="increase-count" ng-bind="data.member.totalCount">0</span>
+                                                <span class="azure">人</span>
+                                                <span class="increase-rate up" ng-if="data.member.increasePercent > 0" ng-bind="'↑' + data.member.increasePercent + '%'"></span>
+                                                <span class="increase-rate down" ng-if="data.member.increasePercent < 0" ng-bind="'↓' + (data.member.increasePercent*-1) + '%'"></span>
+                                                <span class="increase-rate" ng-if="data.member.increasePercent == 0">—</span>
+                                            </div>
+                                            <h5 class="margin-bottom-20">昨天新增微信会员数</h5>
+                                        </div>
+                                        <div class="col-xs-7 profile-info margin-top-20 margin-bottom-20" ng-class="{blur: !data.member}">
+                                            <h5 class="margin-bottom-20">新增微信会员中：</h5>
+                                            <div class="increase-progress">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td width="100" style="padding: 8px 0;">新注册微信会员</td>
+                                                        <td><span class="progress" style="width: {{data.member.isNotErpMemberPercent*0.6 + '%'}}"></span><span>{{data.member.isNotErpMemberPercent}}%({{data.member.isNotErpMemberCount}}人)</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>原ERP会员激活</td>
+                                                        <td><span class="progress" style="width: {{data.member.isErpMemberPercent*0.6 + '%'}}"></span><span>{{data.member.isErpMemberPercent}}%({{data.member.isErpMemberCount}}人)</span></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="member-disabled-mask" ng-if="!data.activeMember">
+                                            您尚未开通会员卡功能，<a class="btn btn-link" ui-sref="app.base.memberCard">立即开通</a>
+                                        </div>
+                                    </div>
+                                    <div id="home2" class="tab-pane">
+                                        <div class="col-xs-4 text-center margin-top-20 margin-bottom-20">
+                                            <div>
+                                                <span class="increase-count" ng-bind="data.follower.newCount">0</span>
+                                                <span class="azure">人</span>
+                                                <span class="increase-rate up" ng-if="data.follower.newCountPercent > 0" ng-bind="'↑' + data.follower.newCountPercent + '%'"></span>
+                                                <span class="increase-rate down" ng-if="data.follower.newCountPercent < 0" ng-bind="'↓' + (data.follower.newCountPercent*-1) + '%'"></span>
+                                                <span class="increase-rate" ng-if="data.follower.newCountPercent == 0">—</span>
+                                            </div>
+                                            <h5 class="margin-bottom-20">昨天新增关注</h5>
+                                        </div>
+                                        <div class="col-xs-4 text-center margin-top-20 margin-bottom-20">
+                                            <div>
+                                                <span class="increase-count" ng-bind="data.follower.cancelCount">0</span>
+                                                <span class="azure">人</span>
+                                            </div>
+                                            <h5 class="margin-bottom-20">昨天取消关注</h5>
+                                        </div>
+                                        <div class="col-xs-4 text-center margin-top-20 margin-bottom-20">
+                                            <div>
+                                                <span class="increase-count" ng-bind="data.follower.netNewCount">0</span>
+                                                <span class="azure">人</span>
+                                                <span class="increase-rate up" ng-if="data.follower.netNewCountPercent > 0" ng-bind="'↑' + data.follower.netNewCountPercent + '%'"></span>
+                                                <span class="increase-rate down" ng-if="data.follower.netNewCountPercent < 0" ng-bind="'↓' + (data.follower.netNewCountPercent*-1) + '%'"></span>
+                                                <span class="increase-rate" ng-if="data.follower.netNewCountPercent == 0">—</span>
+                                            </div>
+                                            <h5 class="margin-bottom-20">昨天净新增关注</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 no-padding-left">
+                        <h5>今日留言</h5>
+                        <div class="well with-header bg_white bordered-1 bordered-lightgray no-padding-left no-padding-right no-padding-top padding-top-50 margin-bottom-20 message-count no-box-shadow bordered-1 bordered-lightgray">
+                            <div>
+                                <span class="count azure" style="position: relative;">
+                                    {{data.messageCount}}
+                                <img style="position: absolute;" ng-if="data.messageCount > 0" class="message-icon" src="/assets/img/message-icon.png">
+                                </span>
+                                <span class="azure">条</span>
+                            </div>
+                            <h5 class="margin-bottom-20 smaller"><a ui-sref="app.base.comment">请及时处理</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-xs-8">
+                        <h5>互联网药店成长指南</h5>
+                        <div class="well with-header bg_white no-padding-left no-padding-right no-padding-top no-padding-bottom margin-bottom-20 no-box-shadow bordered-1 bordered-lightgray" style="border-top: none;">
+                            <div class="tabbable summary-data clearfix" style="min-height: 292px">
+                                <ul class="nav nav-tabs tabs-flat bg-seashell">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#home11" target="_self" style="border-left: 0;">
+                                            &emsp;运营指南&emsp;
+                                        </a>
+                                    </li>
+
+                                    <!--<li>-->
+                                    <!--<a data-toggle="tab" href="#home12" target="_self">-->
+                                    <!--&emsp;操作指南&emsp;-->
+                                    <!--</a>-->
+                                    <!--</li>-->
+
+                                    <li>
+                                        <a data-toggle="tab" href="#home13" target="_self">
+                                            &emsp;常见问题&emsp;
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content tabs-flat no-padding-top">
+                                    <div id="home11" class="tab-pane in active">
+                                        <div style="height: 244px;">
+                                            <table class="table">
+                                                <tbody>
+                                                <tr ng-repeat="item in yunyingList"
+                                                    ng-init="index = $index + 1"
+                                                    ng-show="(index <= yunyingPage * 5) && (index > (yunyingPage-1)*5)">
+                                                    <td><a class="has-visited-color" href="{{item.url}}" target="_blank">{{item.name}}</a><label ng-if="item.isNew" class="label label-sm red" style="font-weight: normal;">New</label></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="text-align-right" ng-show="yunyingList.length > 5">
+                                            <i class="fa fa-caret-right pull-right pagination-trigger" ng-click="yunyingPage=2" ng-class="{disabled: yunyingPage == 2}"></i>
+                                            <i class="fa fa-caret-left  pull-right pagination-trigger" ng-click="yunyingPage=1" ng-class="{disabled: yunyingPage == 1}"></i>
+                                        </div>
+                                    </div>
+                                    <div id="home13" class="tab-pane">
+                                        <div style="height: 225px;">
+                                            <table class="table">
+                                                <tbody>
+                                                <tr ng-repeat="faq in faqList"
+                                                    ng-init="index = $index + 1"
+                                                    ng-show="(index <= faqPage * 5) && (index > (faqPage-1)*5)">
+                                                    <td><a class="has-visited-color" ui-sref="app.help.faq.detail({id: faq.id})">{{faq.name}}</a>
+                                                    <label ng-if="faq.isNew" class="label label-sm red" style="font-weight: normal;">New</label></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="text-align-right" ng-show="faqList.length > 5">
+                                            <i class="fa fa-caret-right pull-right pagination-trigger" ng-click="faqPage=2" ng-class="{disabled: faqPage == 2}"></i>
+                                            <i class="fa fa-caret-left  pull-right pagination-trigger" ng-click="faqPage=1" ng-class="{disabled: faqPage == 1}"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 no-padding-left">
+                        <h5>
+                            昨日门店会员新增十强
+                            <a class="more" ui-sref="app.base.memberData">更多 <i class="fa fa-angle-right"></i></a>
+                        </h5>
+                        <div class="well with-header bg_white no-padding-left no-padding-right no-padding-top margin-bottom-20 no-box-shadow bordered-1 bordered-lightgray" style="min-height: 302px">
+                            <table class="table table-hover">
+                                <thead class="bordered-bottom-1 bordered-lightgray bg-seashell">
+                                <tr>
+                                    <th width="20"></th>
+                                    <th width="50" class="text-align-center" style="font-weight: normal">
+                                        排名
+                                    </th>
+                                    <th style="font-weight: normal">
+                                        门店
+                                    </th>
+                                    <th width="100" class="text-align-center" style="font-weight: normal">
+                                        新增会员
+                                    </th>
+                                    <th width="20"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in data.customerStoreRank.list"
+                                    ng-init="index = $index + 1"
+                                    ng-show="(index <= storeRankPage * 5) && (index > (storeRankPage-1)*5)">
+                                    <td ng-class="{'bordered-white': !$last}" width="20"></td>
+                                    <td class="text-align-center">
+                            <span ng-class="{'badge badge-square': index <= 3, 'badge-danger': index == 1, 'badge-warning': index == 2, 'badge-azure': index == 3}">
+                                                    {{index}}
+                                                </span>
+                                    </td>
+                                    <td>
+                                        {{item.storeName}}
+                                    </td>
+                                    <td class="text-align-center">
+                                        {{item.totalCount}}
+                                    </td>
+                                    <td ng-class="{'bordered-white': !$last}" width="20"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-align-right" ng-show="data.customerStoreRank.list.length > 5">
+                                <i class="fa fa-caret-right pull-right pagination-trigger" ng-click="storeRankPage=2" ng-class="{disabled: storeRankPage == 2}"></i>
+                                <i class="fa fa-caret-left  pull-right pagination-trigger" ng-click="storeRankPage=1" ng-class="{disabled: storeRankPage == 1}"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="well with-header bg_white margin-bottom-20 no-box-shadow bordered-1 bordered-lightgray" style="padding:43px 20px 20px;">
+                            <div class="header">系统公告</div>
+                            <table class="table table-hover">
+                                <tbody>
+                                <tr ng-repeat="news in newsList">
+                                    <td><a class="has-visited-color" ui-sref="app.help.news.detail({id: news.id})">{{news.name}}</a><label ng-if="news.isNew" class="label label-sm red" style="font-weight: normal;">New</label></td>
+                                    <td class="darkgray" width="100">{{news.time}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <tm-pagination conf="paginationConf"></tm-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

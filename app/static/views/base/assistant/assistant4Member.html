@@ -1,0 +1,178 @@
+<!--该店员下的会员-->
+<div class=" assistantPage">
+
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom text-align-center bordered-bottom-1 bordered-lightgray"
+            style="margin-top: -14px;height: 56px;line-height: 36px;">
+            <a class="btn pull-left ripple" href="javascript:history.back();"><i
+                    class="fa fa-arrow-left"></i>&emsp;返回</a>
+            <span ng-bind="data.name"></span>
+        </h4>
+    </div>
+    <div class="col-xs-12">
+        <div class="widget flat">
+            <div class="widget-body bg-white no-padding">
+                <div class="row" style="padding-top: 20px">
+                    <div class="col-xs-3" style="width: 250px">
+                        <form class="form-horizontal margin-bottom-20">
+
+                            <div class="input-group">
+                                <input class="form-control" ng-model="data.keyWord" maxlength="20"
+                                       placeholder="按手机号码、姓名搜索"
+                                       type="text">
+                                <span class="input-group-btn">
+                                    <ripple class="btn" ng-click="changePath(false)" type="submit"><i
+                                            class="fa fa-search gray"></i></ripple>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="bordered-1 bordered-lightgray">
+                    <table class="table table-hover" id="simpledatatable">
+                        <thead class="bordered-bottom-1 bordered-lightgray bg-seashell">
+                        <tr>
+                            <th width="20"></th>
+                            <th style="width: 200px">
+                                手机号码
+                            </th>
+                            <th class="text-align-center">
+                                姓名
+                            </th>
+                            <th class="text-align-center">
+                                性别
+                            </th>
+                            <th class="text-align-center">
+                                最后一次消费距今
+                            </th>
+                            <th class="text-align-center">
+                                消费总次数
+                            </th>
+                            <th class="text-align-center">
+                                客单价
+                            </th>
+                            <th class="text-align-center">
+                                累计消费
+                            </th>
+
+                            <th width="20"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="assistant in tableData" ng-class="{darkgray: assistant.disable == '1'}">
+                            <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                            <td ng-bind="assistant.mobile" style="width: 200px"></td>
+                            <td class="text-align-center" ng-bind="assistant.name"></td>
+                            <td class="text-align-center" ng-bind="assistant.sex||'-'"></td>
+                            <td class="text-align-center"
+                                ng-bind="assistant.recency?toDays(assistant.recency)+ '天':'-'"></td>
+                            <td class="text-align-center"
+                                ng-bind="assistant.frequency?assistant.frequency+'次':'-'"></td>
+                            <td class="text-align-center"
+                                ng-bind="assistant.unitPrice?assistant.unitPrice+'元':'-'"></td>
+                            <td class="text-align-center" ng-bind="assistant.monetary?assistant.monetary+'元':'-'"> 数据
+                            </td>
+                            <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                        </tr>
+                        <tr ng-if="tableData.length == 0">
+                            <td class="no-data" style="padding: 100px 0;" colspan="9">没有数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <tm-pagination conf="paginationConf"></tm-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<style type="text/css" rel="stylesheet">-->
+<!--.assistantPage .add-store-step {-->
+<!--padding: 43px 12px 40px;-->
+<!--}-->
+
+<!--.assistantPage .well .header {-->
+<!--background-color: #fafafa;-->
+<!--}-->
+
+<!--.assistantPage .add-store-step .step-item {-->
+<!--width: 80%;-->
+<!--min-width: 160px;-->
+<!--float: right;-->
+<!--height: 180px;-->
+<!--padding-top: 62px;-->
+<!--position: relative;-->
+<!--}-->
+
+<!--.assistantPage .add-store-step .step-item:before {-->
+<!--content: "";-->
+<!--display: block;-->
+<!--position: absolute;-->
+<!--z-index: 0;-->
+<!--left: -22px;-->
+<!--top: 8px;-->
+<!--width: 81px;-->
+<!--height: 71px;-->
+<!--}-->
+
+<!--.assistantPage .add-store-step .step-item.no1:before {-->
+<!--background: url("/assets/img/1.png") 0 0 no-repeat;-->
+<!--}-->
+
+<!--.assistantPage .add-store-step .step-item.no2:before {-->
+<!--background: url("/assets/img/2.png") 0 0 no-repeat;-->
+<!--}-->
+
+<!--.assistantPage .add-store-step .step-item.no3:before {-->
+<!--background: url("/assets/img/3.png") 0 0 no-repeat;-->
+<!--}-->
+
+<!--.assistantPage .add-store-step .step-item.no4:before {-->
+<!--background: url("/assets/img/4.png") 0 0 no-repeat;-->
+<!--}-->
+
+<!--.assistantPage .add-store-step .step-item h4 {-->
+<!--font-size: 16px;-->
+<!--font-weight: bold !important;-->
+<!--position: relative;-->
+<!--z-index: 1;-->
+<!--}-->
+
+<!--.assistantPage .add-store-step .step-item div {-->
+<!--position: relative;-->
+<!--z-index: 1;-->
+<!--color: #9f9f9f;-->
+<!--}-->
+
+<!--.assistantPage .addStoreBtn {-->
+<!--text-align: center;-->
+<!--width: 380px;-->
+<!--height: 150px;-->
+<!--border: dotted 2px #2271F0;-->
+<!--margin: 0 auto;-->
+<!--cursor: pointer;-->
+<!--}-->
+
+<!--.assistantPage .addStoreBtn p.add {-->
+<!--font-size: 80px;-->
+<!--color: #C0C0C0;-->
+<!--margin-bottom: 20px;-->
+<!--margin-top: 45px;-->
+<!--}-->
+
+<!--.assistantPage .addStoreBtn p.label {-->
+<!--color: #2271F0;-->
+<!--}-->
+
+<!--.assistantPage .addStoreBtn:hover {-->
+<!--border-color: #1f60d2;-->
+<!--}-->
+
+<!--.assistantPage .addStoreBtn:hover p.add {-->
+<!--color: #696969;-->
+<!--}-->
+
+<!--.assistantPage .addStoreBtn:hover p.label {-->
+<!--color: #1f60d2;-->
+<!--}-->
+<!--</style>-->

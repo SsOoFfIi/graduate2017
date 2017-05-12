@@ -1,0 +1,230 @@
+<div class="messageConfigPage">
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom text-align-center" style="margin-top: -14px;height:52px;line-height:34px;">
+            <ripple class="btn pull-left" ui-sref="app.base.memberCard.edit"><i class="fa fa-arrow-left"></i>&emsp;返回</ripple>
+            新建微信会员卡
+        </h4>
+    </div>
+    <div class="col-xs-12 col-md-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="steps clearfix">
+                    <li class="current">2.设置公众号推送信息</li>
+                    <li>1.填写基础信息</li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-7 col-md-6 col-lg-4 member-card-preview-wrapper">
+                <style type="text/css">
+                    .member-card-preview-wrapper {
+                        max-width: 372px;
+                        position: absolute;
+                        top: 47px;
+                    }
+                    .message-config-form-wrapper {
+                        float: none;
+                        width: auto;
+                        margin-left: 386px;
+                        margin-top: 47px;
+                    }
+                    .member_card_preview_area {
+                        width: 340px;
+                        height: 550px;
+                        border: solid 1px lightgray;
+                        background-color: #fafafa;
+                        border-top: none;
+                        position: relative;
+                    }
+                    .member_card_preview_area .member_card_header {
+                        color: #fff;
+                        background-color: #383838;
+                        text-align: center;
+                        height: 45px;
+                        line-height: 45px;
+                    }
+                    .member_card_preview_area .message {
+                        padding: 15px 15px 0;
+                        margin: 15px;
+                        border: solid 1px lightgray;
+                        border-radius: 5px;
+                        background-color: #fff;
+                    }
+                    .member_card_preview_area .header h5 {
+                        margin-top: 0;
+                        margin-bottom: 0;
+                    }
+                    .member_card_preview_area .header p {
+                        color: #a1a1a1;
+                        margin-bottom: 4px;
+                    }
+                    .member_card_preview_area .content img{
+                        vertical-align: middle;
+                        width: 100%;
+                    }
+                    .member_card_preview_area .footer {
+                        line-height: 36px;
+                        margin-top: 10px;
+                        border-top: solid 1px lightgray;
+                    }
+                    .member_card_preview_area .footer i {
+                        margin-top: 7px;
+                    }
+                    .member_card_preview_area .bottom_image {
+                        position: absolute;
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                    }
+                    .messageConfigForm {
+                        position: relative;
+                        min-height: 550px;
+                    }
+                    .messageConfigForm .triangle, .messageConfigForm .triangle:before {
+                        position: absolute;
+                        left: -32px;
+                        top: 250px;
+                        display: block;
+                        border: 16px solid transparent;
+                        border-right-color: lightgrey;
+                    }
+                    .messageConfigForm .triangle:before {
+                        content: "";
+                        position: absolute;
+                        left: -15px;
+                        border-right-color: #fafafa;
+                        top: -16px;
+                    }
+                    .message-setting-item {
+                        padding: 0 40px 0 15px;
+                    }
+                    .message-setting-item .radio-wrapper {
+                        width: 43px;
+                        display: inline-block;
+                        text-align: center;
+                    }
+                    .message-setting-item .radio {
+                        position: absolute;
+                        top: 50px;
+                        left: 38px;
+                    }
+                    .message-setting-item .content-wrapper {
+                        width: 85%;
+                        display: inline-block;
+                        vertical-align: middle;
+                        border: solid 1px lightgray;
+                        background-color: #fff;
+                        cursor: pointer;
+
+                    }
+                    .message-setting-item .content-wrapper .content {
+                        padding: 30px 20px 20px 100px;
+                    }
+                    .message-setting-item .content-wrapper h5 {
+                        font-weight: bold !important;
+                    }
+                    .message-setting-item.selected .content-wrapper {
+                        border-color: #2372F5;
+                    }
+                    .message-setting-item.default .content-wrapper .content {
+                        background: url("/assets/img/default_icon.png") no-repeat 30px center;
+                    }
+                    .message-setting-item.selected.default .content {
+                        background-image: url("/assets/img/default_icon_selected.png");
+                    }
+                    .message-setting-item.custom .content-wrapper .content {
+                        background: url("/assets/img/custom_icon.png") no-repeat 30px center;
+                    }
+                    .message-setting-item.selected.custom .content {
+                        background-image: url("/assets/img/custom_icon_selected.png");
+                    }
+                    .message-setting-item.custom .form {
+                        display: none;
+                    }
+                    .message-setting-item.selected.custom .form {
+                        display: block;
+                    }
+                    .additional {
+                        padding: 40px 105px;
+                    }
+                </style>
+                <div class="member_card_preview_area">
+                    <div class="member_card_header">
+                        H5会员卡
+                    </div>
+                    <div class="message">
+                        <div class="header">
+                            <h5 ng-bind="data.title"></h5>
+                            <p class="time">10月12日</p>
+                        </div>
+                        <div class="content">
+                            <img ng-src="{{data.imageUrlLocal}}">
+                        </div>
+                        <div class="footer">
+                            <i class="fa fa-angle-right pull-right"></i>
+                            详情
+                        </div>
+                    </div>
+                    <img class="bottom_image" src="/assets/img/bottom_menu.jpg">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-6 col-lg-8 no-padding-left message-config-form-wrapper padding-bottom-50 margin-bottom-40">
+                <form role="form" name="messageConfigForm" class="clearfix messageConfigForm padding-top-40 bordered-1 bordered-lightgray" style="background-color: #fafafa;" novalidate>
+                    <div class="triangle"></div>
+                    <div class="form-group col-xs-12">
+                        <div class="message-setting-item default" ng-class="{selected: selected=='default'}" ng-click="selectDefault()">
+                            <div class="radio-wrapper">
+                                <div class="radio">
+                                    <label>
+                                        <input ng-model="selected" value="default" name="selected" type="radio" class="colored-blue">
+                                        <span class="text"> </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="content-wrapper">
+                                <div class="content">
+                                    <h5>建议推送激活模板</h5>
+                                    <p class="darkgray">顾客扫描药店二维码后，马上收到药店给顾客推送的激活会员卡消息，点击激活推送后可以快速领取到药店的微信会员卡</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <div class="message-setting-item custom" ng-class="{selected: selected=='custom'}" ng-click="selectCustom()">
+                            <div class="radio-wrapper">
+                                <div class="radio">
+                                    <label>
+                                        <input ng-model="selected" value="custom" name="selected" type="radio" class="colored-blue">
+                                        <span class="text"> </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="content-wrapper">
+                                <div class="content">
+                                    <h5>自定义推送激活消息</h5>
+                                    <p class="darkgray">药店可以自定义消息标题和推送图片，可以设置更符合自己药店顾客的推送文案</p>
+                                </div>
+                                <div class="form padding-left-20 padding-right-20 padding-bottom-20">
+                                    <div class="form-group" ng-class="{'has-error': (messageConfigForm.$submitted || messageConfigForm.title.$dirty) && messageConfigForm.title.$invalid}">
+                                        <label for="title">消息标题</label>
+                                        <input type="text" class="form-control" id="title" name="title" ng-model="data.title" placeholder="请输入标题" required maxlength="64">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>图片<span style="color: #a9a9a9;">（大图片建议尺寸：900像素*500像素）</span></label><br>
+                                        <ripple class="btn btn-default uploadBtn">上传图片</ripple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <div class="additional darkgray">
+                            你还可以到营销中心设置推送优惠券、打折券、实物券（设置该功能需要对接ERP）
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="action-fixed text-align-center padding-top-20 padding-bottom-20 bordered-top-1 bordered-lightgray">
+                <ripple type="submit" class="btn btn-lg btn-success" ng-disabled="messageConfigForm.$invalid || !data.imageUrlLocal" ng-click="save()">保存并发布</ripple>
+            </div>
+        </div>
+    </div>
+</div>

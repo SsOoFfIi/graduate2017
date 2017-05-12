@@ -1,0 +1,186 @@
+<div class="add-reply">
+    <style type="text/css">
+        .add-reply h4.block {
+            height: 56px;
+            line-height: 36px;
+        }
+        .add-reply .emotion-picker {
+            position: absolute;
+            right: 26px;
+            top: 71px;
+        }
+
+        .keyword-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .keyword-list li {
+            border-top: solid 1px #eeeeee;
+            border-bottom: solid 1px #eeeeee;
+            margin-top: -1px;
+            padding: 14px 0;
+        }
+    </style>
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom text-align-center bordered-bottom-1 bordered-lightgray" style="margin-top: -14px;">
+            <ripple class="btn pull-left" ui-sref="app.base.reply.keywords"><i class="fa fa-arrow-left"></i>&emsp;返回</ripple>
+            添加关键词
+        </h4>
+    </div>
+    <div class="col-xs-12">
+        <div class="col-xs-12 bg-white padding-top-20 padding-bottom-20 no-padding-left no-padding-right">
+            <div class="well with-header bordered-1 bordered-lightgray no-box-shadow no-margin-bottom" style="background-color: #fff;">
+                <div class="header" style="background-color: #fbfbfb;">新规则
+                </div>
+                <div class="row">
+                    <div class="col-xs-1 margin-top-10" style="width: 80px;">
+                        <span class="red">*</span>关键词
+                    </div>
+                    <div class="col-xs-10">
+                        <tags-input ng-model="keywords" min-length="1" max-length="10" maxlength="10"
+                                    placeholder="请添加关键词， 长度不超过10个字， 按回车增加"
+                                    add-on-space="false" add-on-comma="true" add-on-blur="false"
+                                    add-on-paste="false"></tags-input>
+                        <!--<div on-emotion-select="onEmotionSelect(id, title)" class="emotion-picker right"></div>-->
+                        <ul class="keyword-list no-padding margin-top-20 no-margin-bottom">
+                            <li ng-repeat="keyword in keywords">
+                                <span>{{keyword.text}}</span>
+                                <a href="javascript:;" class="btn-red pull-right margin-left-20"
+                                   ng-click="removeKeyword($index)"><i class="fa fa-trash font-130"></i></a>
+                                <a href="javascript:;" class="pull-right azure" ng-click="keyword.type='gt'"
+                                   ng-if="keyword.type != 'gt'">等于</a>
+                                <a href="javascript:;" class="pull-right azure" ng-click="keyword.type='eq'"
+                                   ng-if="keyword.type == 'gt'">包含</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="well bordered-1 bordered-lightgray no-box-shadow" style="background-color: #fff;margin-top:-1px;">
+                <div>
+                    <div class="row">
+                        <div class="col-xs-1 margin-top-10" style="width: 80px;">
+                            <span class="red">*</span>回复
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="well with-header bordered-1 bordered-lightgray no-box-shadow no-margin-bottom" style="background-color: #fff;">
+                                <div class="header" style="background-color: #fbfbfb;">
+                                    <div class="btn-group">
+                                        <ripple type="button" ng-click="addTextMessage()" class="btn btn-default"><i
+                                                class="fa fa-pencil"></i> 文字
+                                        </ripple>
+                                        <ripple type="button" ng-click="addNewsMessage()" class="btn btn-default"><i
+                                                class="fa fa-imagetext"></i> 微信图文
+                                        </ripple>
+                                        <ripple type="button" ng-click="addLinkArticleMessage()" class="btn btn-default"><i
+                                                class="fa fa-link-news"></i> 高级图文
+                                        </ripple>
+                                        <ripple type="button" ng-click="addImageMessage()" class="btn btn-default"><i
+                                                class="fa fa-image"></i> 图片
+                                        </ripple>
+                                    </div>
+                                </div>
+                                <div class="padding-top-20">
+                                    <table class="table">
+                                        <tr ng-repeat="material in materials">
+                                            <td ng-if="material.type == 'text'">
+                                                {{material.content}}
+                                            </td>
+                                            <td ng-if="material.type == 'mpnews'">
+                                                <div>
+                                                    <div class="red" ng-if="material.content.isDeleted">图文素材获取失败或已被删除!</div>
+                                                    <div class="news-area" ng-if="!material.content.isDeleted" style="max-width: 350px">
+                                                        <div class="appmsg_content no-padding">
+                                                            <div class="js_appmsg_item has_thumb">
+                                                                <div class="cover_appmsg_item" style="margin: 14px;">
+                                                                    <div class="appmsg_info">
+                                                                        <em class="appmsg_date" style="color:#8d8d8d" ng-if="material.content.updateTime"
+                                                                            ng-bind="material.content.updateTime * 1000 | date : 'yyyy-MM-dd HH:mm'"></em>
+                                                                    </div>
+                                                                    <div class="pic">
+                                                                        <h4 class="appmsg_title" style="padding-top:0">
+                                                                            <a href="{{material.content.content.articles[0].url}}"
+                                                                               target="_blank">{{material.content.content.articles[0].title}}</a>
+                                                                        </h4>
+                                                                        <div class="appmsg_thumb_wrp">
+                                                                            <img width="100%"
+                                                                                 ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + material.content.content.articles[0].thumbMediaId}}">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="appmsg_item js_appmsg_item has_thumb"
+                                                                 ng-repeat="article in material.content.content.articles"
+                                                                 ng-if="$index > 0">
+                                                                <img class="js_appmsg_thumb appmsg_thumb"
+                                                                     ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + article.thumbMediaId}}">
+                                                                <h4 class="appmsg_title">
+                                                                    <a class="sub_title" href="{{article.url}}" style="color:#8d8d8d"
+                                                                       target="_blank">{{article.title}}</a>
+                                                                </h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td ng-if="material.type == 'news'">
+                                                <div>
+                                                    <div class="red" ng-if="material.content.isDeleted">图文素材获取失败或已被删除!</div>
+                                                    <div class="news-area" style="max-width: 350px" ng-if="!material.content.isDeleted">
+                                                        <div class="appmsg_content no-padding">
+                                                            <div class="js_appmsg_item has_thumb">
+                                                                <div class="cover_appmsg_item" style="margin: 14px;">
+                                                                    <div class="appmsg_info">
+                                                                        <em class="appmsg_date" style="color:#8d8d8d"
+                                                                            ng-bind="material.content.ltime * 1000 | date : 'yyyy-MM-dd HH:mm'"></em>
+                                                                    </div>
+                                                                    <div class="pic">
+                                                                        <h4 class="appmsg_title" style="padding-top:0">
+                                                                            <a href="{{material.content.content[0].url}}" target="_blank">{{material.content.content[0].title}}</a>
+                                                                        </h4>
+                                                                        <div class="appmsg_thumb_wrp">
+                                                                            <img width="100%"
+                                                                                 ng-src="{{material.content.content[0].localurl}}">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="appmsg_item js_appmsg_item has_thumb"
+                                                                 ng-repeat="article in material.content.content" ng-if="$index > 0">
+                                                                <img class="js_appmsg_thumb appmsg_thumb" ng-src="{{article.localurl}}">
+                                                                <h4 class="appmsg_title">
+                                                                    <a class="sub_title" href="{{article.url}}" style="color:#8d8d8d"
+                                                                       target="_blank">{{article.title}}</a>
+                                                                </h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td ng-if="material.type == 'image'">
+                                                <img style="max-width:300px;"
+                                                     ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + material.content.mediaId}}">
+                                            </td>
+                                            <td width="110">
+                                                <a href="javascript:;" class="pull-right margin-left-20"><i class="fa fa-trash font-130"
+                                                                                                            ng-click="removeMaterial($index)"></i></a>
+                                                <a href="javascript:;" class="pull-right"><i class="fa fa-pencil font-130"
+                                                                                             ng-click="changeMaterial($index)"></i></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="help-block">共{{count()}}条：文字({{count('text')}})&emsp;微信图文({{count('mpnews')}})&emsp;高级图文({{count('news')}})&emsp;图片({{count('image')}})</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a class="btn btn-lg btn-success" ng-click="save()">保存</a>
+            </div>
+        </div>
+    </div>
+</div>
+          

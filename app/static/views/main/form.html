@@ -1,0 +1,97 @@
+<div class="form-page">
+    <style>
+
+        .middle {
+            width: 100%;
+            height: 600px;
+        }
+
+        /*渐变和阴影*/
+        .box {
+            width: 80%;
+            height: 500px;
+            /*margin-top: 50px;*/
+            background: -webkit-linear-gradient(top, #fff, #ebebeb);
+            background: -moz-linear-gradient(top, #fff, #ebebeb);
+            background: linear-gradient(top, #fff, #ebebeb);
+            -webkit-box-shadow: 0 0 5px rgba(231, 231, 235, .5);
+            -moz-box-shadow: 0 0 5px rgba(231, 231, 235, .5);
+            box-shadow: 0 0 5px rgba(231, 231, 235, .5);
+        }
+    </style>
+    <div class="middle bordered-lightgray bordered-1">
+        <form>
+            <div class="box block-center">
+                <div class="col-xs-12 bordered-lightgray bordered-bottom-1">
+                    <form name="addForm" class="form-horizontal" novalidate role="form">
+                        <div class="modal-header">
+                            <h3  style="text-align: center" >表格创建</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="widget" ng-init="type=1;">
+                                <div class="form-group col-xs-12"
+                                     ng-class="{'has-error': (addForm.$submitted || addForm.code.$dirty) && addForm.code.$invalid}">
+                                    <label class="col-xs-3 control-label no-padding-right"><h4>创建者</h4></label>
+                                    <div class="col-xs-6"><h4>{{userData.username}}</h4></div>
+                                    <!--<p class="help-block">为账号本人</p>-->
+                                </div>
+                                <div class="form-group  col-xs-12"
+                                     ng-class="{'has-error': (addForm.$submitted || addForm.name.$dirty) && addForm.name.$invalid}">
+                                    <label for="name" class="col-xs-3 control-label no-padding-right"><h4>选课表名</h4>
+                                    </label>
+                                    <div class="col-xs-6">
+                                        <input type="text" required ng-minlength="2" maxlength="30"
+                                               ng-model="data.form.tableName"
+                                               name="name"
+                                               class="form-control" id="name" placeholder="选课表名">
+                                    </div>
+                                    <!--<p class="help-block">必填,2~100字符</p>-->
+                                </div>
+                                <div class="form-group  col-xs-12"
+                                     ng-class="{'has-error': (addForm.$submitted || addForm.phone.$dirty) && addForm.phone.$invalid}">
+                                    <label for="tablePwd" class="col-xs-3 control-label no-padding-right"><h4>表密码</h4>
+                                    </label>
+                                    <div class="col-xs-6">
+                                        <input type="text" required maxlength="8" ng-model="data.form.tablePwd"
+                                               name="tablePwd"
+                                               class="form-control" id="tablePwd" placeholder="8位">
+                                    </div>
+                                    <!--<p class="help-block">必填</p>-->
+                                </div>
+                                <div class="form-group  col-xs-12"
+                                     ng-class="{'has-error': (addForm.$submitted || addForm.managerName.$dirty) && addForm.managerName.$invalid}">
+                                    <label for="subjectString"
+                                           class="col-xs-3 control-label no-padding-right"><h4>科目名称</h4></label>
+                                    <div class="col-xs-6">
+                                        <input type="text" required ng-minlength="2" maxlength="30"
+                                               ng-model="data.form.subjectString"
+                                               name="subjectString"
+                                               class="form-control" id="subjectString" placeholder="科目间请用#号隔开">
+                                    </div>
+                                    <!--<p class="help-block">必填,2~30字符</p>-->
+                                </div>
+                                <div class="form-group  col-xs-12"
+                                     ng-class="{'has-error': (addForm.$submitted || addForm.managerPhone.$dirty) && addForm.managerPhone.$invalid}">
+                                    <label for="period" class="col-xs-3 control-label no-padding-right"><h4>有限天数</h4>
+                                    </label>
+                                    <div class="col-xs-6">
+                                        <input type="text" required maxlength="30" ng-model="data.form.period"
+                                               name="period"
+                                               class="form-control" id="period" placeholder="请填写数字">
+                                    </div>
+                                    <!--<p class="help-block">必填</p>-->
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <ripple class="btn btn-lg btn-success" ng-click="ok()">保存</ripple>
+                            <!--<ripple class="btn btn-lg btn-default" ng-click="cancel()">取消</ripple>-->
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

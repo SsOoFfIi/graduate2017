@@ -1,0 +1,234 @@
+<div class="follower-data-page">
+    <style type="text/css" rel="stylesheet">
+        .follower-data-page {
+
+        }
+        .follower-data-page .header-tabs {
+            display: inline-block;
+            list-style: none;
+            padding-left: 1rem;
+            font-size: 13px;
+            color: #afafaf;
+        }
+        .follower-data-page .header-tabs li {
+            display: inline-block;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+        .follower-data-page .header-tabs li.current {
+            color: #2372F3;
+            font-weight: bold;
+        }
+        .follower-data-page .profile-header .increase-count {
+            font-size: 50px;
+            font-weight: bold;
+            color: #2372F3;
+        }
+        .follower-data-page .profile-header .increase-rate {
+            vertical-align: top;
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 16px;
+        }
+        .follower-data-page .profile-header .increase-rate.up {
+            color: red;
+        }
+        .follower-data-page .profile-header .increase-rate.down {
+            color: green;
+        }
+        .follower-data-page .profile-header .total-count {
+            font-size: 50px;
+            font-weight: bold;
+            color: #2372F3;
+            vertical-align: top;
+        }
+        .follower-data-page .well {
+            padding-top: 45px;
+        }
+        .follower-data-page .well .header {
+            padding: 0;
+            background-color: #fafafa;
+        }
+        .follower-data-page .table>tbody>tr>td,
+        .follower-data-page .table>tbody>tr>th,
+        .follower-data-page .table>tfoot>tr>td,
+        .follower-data-page .table>tfoot>tr>th,
+        .follower-data-page .table>thead>tr>td,
+        .follower-data-page .table>thead>tr>th {
+            padding: 10px;
+            border-top: none;
+            border-bottom: 1px solid #ddd;
+        }
+        .follower-data-page .select2-container {
+            height: 40px;
+        }
+        .follower-data-page .select2-container.open {
+            background: #e7e6eb;
+        }
+        .follower-data-page .select2-container .select2-choice {
+            background: none;
+            border: none;
+            box-shadow: none;
+            cursor: pointer;
+            line-height: 40px;
+        }
+        .follower-data-page .select2-container .select2-choice .select2-arrow {
+            background: none;
+        }
+        .follower-data-page input[date-range-picker] {
+            border: none;
+            height: 40px;
+            background: url('/assets/img/caret-down.png') no-repeat 172px center;
+        }
+        .follower-data-page input[date-range-picker]:hover {
+            background-color: transparent;
+        }
+        .follower-data-page input[date-range-picker]:focus {
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            background-color: #e7e6eb;
+            background-image: url('/assets/img/caret-up.png');
+        }
+        .follower-data-page .select2-result-single {
+            padding: 8px 0;
+        }
+        .follower-data-page .select2-results {
+            margin: 0;
+            padding: 0;
+        }
+        .follower-data-page .select2-results .select2-result-label {
+            padding: 8px 7px;
+        }
+        .follower-data-page .select2-results .select2-highlighted {
+            background: #e7e6eb;
+            color: #000;
+        }
+        .follower-data-page .select2-container.open .select2-choice .select2-arrow b:before {
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            transform: rotate(180deg);
+            width: auto;
+            height: auto;
+        }
+    </style>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <h4 class="block no-margin-bottom bordered-bottom-1 bordered-lightgray" style="margin-top: -14px;">粉丝增长</h4>
+            <h5 class="margin-top-20">
+                增长概况
+                <ul class="header-tabs">
+                    <li ng-class="{'current': increaseSituation == 1}" ng-click="getIncreaseSituation(1)">昨日</li>
+                    <li ng-class="{'current': increaseSituation == 7}" ng-click="getIncreaseSituation(7)">最近7天</li>
+                    <li ng-class="{'current': increaseSituation == 30}" ng-click="getIncreaseSituation(30)">最近30天</li>
+                </ul>
+            </h5>
+            <div class="profile-header row">
+                <div class="col-xs-8">
+                    <div class="col-xs-4 text-center margin-top-20 margin-bottom-20">
+                        <div>
+                            <span class="increase-count" ng-bind="increaseSituationData.newCount">0</span>
+                            <span class="increase-rate up" ng-if="increaseSituationData.newCountPercent > 0" ng-bind="'↑' + increaseSituationData.newCountPercent + '%'"></span>
+                            <span class="increase-rate down" ng-if="increaseSituationData.newCountPercent < 0" ng-bind="'↓' + (increaseSituationData.newCountPercent*-1) + '%'"></span>
+                            <span class="increase-rate" ng-if="increaseSituationData.newCountPercent == 0">—</span>
+                        </div>
+                        <h5 class="margin-bottom-20">{{increaseSituation == 1 ? '昨天' : '最近' + increaseSituation + '天'}}新增关注</h5>
+                    </div>
+                    <div class="col-xs-4 text-center margin-top-20 margin-bottom-20">
+                        <div>
+                            <span class="increase-count" ng-bind="increaseSituationData.cancelCount">0</span>
+                            <!--<span class="increase-rate up" ng-if="increaseSituationData.increasePercent > 0" ng-bind="'↑' + increaseSituationData.increasePercent + '%'"></span>-->
+                            <!--<span class="increase-rate down" ng-if="increaseSituationData.increasePercent < 0" ng-bind="'↓' + (increaseSituationData.increasePercent*-1) + '%'"></span>-->
+                            <!--<span class="increase-rate" ng-if="increaseSituationData.increasePercent == 0">—</span>-->
+                        </div>
+                        <h5 class="margin-bottom-20">{{increaseSituation == 1 ? '昨天' : '最近' + increaseSituation + '天'}}取消关注</h5>
+                    </div>
+                    <div class="col-xs-4 text-center margin-top-20 margin-bottom-20">
+                        <div>
+                            <span class="increase-count" ng-bind="increaseSituationData.netNewCount">0</span>
+                            <span class="increase-rate up" ng-if="increaseSituationData.netNewCountPercent > 0" ng-bind="'↑' + increaseSituationData.netNewCountPercent + '%'"></span>
+                            <span class="increase-rate down" ng-if="increaseSituationData.netNewCountPercent < 0" ng-bind="'↓' + (increaseSituationData.netNewCountPercent*-1) + '%'"></span>
+                            <span class="increase-rate" ng-if="increaseSituationData.netNewCountPercent == 0">—</span>
+                        </div>
+                        <h5 class="margin-bottom-20">{{increaseSituation == 1 ? '昨天' : '最近' + increaseSituation + '天'}}净新增关注</h5>
+                    </div>
+                </div>
+                <div class="col-xs-4 text-align-center margin-top-20 margin-bottom-20 bordered-left bordered-left-1 bordered-e3">
+                    <div class="total-count" ng-bind="increaseSituationData.totalCount">0</div>
+                    <h5 class="margin-bottom-20">粉丝总数</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row data-charts">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <h5>增长趋势</h5>
+            <div class="well with-header bg_white no-padding-left no-padding-right bordered-1 bordered-lightgray no-box-shadow">
+                <div class="header">
+                    <input id="date" readonly date-range-picker class="form-control date-picker" type="text" ng-change="getIncreaseTendency()"
+                           ng-model="increaseTendencyParams.date" style="display:inline-block;width: 200px;vertical-align: middle;"
+                           options="opts"/>
+                </div>
+                <div class="tab-pane in active">
+                    <div id="charts" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row data-charts">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <h5>增长明细</h5>
+            <div class="well with-header bg_white no-padding-left no-padding-right margin-bottom-20 bordered-1 bordered-lightgray no-box-shadow clearfix" style="min-height: 306px">
+                <div class="header">
+                    <input date-range-picker readonly class="form-control date-picker" type="text"
+                           ng-model="increaseDetailParams.date" style="display:inline-block;width: 200px;"
+                           options="opts4"/>
+                    <ripple class="btn btn-md btn-default margin-left-10" ng-click="exportIncreaseDetail()" style="float: right; margin: 4px 5px;">导出Excel</ripple>
+                </div>
+                <table class="table table-hover">
+                    <thead class="bordered-bottom-1 bordered-gray">
+                    <tr>
+                        <th width="20"></th>
+                        <th width="120" class="text-align-center">
+                            时间
+                        </th>
+                        <th class="text-align-center">
+                            新增关注人数
+                        </th>
+                        <th class="text-align-center">
+                            取消关注人数
+                        </th>
+                        <th class="text-align-center">
+                            净新增关注人数
+                        </th>
+                        <th width="20"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in increaseDetailData">
+                        <td class="bordered-white" width="20"></td>
+                        <td class="text-align-center">
+                            {{item.date * 1000 | date: 'yyyy.MM.dd'}}
+                        </td>
+                        <td class="text-align-center">
+                            {{item.newCount}}
+                        </td>
+                        <td class="text-align-center">
+                            {{item.cancelCount}}
+                        </td>
+                        <td class="text-align-center">
+                            {{item.netNewCount}}
+                        </td>
+                        <td class="bordered-white" width="20"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="col-xs-12">
+                    <tm-pagination conf="paginationConf1"></tm-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,159 @@
+<div class="personasDetailPage">
+    <style type="text/css">
+        .personasDetailPage .item-icon {
+            position: absolute;
+            top: 88px;
+            width: 75px;
+            height: 75px;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+
+        .personasDetailPage #pieChart div {
+            margin: auto;
+        }
+
+        .personasDetailPage .desc {
+            padding: 15px 36px;
+            background-color: #f0f0f0;
+            line-height: 2.2rem;
+        }
+
+        .personasDetailPage .table-header {
+            background-color: #fafafa;
+            border: solid 1px #ddd;
+            padding: 6px 0;
+            border-bottom: none;
+        }
+
+        .personasDetailPage .table.no-td-border td {
+            border-left: none;
+            border-right: none;
+        }
+    </style>
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom text-align-center bordered-bottom-1 bordered-lightgray"
+            style="margin-top: -14px;height: 56px;line-height: 36px;">
+            <ripple class="btn pull-left" ui-sref="app.base.member.personas"><i class="fa fa-arrow-left"></i>&emsp;返回
+            </ripple>
+            <span ng-bind="currentData.name"></span>
+        </h4>
+    </div>
+    <div class="col-xs-12 margin-top-20 margin-bottom-30">
+        <div class="row">
+            <div class="col-xs-3" style="max-width: 300px;">
+                <div id="pieChart" style="height: 250px;"></div>
+                <svg class="item-icon" ng-if="currentData.id == 0" xmlns="http://www.w3.org/2000/svg" width="19.995"
+                     height="19.995" viewBox="0 0 59 59">
+                    <path style="fill: #2371f3;fill-rule: evenodd;"
+                          d="M119.06,2936.84H112.1L102.969,2926l25.016,0.08-8.925,10.76h0Zm-18.592,13.98a21.253,21.253,0,0,1,14.122-6.19l-15.47-18.55L86,2938.14l13.075,14.21q0.659-.795,1.394-1.53h0Zm23.307-4.54a20.98,20.98,0,0,1,6.756,4.54q0.733,0.735,1.395,1.53L145,2938.14l-13.12-12.06-15.471,18.55a21.2,21.2,0,0,1,7.366,1.65h0Zm-8.275.35a19.185,19.185,0,1,0,19.229,19.19,19.209,19.209,0,0,0-19.229-19.19h0Zm6.394,26.99-6.456-5.06-6.648,5.14,2.833-8.13-6.187-4.85h7.875l2.294-6.59,2.126,6.59h7.833l-6.267,4.85,2.6,8.05h0Z"
+                          transform="translate(-86 -2926)"/>
+                </svg>
+                <svg class="item-icon" ng-if="currentData.id == 1" xmlns="http://www.w3.org/2000/svg" width="19.997"
+                     height="19.997" viewBox="0 0 53 53">
+                    <path style="fill: #2371f3;fill-rule: evenodd;"
+                          d="M251.75,2956.5v-23.85a2.5,2.5,0,0,0-2.65-2.65H214.65a2.5,2.5,0,0,0-2.65,2.65v37.1l10.6-10.6h26.5A2.5,2.5,0,0,0,251.75,2956.5Zm10.6-15.9h-5.3v23.85H222.6v5.3a2.5,2.5,0,0,0,2.65,2.65H254.4L265,2983v-39.75A2.5,2.5,0,0,0,262.35,2940.6Zm-38.312,1.48a2.38,2.38,0,1,1-2.377,2.38A2.382,2.382,0,0,1,224.038,2942.08Zm8.45,0a2.38,2.38,0,1,1-2.423,2.38A2.4,2.4,0,0,1,232.488,2942.08Zm8.42,0a2.38,2.38,0,1,1-2.408,2.38A2.4,2.4,0,0,1,240.908,2942.08Z"
+                          transform="translate(-212 -2930)"/>
+                </svg>
+                <svg class="item-icon" ng-if="currentData.id == 2" xmlns="http://www.w3.org/2000/svg" width="19.998"
+                     height="20" viewBox="0 0 60 60.006">
+                    <path style="fill: #2371f3;fill-rule: evenodd;"
+                          d="M380.889,2929a8.4,8.4,0,1,1,0,16.8,8.558,8.558,0,0,1-6.09-2.53l-2.057,2.09a12.288,12.288,0,0,1,.243,17.24l3.5,3.17a9.554,9.554,0,0,1,6.032-2.14,9.356,9.356,0,1,1-9.487,9.35,9.26,9.26,0,0,1,2.26-6.05l-3.532-3.2a12.736,12.736,0,0,1-16.551-.57l-1.753,1.78a11.367,11.367,0,0,1,2.017,6.48,11.735,11.735,0,1,1-11.731-11.57,11.781,11.781,0,0,1,8.672,3.78l1.658-1.68a12.272,12.272,0,0,1-.653-14.83l-3.844-3.49a7.015,7.015,0,0,1-4.963,2.04,6.9,6.9,0,1,1,6.99-6.89,6.733,6.733,0,0,1-1,3.54l3.85,3.49a12.707,12.707,0,0,1,17.042-1.54l2.254-2.29a8.285,8.285,0,0,1-1.374-4.58,8.459,8.459,0,0,1,8.519-8.4h0ZM364,2954.85c-1.971,0-6,1.03-6,3V2960h12v-2.15C370,2955.88,365.97,2954.85,364,2954.85Zm0-1.71a2.57,2.57,0,1,0-2.57-2.57A2.528,2.528,0,0,0,364,2953.14Z"
+                          transform="translate(-332 -2925.997)"/>
+                </svg>
+                <svg class="item-icon" ng-if="currentData.id == 3" xmlns="http://www.w3.org/2000/svg" width="19.998"
+                     height="20" viewBox="0 0 56 56.007">
+                    <path style="fill: #2371f3;fill-rule: evenodd;"
+                          d="M486.07,2963.27v12.85a0.889,0.889,0,0,0,.89.88h6.556a0.885,0.885,0,0,0,.892-0.88V2959l-6.667,5.69-1.671-1.42h0Zm-28.022,12.85a0.889,0.889,0,0,0,.891.88h6.555a0.889,0.889,0,0,0,.891-0.88v-13.11l-8.339,6.82v6.29h0Zm14.007-17.74v17.74a0.863,0.863,0,0,0,.261.62,0.881,0.881,0,0,0,.632.26h6.557a0.891,0.891,0,0,0,.891-0.88v-17.63l-4.169-3.51-4.172,3.4h0Zm28.025,17.74a0.861,0.861,0,0,0,.259.62,0.883,0.883,0,0,0,.632.26h6.558a0.889,0.889,0,0,0,.892-0.88v-29.07l-8.342,7.12v21.95h0ZM498.642,2932a0.3,0.3,0,0,0-.3.3,0.283,0.283,0,0,0,.088.2l6.269,6.11-16.958,14.46-11.512-9.71L458,2958.26v6.43l18.231-14.89,11.512,9.71,20.484-17.47,5.178,5.05a0.29,0.29,0,0,0,.221.28,0.287,0.287,0,0,0,.335-0.14,0.284,0.284,0,0,0-.049-0.35v-14.59a0.289,0.289,0,0,0-.291-0.29H498.642Z"
+                          transform="translate(-458 -2926.497)"/>
+                </svg>
+            </div>
+            <div class="col-xs-9">
+                <h2 class="margin-top-30" ng-bind="currentData.name"></h2>
+                <p class="darkgray font-110"><span
+                        ng-bind="currentData.name"></span><span>{{currentData.important}}</span>人，会员总数<span>{{currentData.total}}</span>人
+                </p>
+                <p class="font-110" ng-bind="currentData.summary"></p>
+                <ul class="font-110 darkgray desc margin-top-20">
+                    <li ng-repeat="s in currentData.details">{{s}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="tab-content tabs-flat padding-bottom-20 no-padding-top no-padding-left no-padding-right no-border">
+            <div class="widget flat">
+                <div class="widget-body bg-white no-padding">
+                    <div>
+                        <div class="col-xs-12 table-header">
+                            <div class="col-xs-4" style="line-height: 32px;">
+                                <span>共有{{currentData.important}}位会员</span>
+                            </div>
+                            <div class="col-xs-8">
+                                <!--<a class="btn btn-success pull-right margin-left-10 margin-right-10">同步粉丝</a>-->
+                                <form ng-if="false" class="form-horizontal">
+                                    <div class="input-group pull-right" style="width: 250px">
+                                        <input type="text" class="form-control" ng-model="filterData.nickName"
+                                               placeholder="输入昵称">
+                                        <span class="input-group-btn">
+                                        <ripple class="btn btn-default" type="submit" ng-click="load()"><i
+                                                class="fa fa-search"></i></ripple>
+                                    </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <table class="table table-hover bordered-1 bordered-lightgray" id="simpledatatable">
+                            <tbody>
+                            <tr ng-repeat="member in memberList">
+                                <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                                <td width="60" class="text-center">
+                                    <img src="{{member.headimgurl||'assets/img/default_member_avatar.png'}}" width="50"
+                                    >
+                                </td>
+                                <td>
+                                    <!--<a class="btn btn-link" ng-click="editUser(member)" ng-bind="member.nickname"></a>-->
+                                    <div class="member-header clearfix">
+                                        <span ng-class="{'tooltip-red':member.personas=='重要价值会员', 'tooltip-green':member.personas=='重要保持会员', 'tooltip-blue':member.personas=='重要发展会员', 'tooltip-yellow':member.personas=='重要挽留会员' }"
+                                              style="line-height: 26px;"><span
+                                                ng-if="member.mobile">{{member.mobile}}</span><span ng-if="member.name">（{{member.name}}）</span></span>
+                                        <div ng-if="member.personas" class="tooltip right" role="tooltip">
+                                            <div class="tooltip-arrow"></div>
+                                            <div class="tooltip-inner"> {{member.personas}}</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <!--<span class="label label-white" ng-if="false">会员</span>-->
+                                        <span class="label label-white" ng-bind="storeMap[member.storeId + '']"></span>
+                                        <span class="label label-white" ng-bind="member.sex"
+                                              ng-if="member.sex && member.sex != '未知'"></span>
+                                        <span class="label label-white" ng-if="member.province">{{member.province}} {{member.city}}</span>
+                                        <span class="label label-white" ng-if="member.birthday"
+                                              ng-bind="getAge(member.birthday)"></span>
+                                        <span class="label label-white" ng-if="member.constellation">{{member.constellation}}</span>
+                                        <span class="label label-white" ng-if="member.recency">{{'最后一次购药距今' +toDays(member.recency)+ '天'}}</span>
+                                        <span class="label label-white" ng-if="member.frequency">{{'共购药'+member.frequency + '次'}}</span>
+                                        <span class="label label-white" ng-if="member.monetary">{{'消费总额'+member.monetary + '元'}}</span>
+                                        <span class="label label-white" ng-if="member.unitPrice">{{'客单价'+member.unitPrice + '元'}}</span>
+                                        <span class="label label-white" ng-if="member.disease">{{member.disease}}</span>
+                                    </div>
+                                </td>
+                                <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                            </tr>
+                            <tr ng-if="memberList.length == 0">
+                                <td class="text-align-center padding-top-50 padding-bottom-50">
+                                    没有数据
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-xs-12">
+                        <tm-pagination conf="paginationConf"></tm-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,325 @@
+<div class="statistics-page">
+    <style type="text/css" rel="stylesheet">
+        .page-body {
+            background: none !important;
+            padding: 0 !important;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+        .statistics-page {
+
+        }
+        .statistics-page .header-tabs {
+            display: inline-block;
+            list-style: none;
+            padding-left: 1rem;
+            font-size: 13px;
+            color: #afafaf;
+        }
+        .statistics-page .header-tabs li {
+            display: inline-block;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+        .statistics-page .header-tabs li.current {
+            color: #2372F3;
+            font-weight: bold;
+        }
+        .statistics-page .profile-header .increase-count {
+            font-size: 50px;
+            font-weight: bold;
+            color: #2372F3;
+        }
+        .statistics-page .profile-header .increase-rate {
+            color: lightgrey;
+            vertical-align: top;
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 16px;
+        }
+        .statistics-page .profile-header .increase-rate.up {
+            color: red;
+        }
+        .statistics-page .profile-header .increase-rate.down {
+            color: green;
+        }
+        .statistics-page .profile-header .total-count {
+            font-size: 50px;
+            font-weight: bold;
+            color: #2372F3;
+            vertical-align: top;
+        }
+        .statistics-page .profile-header .increase-progress {
+            color: #9d9d9d;
+            margin-top: 10px;
+        }
+        .statistics-page .profile-header .increase-progress label {
+            display: inline-block;
+            width: 100px;
+        }
+        .statistics-page .profile-header .increase-progress .progress {
+            display: inline-block;
+            height: 11px;
+            background-color: #2372F3;
+            margin: 0 10px;
+            border-radius: 0;
+            width: 0;
+            -webkit-transition: all .3s linear;
+            -moz-transition: all .3s linear;
+            -o-transition: all .3s linear;
+            transition: all .3s linear;
+        }
+        .statistics-page .well {
+            padding-top: 45px;
+        }
+        .statistics-page .well .header {
+            padding: 0;
+            background-color: #fafafa;
+        }
+        .statistics-page .pie-chart-total {
+            height: 300px;
+            position: absolute;
+            text-align: center;
+            width: 100%;
+            color: #2372F3;
+            padding-top: 135px;
+            font-size: 1.5rem;
+        }
+        .statistics-page .table>tbody>tr>td,
+        .statistics-page .table>tbody>tr>th,
+        .statistics-page .table>tfoot>tr>td,
+        .statistics-page .table>tfoot>tr>th,
+        .statistics-page .table>thead>tr>td,
+        .statistics-page .table>thead>tr>th {
+            padding: 10px;
+            border-top: none;
+            border-bottom: 1px solid #ddd;
+        }
+        .statistics-page .select2-container {
+            height: 40px;
+        }
+        .statistics-page .select2-container.open {
+            background: #e7e6eb;
+        }
+        .statistics-page .select2-container .select2-choice {
+            background: none;
+            border: none;
+            box-shadow: none;
+            cursor: pointer;
+            line-height: 40px;
+        }
+        .statistics-page .select2-container .select2-choice .select2-arrow {
+            background: none;
+        }
+        .statistics-page input[date-range-picker] {
+            border: none;
+            height: 40px;
+            background: url(/assets/img/caret-down.png) no-repeat 172px center;
+        }
+        .statistics-page input[date-range-picker]:hover {
+            background-color: transparent;
+        }
+        .statistics-page input[date-range-picker]:focus {
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            background-color: #e7e6eb;
+            background-image: url(/assets/img/caret-up.png);
+        }
+        .statistics-page .select2-result-single {
+            padding: 8px 0;
+        }
+        .statistics-page .select2-results {
+            margin: 0;
+            padding: 0;
+        }
+        .statistics-page .select2-results .select2-result-label {
+            padding: 8px 7px;
+        }
+        .statistics-page .select2-results .select2-highlighted {
+            background: #e7e6eb;
+            color: #000;
+        }
+        .statistics-page .select2-container.open .select2-choice .select2-arrow b:before {
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            transform: rotate(180deg);
+            width: auto;
+            height: auto;
+        }
+        .selected{
+            background-color: #00a2d4;
+        }
+        .header-fullname{
+            font-size: 30px;
+        }
+    </style>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="well margin-bottom-20 no-padding bg_white">
+                <div class="profile-header row">
+                    <div style="max-width: 175px;"
+                         class="col-xs-2 text-center padding-left-30 no-padding-right margin-top-30 margin-bottom-30">
+                        <img ng-src="{{userData.image ||  '/static/assets/img/mp_default_logo.jpg'}}" alt=""
+                             class="header-avatar">
+                    </div>
+                    <div style="height: 100px;"
+                         class="col-xs-6 profile-info no-padding-left margin-top-30 margin-bottom-20 text-center">
+                        <div class="col-xs-12 no-padding-left margin-top-20">
+                            <span class="header-fullname" ng-bind="userData.name"></span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-10"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                                <!--<i class="fa fa-check"></i>-->
+                                {{userData.username || "userName"}}
+                            </span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-5"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                                <!--<i class="fa fa-check"></i>-->
+                                {{userData.gender||"gender"}}
+                            </span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-5"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                                <!--<i class="fa fa-check"></i>-->
+                                {{userData.college || "college"}}
+                            </span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-5"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                            <!--<i class="fa fa-check"></i>-->
+                            {{userData.className || "class"}}
+                        </span>
+                            <span href="#" class="btn-palegreen btn-sm btn-follow margin-left-5"
+                                  style="background-color: #26C166 !important; padding: 6px 13px; font-size: 12px;">
+                            <!--<i class="fa fa-check"></i>-->
+                            {{userData.grade || "grade"}}
+                        </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well margin-bottom-20 padding-20 bg_white">
+       <div class="row">
+           <div class="col-xs-12 text-align-center">
+               <h3 ng-bind="tableName"></h3>
+           </div>
+           <div class="data-charts ">
+               <div class="col-xs-12">
+                   <div class="well with-header bg_white no-padding-left no-padding-right margin-bottom-20 bordered-1 bordered-lightgray no-box-shadow clearfix"
+                        style="min-height: 306px">
+                       <div class="header">
+                           <!--<input date-range-picker readonly class="form-control date-picker" type="text"-->
+                           <!--ng-model="increaseDetailParams.date" style="display:inline-block;width: 200px;" max="maxDate"-->
+                           <!--options="opts4"/>-->
+                           <ripple class="btn btn-md btn-default margin-left-10" ng-click="exportExcel()"
+                                   style="float: right; margin: 4px 5px;">导出Excel
+                           </ripple>
+                           <ripple class="btn btn-md btn-default margin-left-10" ng-click="sure()"
+                                   style="float: right; margin: 4px 5px;">删除表格
+                           </ripple>
+                       </div>
+                       <table class="table table-hover" id="table">
+                           <thead class="bordered-bottom-1 bordered-gray">
+                           <tr>
+                               <th width="20"></th>
+                               <th  class="text-align-center">
+                                   行号
+                               </th>
+                               <th>
+                                   学号
+                               </th>
+                               <th class="text-align-center">
+                                   学生名字
+                               </th>
+                               <th class="text-align-center">
+                                   科目名称
+                               </th>
+                               <th class="text-align-center">
+                                   最新一次修改时间
+                               </th>
+                               <!--<th class="text-align-center">-->
+                                   <!--选课科目总数量-->
+                               <!--</th>-->
+                               <th width="20"></th>
+                           </tr>
+                           </thead>
+                           <tbody>
+                           <tr ng-repeat="item in tableList">
+                               <td class="bordered-white" width="20"></td>
+                               <td class="text-align-center">
+                                   {{item.rowNum}}
+                               </td>
+                               <td>
+                                   {{item.username}}
+                               </td>
+                               <td class="text-align-center">
+                                   {{item.name}}
+                               </td>
+                               <td class="text-align-center" >
+                                  <span ng-repeat="arr in item.sub">
+                                      {{arr}}
+                                  </span>
+                               </td>
+                               <td class="text-align-center">
+                                   {{item.editDate}}
+                               </td>
+
+                               <!--<td class="text-align-center">-->
+                                   <!--{{subjectCount}}-->
+                               <!--</td>-->
+                               <td class="bordered-white" width="20"></td>
+                           </tr>
+                           </tbody>
+                       </table>
+                       <div style="min-height: 130px;" ng-if="increaseDetailData.length == 0">
+                           <div style="text-align: center; padding: 50px 0;" ng-if="increaseDetailData.length == 0">暂无数据</div>
+                       </div>
+                       <div class="col-xs-12">
+                           <tm-pagination conf="paginationConf"></tm-pagination>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="data-charts">
+               <div class="col-xs-12">
+                   <h5>数据展现</h5>
+                   <div class="well with-header bg_white no-padding-left no-padding-right bordered-1 bordered-lightgray no-box-shadow">
+                       <!--<div class="header">-->
+                           <!--<div class="input-group input-group-md" style="width: 200px;float: right; margin: 3px 5px;">-->
+                                <!--<form>-->
+                            <!--<div class="input-group">-->
+                                <!--<input class="form-control" ng-model="data.num" type="text" maxlength="25" placeholder="表格序列号">-->
+                                <!--<span class="input-group-btn">-->
+                            <!--<ripple class="btn" on-click="changePath()" type="submit"><i class="fa fa-search grey"></i></ripple>-->
+                        <!--</span>-->
+                            <!--</div>-->
+                        <!--</form>-->
+                        <!--</span>-->
+                           <!--</div>-->
+                       <!--</div>-->
+                       <div class="tab-pane in active">
+                           <div id="charts" style="height: 400px;"></div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+</div>
+<script type="text/ng-template" id="sure.html">
+    <form name="sureForm" class="form-horizontal"  novalidate role="form">
+        <div class="modal-header">
+            <h3 class="modal-title" >确定删除此表格？</h3>
+        </div>
+
+
+        <div class="modal-footer">
+            <ripple class="btn btn-lg btn-success" ng-click="ok()">保存</ripple>
+            <ripple class="btn btn-lg btn-default" ng-click="cancel()">取消</ripple>
+        </div>
+    </form>
+</script>

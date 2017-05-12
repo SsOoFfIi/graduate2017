@@ -1,0 +1,79 @@
+<!-- Page Container -->
+<div class="page-container">
+    <!-- Page Sidebar -->
+    <div class="page-sidebar {{settings.fixed.sidebar ? 'sidebar-fixed' : ''}}" id="sidebar">
+        <div class="sidebar-collapse">
+            <a>
+                <i class="collapse-icon fa fa-bars"></i>
+            </a>
+        </div>
+        <ul class="nav sidebar-menu">
+            <li ui-sref-active="active" class="open">
+                <a>
+                    <i class="menu-icon fa fa-graduation-cap blue"></i>
+                    <span class="menu-text"> 培训测评 </span>
+                </a>
+
+                <ul class="submenu">
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.training.course" ui-sref-opts="{reload:true}">
+                            <span class="menu-text"> 学习课程 </span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.training.test" ui-sref-opts="{reload:true}">
+                            <span class="menu-text"> 知识测评 </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- /Page Sidebar -->
+    <!-- Page Content -->
+    <div class="page-content">
+        <!-- Page Breadcrumb -->
+        <!--<div class="page-breadcrumbs page-header {{settings.fixed.breadcrumbs ? 'breadcrumbs-fixed' : ''}}" data-ng-include=" 'view?view=/common/breadcrumbs' "></div>-->
+        <!-- /Page Breadcrumb -->
+        <!-- Page Header -->
+        <!--<div class="page-header position-relative page-header-fixed" data-ng-include=" 'view?view=/common/header' "></div>-->
+        <!-- /Page Header -->
+        <!-- Page Body -->
+        <div class="page-body no-margin-right bg-white padding-20" ui-view>
+            <!-- Your Content Goes Here -->
+        </div>
+        <!-- /Page Body -->
+    </div>
+    <!-- /Page Content -->
+</div>
+<!-- /Page Container -->
+<script type="text/ng-template" id="downloadAppModal.html">
+    <div class="modal-header">
+        <ripple type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</ripple>
+        <h4 class="modal-title">{{type == 1 ? '课程' : '测评'}}开始提示</h4>
+    </div>
+    <div class="modal-body">
+        <style type="text/css" rel="stylesheet">
+            .download-app-modal .modal-body {
+                padding: 20px;
+            }
+            .download-app-modal .copy_link {
+                text-indent: 1.5rem;
+            }
+            .download-app-modal .copy_link input{
+                border: none;
+                width: 250px;
+                background: none;
+            }
+            .download-app-modal .qrcode img{
+                vertical-align: middle;
+                width: 10rem;
+            }
+        </style>
+        <p>{{type == 1 ? '课程' : '测评任务'}}已经开始，请让店员下载心康助手进行{{type == 1 ? '学习' : '测评'}}，您可以：</p>
+        <p class="padding-top-10">复制下方链接地址，发给店员</p>
+        <div class="copy_link">
+            <input id="urlShared1" style="width: 240px; border: none;" readonly value="https://www.sinoxk.com/download/">&emsp;<ripple ng-click="copyUrl('#urlShared1')" class="btn btn-sm btn-success">复制</ripple>
+        </div>
+    </div>
+</script>

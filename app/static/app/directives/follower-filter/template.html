@@ -1,0 +1,471 @@
+<div class="follower-filter">
+    <style scoped type="text/css">
+        .follower-filter .nav-tabs>li>a, .follower-filter .nav-tabs>li>a:focus{
+            line-height: 21px;
+            border: 1px solid #ddd;
+            border-bottom: none;
+            margin-top: -1px;
+        }
+        .follower-filter .nav-tabs>li.active>a[href],
+        .follower-filter .nav-tabs>li.active>a[href]:hover,
+        .follower-filter .nav-tabs>li.active>a[href]:focus {
+            border: 1px solid #ddd;
+            border-bottom: none;
+            margin-top: -1px;
+            color: #2372F3;
+            line-height: 20px;
+            border-bottom: none;
+            background: #fff;
+        }
+        .follower-filter .filter-list{
+            padding: 10px 0;
+        }
+
+        .follower-filter .filter-list a {
+            display: inline-block;
+            padding: 2px 5px;
+            border: solid 1px #ececec;
+            margin: 5px 6px;
+            color: #575757;
+            text-decoration: none;
+            height: initial;
+            line-height: initial;
+        }
+
+        .follower-filter .filter-list a i {
+            margin-left: 3px;
+        }
+
+        .follower-filter .filter-list a:hover i {
+            color: red;
+        }
+
+        .follower-filter .filter-wrapper {
+            position: relative;
+        }
+
+        .follower-filter .filter-selection-list {
+            -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+            position: absolute;
+            top: 50px;
+            z-index: 99;
+            background-color: #fff;
+            width: 100%;
+        }
+
+        .follower-filter .filter-wrapper span.label1 {
+            display: inline-block;
+            padding: 15px 14px;
+        }
+
+        .follower-filter .filter-wrapper .filter-category {
+            display: inline-block;
+            padding: 15px 20px;
+            color: #575757;
+            text-decoration: none;
+        }
+
+        .follower-filter .filter-wrapper .filter-category i {
+            color: #c8c8c8;
+            -webkit-transition: transform .3s;
+            -moz-transition: transform .3s;
+            -ms-transition: transform .3s;
+            -o-transition: transform .3s;
+            transition: transform .3s;
+        }
+
+        .follower-filter .filter-wrapper .filter-category.current {
+            background-color: #e5e5e5;
+        }
+
+        .follower-filter .filter-wrapper .filter-category.current i {
+            -webkit-transform: rotateZ(180deg);
+            -moz-transform: rotateZ(180deg);
+            -ms-transform: rotateZ(180deg);
+            -o-transform: rotateZ(180deg);
+            transform: rotateZ(180deg);
+        }
+
+        .follower-filter .filter-wrapper ul.items {
+            padding-left: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+            list-style: none;
+            border-bottom: solid 1px #e5e5e5;
+        }
+
+        .follower-filter .filter-wrapper ul.items li {
+            display: inline-block;
+            padding: 2px 5px;
+            margin: 5px;
+            border: solid 1px #ececec;
+            cursor: pointer;
+        }
+
+        .follower-filter .filter-wrapper ul.items li.selected {
+            color: #fff;
+            background-color: #2371f3;
+            border-color: #2371f3;
+        }
+
+        .follower-filter .filter-wrapper ul.items li:hover i {
+            color: red;
+        }
+    </style>
+    <div class="row filter-list">
+        <div class="col-xs-12" style="min-height: 34px;line-height:34px;">
+            筛选粉丝&nbsp;(<span class="red">{{memberCount}}</span>)&nbsp;<i class="fa fa-angle-right darkgray" style="vertical-align: middle;"></i>
+            <a href="javascript:;" ng-if="filterData.memberFlag != '1'">{{followerTypeList[filterData.memberFlag]}}</a>
+            <a href="javascript:;" ng-if="filterData.memberFlag == '1'">{{memberTypeList[filterData.memberType]}}</a>
+            <a href="javascript:;" ng-repeat="store in filterData.store" ng-click="removeFilterData(filterData.store, $index)">{{store.name}}<i class="fa">×</i></a>
+            <a href="javascript:;" ng-repeat="area in filterData.area" ng-click="removeFilterData(filterData.area, $index)">{{area.province}}&nbsp;{{area.city}}<i class="fa">×</i></a>
+            <a href="javascript:;" ng-repeat="sex in filterData.sex" ng-click="removeFilterData(filterData.sex, $index)">{{sex}}<i class="fa">×</i></a>
+            <a href="javascript:;" ng-repeat="age in filterData.age" ng-click="removeFilterData(filterData.age, $index)">{{age.text || (age.min == age.max ? age.max+'岁' : age.min+'-'+age.max+'岁')}}<i class="fa">×</i></a>
+            <a href="javascript:;" ng-repeat="zodiacSign in filterData.zodiacSign" ng-click="removeFilterData(filterData.zodiacSign, $index)">{{zodiacSign.name+'('+zodiacSign.startDate+'-'+zodiacSign.endDate+')'}}<i class="fa">×</i></a>
+            <a href="javascript:;" ng-repeat="r in filterData.r" ng-click="removeFilterData(filterData.r, $index)">{{'R:' + (r.text || r.min + '-' + r.max + customR.timeMap[r.time])}}<i class="fa">×</i></a>
+            <a href="javascript:;" ng-repeat="f in filterData.f" ng-click="removeFilterData(filterData.f, $index)">{{'F:' + (f.text || f.min + '-' + f.max + '次') + '/' + customF.timeMap[f.time]}}<i class="fa">×</i></a>
+            <a href="javascript:;" ng-repeat="m in filterData.m" ng-click="removeFilterData(filterData.m, $index)">{{'M:' + (m.text || m.min + '-' + m.max + '元')}}<i class="fa">×</i></a>
+            <!--<a href="javascript:;" ng-repeat="disease in filterData.disease" ng-click="removeFilterData(filterData.disease, $index)">{{disease}}<i class="fa">×</i></a>-->
+        </div>
+    </div>
+    <div class="well with-header bg_white no-padding-left no-padding-right no-padding-top no-padding-bottom margin-bottom-20 no-box-shadow bordered-1 bordered-lightgray" style="border-top: none;">
+        <div class="tabbable summary-data clearfix">
+            <ul class="nav nav-tabs tabs-flat bg-seashell">
+                <li>
+                    <a class="darkgray no-border-left">
+                        &emsp;筛选范围：&emsp;
+                    </a>
+                </li>
+                <li class="active">
+                    <a data-toggle="tab" href="#home11" target="_self" ng-click="toggleMemberFlag('')">
+                        &emsp;全部&emsp;
+                    </a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#home11" target="_self" ng-click="toggleMemberFlag('1')">
+                        &emsp;会员&emsp;
+                    </a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#home11" target="_self" ng-click="toggleMemberFlag('0')">
+                        &emsp;非会员&emsp;
+                    </a>
+                </li>
+            </ul>
+            <div class="bordered-top-1 bordered-lightgray">
+                <div class="padding-left-20 padding-right-20" ng-if="filterData.memberFlag == '1'">
+                    <div class="padding-10 bordered-bottom-1 bordered-lightgray">
+                        <a class="btn ripple" ng-class="{'btn-primary': filterData.memberType == ''}" ng-click="toggleMemberType('')">
+                            &emsp;全部会员&emsp;
+                        </a>
+                        <a class="btn ripple" ng-class="{'btn-primary': filterData.memberType == 'importantValue'}" ng-click="toggleMemberType('importantValue')">
+                            &emsp;重要价值会员&emsp;
+                        </a>
+                        <a class="btn ripple" ng-class="{'btn-primary': filterData.memberType == 'importantMaintenance'}" ng-click="toggleMemberType('importantMaintenance')">
+                            &emsp;重要保持会员&emsp;
+                        </a>
+                        <a class="btn ripple" ng-class="{'btn-primary': filterData.memberType == 'importantDevelopment'}" ng-click="toggleMemberType('importantDevelopment')">
+                            &emsp;重要发展会员&emsp;
+                        </a>
+                        <a class="btn ripple" ng-class="{'btn-primary': filterData.memberType == 'importantRetention'}" ng-click="toggleMemberType('importantRetention')">
+                            &emsp;重要挽留会员&emsp;
+                        </a>
+                    </div>
+                </div>
+                <div class="tab-content tabs-flat no-padding no-border">
+                    <div id="home11" class="tab-pane in active">
+                        <div class="filter-wrapper" style="position: relative">
+                            <div>
+                                <span class="label1">&emsp;筛选条件：&emsp;</span>
+                                <a class="filter-category" ng-class="{current: selectCategory == 'store'}" href="javascript:;" ng-click="select('store')">门店&nbsp;&nbsp;<i
+                                        class="fa fa-caret-down"></i></a>
+                                <a class="filter-category" ng-class="{current: selectCategory == 'area'}" href="javascript:;" ng-click="select('area')">地区&nbsp;&nbsp;<i
+                                        class="fa fa-caret-down"></i></a>
+                                <a class="filter-category" ng-class="{current: selectCategory == 'sex'}" href="javascript:;" ng-click="select('sex')">性别&nbsp;&nbsp;<i
+                                        class="fa fa-caret-down"></i></a>
+                                <a class="filter-category" ng-class="{current: selectCategory == 'age'}" href="javascript:;" ng-click="select('age')">年龄&nbsp;&nbsp;<i
+                                        class="fa fa-caret-down"></i></a>
+                                <a class="filter-category" ng-class="{current: selectCategory == 'zodiacSign'}" href="javascript:;" ng-click="select('zodiacSign')">星座&nbsp;&nbsp;<i
+                                        class="fa fa-caret-down"></i></a>
+                                <a class="filter-category" ng-if="filterData.memberFlag == '1' && filterData.memberType == ''" ng-class="{current: selectCategory == 'R'}" href="javascript:;" ng-click="select('R')">上次消费距今(R)&nbsp;&nbsp;<i
+                                        class="fa fa-caret-down"></i></a>
+                                <a class="filter-category" ng-if="filterData.memberFlag == '1' && filterData.memberType == ''" ng-class="{current: selectCategory == 'F'}" href="javascript:;" ng-click="select('F')">消费频率(F)&nbsp;&nbsp;<i
+                                        class="fa fa-caret-down"></i></a>
+                                <a class="filter-category" ng-if="filterData.memberFlag == '1' && filterData.memberType == ''" ng-class="{current: selectCategory == 'M'}" href="javascript:;" ng-click="select('M')">客单价(M)&nbsp;&nbsp;<i
+                                        class="fa fa-caret-down"></i></a>
+                                <!--慢病的筛选-->
+                                <!--<a class="filter-category" ng-if="filterData.memberFlag == '1'" ng-class="{current: selectCategory == 'disease'}" href="javascript:;" ng-click="select('disease')">慢病人群&nbsp;&nbsp;<i-->
+                                    <!--class="fa fa-caret-down"></i></a>-->
+                            </div>
+                            <div class="col-xs-12 filter-selection-list no-padding bordered-top-1 bordered-lightgray" ng-if="selectCategory == 'store'">
+                                <div class="row">
+                                    <div class="col-xs-8 padding-top-10 padding-bottom-10">
+                                        <div class="col-xs-2 no-padding-right">
+                                            <ui-select ng-model="filterData.storeArea.province" theme="select2" name="province" ng-required
+                                                       ng-change="filterData.storeArea.city = undefined;filterData.storeArea.area = undefined;"
+                                                       class="ui-select-container ui-select-bootstrap dropdown">
+                                                <ui-select-match allow-clear="true" placeholder="所有省">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices repeat="item in provinceData | filter:{name: $select.search}">
+                                                    {{item.name }}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-xs-2 no-padding-right">
+                                            <ui-select ng-model="filterData.storeArea.city" theme="select2" name="city" ng-required
+                                                       ng-change="filterData.storeArea.area = undefined;"
+                                                       class="ui-select-container ui-select-bootstrap dropdown">
+                                                <ui-select-match allow-clear="true" placeholder="所有市">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices allow-clear="true" repeat="item in filterAreaData(filterData.storeArea.province.id, 2) | filter:{name: $select.search}">
+                                                    {{item.name }}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-xs-2 no-padding-right">
+                                            <ui-select ng-model="filterData.storeArea.area" theme="select2" name="area" ng-required
+                                                       class="ui-select-container ui-select-bootstrap dropdown">
+                                                <ui-select-match allow-clear="true" placeholder="所有区县">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices repeat="item in filterAreaData(filterData.storeArea.city.id, 3) | filter:{name: $select.search}">
+                                                    {{item.name }}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-xs-3 no-padding-right">
+                                            <div class="input-group">
+                                                <input type="text" ng-model="filterData.storeName" class="form-control" placeholder="输入门店关键字">
+                                                <span class="input-group-btn"><ripple class="btn btn-default" type="button"><i class="fa fa-search"></i></ripple></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="items padding-10">
+                                    <li ng-repeat="store in storeList | filter:FilterStore" ng-class="{selected: getStoreIds(filterData.store).indexOf(store.id) >= 0}" ng-click="toggleSelectedStore(store)">{{store.name}}</li>
+                                </ul>
+                                <div class="text-center padding-10">
+                                    <a class="btn btn-default btn-sm" ng-click="$parent.selectCategory = ''">收起</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 filter-selection-list no-padding bordered-top-1 bordered-lightgray" ng-if="selectCategory == 'area'">
+                                <div class="row">
+                                    <div class="col-xs-8 padding-top-10 padding-bottom-10">
+                                        <div class="col-xs-2 no-padding-right">
+                                            <ui-select ng-model="filterData.tmpSelectArea.province" theme="select2" name="province" ng-required
+                                                       ng-change="filterData.tmpSelectArea.city = undefined;"
+                                                       class="ui-select-container ui-select-bootstrap dropdown">
+                                                <ui-select-match allow-clear="true" placeholder="所有省">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices repeat="item in provinceData | filter:{name: $select.search}">
+                                                    {{item.name }}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-xs-2 no-padding-right">
+                                            <ui-select ng-model="filterData.tmpSelectArea.city" theme="select2" name="city" ng-required
+                                                       ng-change="filterData.tmpSelectArea.area = undefined;"
+                                                       class="ui-select-container ui-select-bootstrap dropdown">
+                                                <ui-select-match allow-clear="true" placeholder="所有市">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices repeat="item in filterAreaData(filterData.tmpSelectArea.province.id, 2) | filter:{name: $select.search}">
+                                                    {{item.name }}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-xs-3 no-padding-right">
+                                            <div class="input-group">
+                                                <a class="btn btn-default" ng-click="addSelectedArea()">添加</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="items padding-10">
+                                    <li ng-repeat="area in filterData.area" ng-click="removeArea($index)">{{area.province}}&nbsp;{{area.city}}<i class="fa">×</i></li>
+                                </ul>
+                                <div class="text-center padding-10">
+                                    <a class="btn btn-default btn-sm" ng-click="$parent.selectCategory = ''">收起</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 filter-selection-list no-padding bordered-top-1 bordered-lightgray" ng-if="selectCategory == 'sex'">
+                                <ul class="items padding-10">
+                                    <li ng-class="{selected: filterData.sex.indexOf('男') >= 0}" ng-click="toggleSelectedSex('男')">男</li>
+                                    <li ng-class="{selected: filterData.sex.indexOf('女') >= 0}" ng-click="toggleSelectedSex('女')">女</li>
+                                </ul>
+                                <div class="text-center padding-10">
+                                    <a class="btn btn-default btn-sm" ng-click="$parent.selectCategory = ''">收起</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 filter-selection-list no-padding bordered-top-1 bordered-lightgray" ng-if="selectCategory == 'age'">
+                                <div class="row">
+                                    <div class="col-xs-8 padding-top-10 padding-bottom-10">
+                                        <div class="col-xs-2 no-padding-right" style="width: 80px;">
+                                            <label class="control-label">自定义：</label>
+                                        </div>
+                                        <div class="col-xs-1 no-padding">
+                                            <input ng-model="customAge.minAge" type="text" class="form-control input-xs">
+                                        </div>
+                                        <div class="col-xs-1 no-padding text-center" style="width: 30px;">
+                                            -
+                                        </div>
+                                        <div class="col-xs-1 no-padding">
+                                            <input ng-model="customAge.maxAge" type="text" class="form-control input-xs">
+                                        </div>
+                                        <div class="col-xs-3 no-padding-right">
+                                            <div class="input-group">
+                                                <a class="btn btn-default btn-xs" ng-click="addAge()">添加</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                                <ul class="items padding-10">
+                                    <li ng-repeat="age in ageList" ng-class="{selected: filterData.age.indexOf(age) >= 0}" ng-click="addAge(age)">{{age.text}}</li>
+                                </ul>
+                                <div class="text-center padding-10">
+                                    <a class="btn btn-default btn-sm" ng-click="$parent.selectCategory = ''">收起</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 filter-selection-list no-padding bordered-top-1 bordered-lightgray" ng-if="selectCategory == 'zodiacSign'">
+                                <ul class="items padding-10">
+                                    <li ng-repeat="zodiacSign in zodiacSignList" ng-class="{selected: filterData.zodiacSign.indexOf(zodiacSign) >= 0}" ng-click="toggleSelectedZodiacSign(zodiacSign)">{{zodiacSign.name+'('+zodiacSign.startDate+'-'+zodiacSign.endDate+')'}}</li>
+                                </ul>
+                                <div class="text-center padding-10">
+                                    <a class="btn btn-default btn-sm" ng-click="$parent.selectCategory = ''">收起</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 filter-selection-list no-padding bordered-top-1 bordered-lightgray" ng-if="selectCategory == 'R'">
+                                <div class="row">
+                                    <div class="col-xs-12 text-align-right darkgray padding-top-20 padding-right-50">提示：筛选一定时间范围内买过药的会员，如选择“一个月内”，筛选30天内买过药的会员</div>
+                                    <div class="col-xs-12 padding-top-10 padding-bottom-10">
+                                        <div class="col-xs-4 no-padding-right" style="width: 100px;">
+                                            <label class="control-label">自定义时间：</label>
+                                        </div>
+                                        <div class="col-xs-1 no-padding" style="width: 60px;">
+                                            <input ng-model="customR.min" type="text" maxlength="4" class="form-control input-xs">
+                                        </div>
+                                        <div class="col-xs-1 no-padding text-center" style="width: 30px;">
+                                            -
+                                        </div>
+                                        <div class="col-xs-1 no-padding" style="width: 60px;">
+                                            <input ng-model="customR.max" type="text" maxlength="4" class="form-control input-xs">
+                                        </div>
+                                        <div class="col-xs-1 no-padding text-center" style="width: 20px;">
+
+                                            <select class="form-control input-xs" ng-model="customR.time" style="border-radius: 0;">
+                                                <option value="30">月</option>
+                                                <option value="7">周</option>
+                                                <option value="1">天</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-3 no-padding-right">
+                                            <div class="input-group">
+                                                <a class="btn btn-default btn-xs" ng-click="addR()">添加</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="items padding-10">
+                                    <li ng-repeat="r in rList" ng-class="{selected: filterData.r.indexOf(r) >= 0}" ng-click="addR(r)">{{r.text}}</li>
+                                </ul>
+                                <div class="text-center padding-10">
+                                    <a class="btn btn-default btn-sm" ng-click="$parent.selectCategory = ''">收起</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 filter-selection-list no-padding bordered-top-1 bordered-lightgray" ng-if="selectCategory == 'F'">
+                                <div class="row">
+                                    <div class="col-xs-12 text-align-right darkgray padding-top-20 padding-right-50">提示：筛选一定时间范围，一定购药次数的会员，如选择“最近1年购药1-5次的会员”：1-5次/最近1年</div>
+                                    <div class="col-xs-12 padding-top-10 padding-bottom-10">
+                                        <div class="col-xs-4 no-padding-right" style="width: 90px;">
+                                            <label class="control-label">时间范围：</label>
+                                        </div>
+                                        <div class="col-xs-2 no-padding" style="width: 110px;">
+                                            <select class="form-control input-xs" ng-model="customF.time" style="border-radius: 0;">
+                                                <option value="365" selected>最近一年</option>
+                                                <option value="180">最近半年</option>
+                                                <option value="90">最近3个月</option>
+                                                <option value="30">最近1个月</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 padding-top-10 padding-bottom-10">
+                                        <div class="col-xs-4 no-padding-right" style="width: 90px;">
+                                            <label class="control-label padding-top-10">购药次数：</label>
+                                        </div>
+                                        <div class="col-xs-8 no-padding">
+                                            <ul class="items no-padding no-margin no-border">
+                                                <li ng-repeat="f in fList" ng-click="addF(f)">{{f.text}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-xs-12 padding-top-10 padding-bottom-10">-->
+                                    <!--<div class="col-xs-4 no-padding-right" style="width: 110px;">-->
+                                    <!--<label class="control-label">自定义次数：</label>-->
+                                    <!--</div>-->
+                                    <!--<div class="col-xs-1 no-padding" style="width: 60px;">-->
+                                    <!--<input ng-model="customF.min" type="text" class="form-control input-xs">-->
+                                    <!--</div>-->
+                                    <!--<div class="col-xs-1 no-padding text-center" style="width: 30px;">-->
+                                    <!-- - -->
+                                    <!--</div>-->
+                                    <!--<div class="col-xs-1 no-padding" style="width: 60px;">-->
+                                    <!--<input ng-model="customF.max" type="text" class="form-control input-xs">-->
+                                    <!--</div>-->
+                                    <!--<div class="col-xs-3 no-padding-right">-->
+                                    <!--<div class="input-group">-->
+                                    <!--<a class="btn btn-default btn-xs" ng-click="addF()">添加</a>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                    <!--</div>-->
+                                </div>
+                                <div class="text-center padding-10 bordered-top-1 bordered-lightgray">
+                                    <a class="btn btn-default btn-sm" ng-click="$parent.selectCategory = ''">收起</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 filter-selection-list no-padding bordered-top-1 bordered-lightgray" ng-if="selectCategory == 'M'">
+                                <div class="row">
+                                    <div class="col-xs-12 text-align-right darkgray padding-top-20 padding-right-50">提示：筛选总体客单价达到一定程度的会员，如平均每次购药价格在30-50元内的顾客：30-50元</div>
+                                    <div class="col-xs-12 padding-top-10">
+                                        <div class="col-xs-4 no-padding-right" style="width: 90px;">
+                                            <label class="control-label">客单价：</label>
+                                        </div>
+                                        <div class="col-xs-1 no-padding" style="width: 60px;">
+                                            <input ng-model="customM.minM" type="text" maxlength="5" class="form-control input-xs">
+                                        </div>
+                                        <div class="col-xs-1 no-padding text-center" style="width: 30px;">
+                                            -
+                                        </div>
+                                        <div class="col-xs-1 no-padding" style="width: 60px;">
+                                            <input ng-model="customM.maxM" type="text" maxlength="5" class="form-control input-xs">
+                                        </div>
+                                        <div class="col-xs-3 no-padding-right">
+                                            <div class="input-group">
+                                                <a class="btn btn-default btn-xs" ng-click="addM()">添加</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 padding-top-10 padding-bottom-10">
+                                        <div class="col-xs-8 no-padding">
+                                            <ul class="items no-padding no-margin no-border">
+                                                <li ng-repeat="m in mList" ng-class="{selected: filterData.m.indexOf(m) >= 0}" ng-click="addM(m)">{{m.text}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center padding-10 bordered-top-1 bordered-lightgray">
+                                    <a class="btn btn-default btn-sm" ng-click="$parent.selectCategory = ''">收起</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 filter-selection-list no-padding bordered-top-1 bordered-lightgray" ng-if="selectCategory == 'disease'">
+                                <ul class="items padding-10">
+                                    <li ng-repeat="disease in diseaseList" ng-class="{selected: filterData.disease.indexOf(disease) >= 0}" ng-click="toggleDisease(disease)">{{disease}}</li>
+                                </ul>
+                                <div class="text-center padding-10">
+                                    <a class="btn btn-default btn-sm" ng-click="$parent.selectCategory = ''">收起</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

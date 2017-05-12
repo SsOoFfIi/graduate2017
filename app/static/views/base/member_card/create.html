@@ -1,0 +1,318 @@
+<div class="memberCardCreatePage">
+    <style type="text/css">
+        .memberCardCreatePage .benefits {
+            padding: 43px 12px 40px;
+        }
+        .memberCardCreatePage .well .header {
+            background-color: #fafafa;
+        }
+        .memberCardCreatePage .benefits .benefit-item {
+            width: 80%;
+            min-width: 160px;
+            float: right;
+            height: 180px;
+            padding-top: 62px;
+            position: relative;
+        }
+        .memberCardCreatePage .benefits .benefit-item:before {
+            content: "";
+            display: block;
+            position: absolute;
+            z-index: 0;
+            left: -22px;
+            top: 8px;
+            width: 81px;
+            height: 71px;
+        }
+        .memberCardCreatePage .benefits .benefit-item.no1:before {
+            background: url("/assets/img/1.png") 0 0 no-repeat;
+        }
+        .memberCardCreatePage .benefits .benefit-item.no2:before {
+            background: url("/assets/img/2.png") 0 0 no-repeat;
+        }
+        .memberCardCreatePage .benefits .benefit-item.no3:before {
+            background: url("/assets/img/3.png") 0 0 no-repeat;
+        }
+        .memberCardCreatePage .benefits .benefit-item.no4:before {
+            background: url("/assets/img/4.png") 0 0 no-repeat;
+        }
+        .memberCardCreatePage .benefits .benefit-item h4 {
+            font-size: 16px;
+            font-weight: bold !important;
+            position: relative;
+            z-index: 1;
+        }
+        .memberCardCreatePage .benefits .benefit-item div {
+            position: relative;
+            z-index: 1;
+            color: #9f9f9f;
+        }
+        .memberCardCreatePage .createCardBtn {
+            text-align: center;
+            width: 380px;
+            height: 150px;
+            border: dotted 2px #2271F0;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+        .memberCardCreatePage .createCardBtn p.add{
+            font-size: 80px;
+            color: #C0C0C0;
+            margin-bottom: 20px;
+            margin-top: 45px;
+        }
+        .memberCardCreatePage .createCardBtn p.label{
+            color: #2271F0;
+        }
+        .memberCardCreatePage .createCardBtn:hover {
+            border-color: #1f60d2;
+        }
+        .memberCardCreatePage .createCardBtn:hover p.add {
+            color: #696969;
+        }
+        .memberCardCreatePage .createCardBtn:hover p.label {
+            color: #1f60d2;
+        }
+        .memberCardCreatePage .loading-progress {
+            list-style: none;
+            position: absolute;
+            left: 0;
+            right: 0;
+            padding: 0;
+            margin: 0 auto;
+            width: 84px;
+            height: 14px;
+            margin-top: 40px;
+        }
+        .memberCardCreatePage .loading-progress li {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 6px;
+            background-color: #d8d8d8;
+            margin: 5px 4px;
+        }
+        @-webkit-keyframes progress {
+            0%   {left:0;}
+            19.9%  {left:0;}
+            20%  {left:17px;}
+            39.9%  {left:17px;}
+            40%  {left:35px;}
+            59.9%  {left:35px;}
+            60%  {left:52px;}
+            79.9% {left:52px;}
+            80% {left:69px;}
+            99.9% {left:69px;}
+            100% {left:0;}
+        }
+        @-moz-keyframes progress {
+            0%   {left:0;}
+            19.9%  {left:0;}
+            20%  {left:17px;}
+            39.9%  {left:17px;}
+            40%  {left:35px;}
+            59.9%  {left:35px;}
+            60%  {left:52px;}
+            79.9% {left:52px;}
+            80% {left:69px;}
+            99.9% {left:69px;}
+            100% {left:0;}
+        }
+        @keyframes progress {
+            0%   {left:0;}
+            19.9%  {left:0;}
+            20%  {left:17px;}
+            39.9%  {left:17px;}
+            40%  {left:35px;}
+            59.9%  {left:35px;}
+            60%  {left:52px;}
+            79.9% {left:52px;}
+            80% {left:69px;}
+            99.9% {left:69px;}
+            100% {left:0;}
+        }
+        .memberCardCreatePage .loading-progress li.current {
+            position: absolute;
+            background-color: #2173f3;
+            left: 16px;
+            top: 0;
+            -webkit-animation: progress .5s infinite;
+            -moz-animation: progress .5s infinite;
+            animation: progress .5s infinite;
+        }
+    </style>
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom bordered-bottom-1 bordered-lightgray margin-bottom-20" style="margin-top: -14px;">微信会员卡</h4>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="benefits well with-header clearfix bg_white margin-bottom-10 bordered-1 bordered-lightgray no-box-shadow">
+                    <div class="header">新建微信会员卡</div>
+                    <div ng-if="!$parent.memberCardData" class="col-xs-12">
+                        <div class="row col-xs-12 padding-top-40 padding-bottom-20">
+                            <div class="col-xs-3 bordered-right-1 bordered-lightgray">
+                                <div class="benefit-item no1">
+                                    <h4>精准的会员营销</h4>
+                                    <p>精准分类会员，结合微信，让营销活动轻松高效触达会员</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3 bordered-right-1 bordered-lightgray">
+                                <div class="benefit-item no2">
+                                    <h4>智能的数据分析</h4>
+                                    <p>多维度分析会员增长数据，掌握营销活动效果，帮助药店做出高效决策</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3 bordered-right-1 bordered-lightgray">
+                                <div class="benefit-item no3">
+                                    <h4>零成本搭建会员体系</h4>
+                                    <p>会员卡的激活和使用都可以在微信上完成，无需再给会员发实体卡，成本大幅降低</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="benefit-item no4">
+                                    <h4>完善的教学体系</h4>
+                                    <p>从0到1，从1到N的全流程的微信会员运营指南，助力您快步成为互联网药店，发挥会员的最大价值</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 margin-top-20">
+                            <div class="createCardBtn" ng-click="linkERP()">
+                                <p class="add">+</p>
+                                <p class="label">新建会员卡</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="$parent.memberCardData && $parent.memberCardData.stepCurrent == 1" class="col-xs-12">
+                        <h3 class="text-align-center margin-top-20">正在努力为您对接ERP中</h3>
+                        <p class="text-align-center darkgray">请配合我们对接工程师，对ERP进行对接</p>
+                        <div class="text-align-center">
+                            <ul class="loading-progress">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li class="current"></li>
+                            </ul>
+                            <img src="/assets/img/linking_erp.jpg">
+                        </div>
+                    </div>
+                    <div ng-if="$parent.memberCardData && $parent.memberCardData.stepCurrent == 2" class="col-xs-12">
+                        <h3 class="text-align-center margin-top-20">对接成功，请完善会员卡基础资料</h3>
+                        <p class="text-align-center darkgray">请跟进指引对会员卡进行设置</p>
+                        <div class="text-align-center padding-top-30 padding-bottom-50">
+                            <a class="btn btn-lg btn-success" ui-sref="app.base.memberCard.edit">马上去填写</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="linkErp.html">
+    <div class="modal-header">
+        <ripple type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</ripple>
+        <h4 class="modal-title">新建会员卡</h4>
+    </div>
+    <div class="modal-body link-erp-modal">
+        <style type="text/css" rel="stylesheet">
+            .link-erp-modal .benefit-item {
+                padding-left: 90px;
+            }
+            .link-erp-modal .benefit-item.no1 {
+                background: url("/assets/img/1.png") 16px 0 no-repeat;
+            }
+            .link-erp-modal .benefit-item.no2 {
+                background: url("/assets/img/2.png") 0 0 no-repeat;
+            }
+            .link-erp-modal .benefit-item.no3 {
+                background: url("/assets/img/3.png") 0 0 no-repeat;
+            }
+            .link-erp-modal .btn-success, .link-erp-modal .btn-success:focus {
+                background-color: #26C166 !important;
+                border-color: #26C166 !important;
+                color: #fff;
+            }
+            .link-erp-modal .btn-success:hover {
+                background-color: #27CC70 !important;
+                border-color: #27CC70 !important;
+                color: #fff;
+            }
+        </style>
+        <h3 class="text-align-center">新建会员卡需要对接ERP</h3>
+        <p class="text-align-center darkgray">只需要申请对接流程，剩下的对接工作交给我们</p>
+        <div class="text-align-center">
+            <img src="/assets/img/link_erp.jpg">
+        </div>
+        <div class="col-xs-12 margin-top-20 margin-bottom-20">
+            <div class="col-xs-4 bordered-right-1 bordered-lightgray">
+                <div class="benefit-item no1">
+                    <h4>申请对接ERP</h4>
+                    <p class="darkgray">点击“一键申请对接”完成申请流程</p>
+                </div>
+            </div>
+            <div class="col-xs-4 bordered-right-1 bordered-lightgray">
+                <div class="benefit-item no2">
+                    <h4>ERP接口开发</h4>
+                    <p class="darkgray">全部接口进行数据安全加密，平台不保存数据</p>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="benefit-item no3">
+                    <h4>填写资料,上线运营</h4>
+                    <p class="darkgray">填写基础信息，根据引导便可上线运营</p>
+                </div>
+            </div>
+        </div>
+        <p class="text-align-center darkgray margin-top-30 margin-bottom-40">申请对接后,会有专员跟您联系</p>
+    </div>
+    <div class="modal-footer text-align-center link-erp-modal">
+
+        <ripple class="btn btn-lg btn-success" ng-click="ok()">申请对接ERP</ripple>
+    </div>
+</script>
+<script type="text/ng-template" id="linkingErp.html">
+    <div class="modal-body">
+        <style type="text/css" rel="stylesheet">
+            .linking-erp-modal .modal-content{
+                width: 214px;
+                margin: 0 auto;
+            }
+            .linking-erp-modal .text {
+                height: 45px;
+            }
+            @-webkit-keyframes rotation{
+                0%{-webkit-transform: rotate(0deg);}
+                100%{-webkit-transform: rotate(360deg);}
+            }
+            @-moz-keyframes rotation{
+                0%{-moz-transform: rotate(0deg);}
+                100%{-moz-transform: rotate(360deg);}
+            }
+            @keyframes rotation{
+                0%{transform: rotate(0deg);}
+                100%{transform: rotate(360deg);}
+            }
+            .linking-erp-modal .loading .loading-img{
+                -webkit-animation: rotation .8s ease-in-out infinite;
+                -moz-animation: rotation .8s ease-in-out infinite;
+                animation: rotation .8s ease-in-out infinite;
+                opacity: 1;
+            }
+            .linking-erp-modal .loading .loading-success-img{
+                display: none;
+            }
+            .linking-erp-modal .loading.success .loading-img {
+                display: none;
+            }
+            .linking-erp-modal .loading.success .loading-success-img {
+                display: inline;
+            }
+        </style>
+        <div class="text-align-center margin-top-30 loading" ng-class="{success: data.success}">
+            <img class="loading-img" src="/assets/img/loading.png">
+            <img class="loading-success-img" src="/assets/img/loading_success.png">
+        </div>
+        <div ng-if="!data.success" class="text text-align-center margin-top-30">正在申请</div>
+        <div ng-if="data.success" class="text text-align-center margin-top-30">申请成功<br>我们会有专员跟您联系</div>
+    </div>
+</script>

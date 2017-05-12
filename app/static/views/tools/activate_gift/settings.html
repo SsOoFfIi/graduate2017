@@ -1,0 +1,416 @@
+<div class="activateGiftSettingsPage">
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom bordered-bottom-1 bordered-lightgray" style="margin-top: -14px;height:52px;line-height:34px;">
+            激活有礼
+        </h4>
+    </div>
+    <div class="col-xs-12 col-md-12">
+        <div class="row">
+            <div class="col-xs-12 col-sm-7 col-md-6 col-lg-4 member-card-preview-wrapper">
+                <style type="text/css">
+                    .member-card-preview-wrapper {
+                        max-width: 372px;
+                        position: absolute;
+                        top: 20px;
+                    }
+                    .member-card-form-wrapper {
+                        float: none;
+                        width: auto;
+                        margin-left: 386px;
+                        margin-top: 20px;
+                    }
+                    .member_card_preview_area {
+                        width: 340px;
+                        border: solid 1px lightgray;
+                        border-top: none;
+                        padding-bottom: 100px;
+                    }
+                    .member_card_preview_area .member_card_header {
+                        color: #fff;
+                        background-color: #383838;
+                        text-align: center;
+                        height: 45px;
+                        line-height: 45px;
+                    }
+                    .member_card_preview_area .member_card {
+                        width: 295px;
+                        height: 165px;
+                        margin: 20px auto;
+                        border-radius: 5px;
+                        position: relative;
+                        background-color: #5164bd;
+                    }
+                    .member_card_preview_area .customer_logo {
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 32px;
+                        position: absolute;
+                        left: 15px;
+                        top: 15px;
+                    }
+                    .member_card_preview_area .customer_info {
+                        padding: 13px 57px;
+                        color: #fff;
+                        font-size: 14px;
+                    }
+                    .member_card_preview_area .qrcode{
+                        display: block;
+                        position: absolute;
+                        top: 15px;
+                        right: 10px;
+                        width: 25px;
+                    }
+                    .member_card_preview_area .customer_info .card_title{
+                        font-size: 12px;
+                    }
+                    .member_card_preview_area .card_no{
+                        font-size: 16px;
+                        color: #fff;
+                        position: absolute;
+                        left: 25px;
+                        bottom: 15px;
+                    }
+                    .member_card_preview_area .member_card_gift {
+                        text-align: center;
+                        min-height: 193.53px;
+                    }
+                    .member_card_preview_area .member_card_gift .activate-btn {
+                        display: inline-block;
+                        font-size: 14px;
+                        width: 160px;
+                        height: 34px;
+                        line-height: 34px;
+                        color: #2371f3;
+                        border: solid 1px #2371f3;
+                        border-radius: 3px;
+                        margin: 2rem 0 1rem;
+                    }
+                    .member_card_preview_area .member_card_gift .coupon {
+                        height: 5.4615rem;
+                        margin: 3rem auto 0;
+                        width: 80%;
+                        border-radius: .6rem;
+                        position: relative;
+                        background-color: #f0f0f0;
+                        display: flex;
+                        overflow: hidden;
+                    }
+                    .member_card_preview_area .member_card_gift .coupon .circle {
+                        width: 2rem;
+                        height: 2rem;
+                        border-radius: 2rem;
+                        position: absolute;
+                        top: 1.7rem;
+                        background-color: #fff;
+                    }
+                    .member_card_preview_area .member_card_gift .coupon .circle.left {
+                        left: -1.4rem;
+                    }
+                    .member_card_preview_area .member_card_gift .coupon .circle.right {
+                        right: -1.4rem;
+                    }
+                    .member_card_preview_area .member_card_gift .coupon .info{
+                        flex: 2;
+                        padding-left: 2rem;
+                        font-size: 1.23rem;
+                        line-height: 5.4615rem;
+                    }
+                    .member_card_preview_area .member_card_gift .coupon .desc{
+                        border-left: dashed 1px #c7c7c7;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: #c4c4c4;
+                        font-size: 1.23rem;
+                        line-height: 1.5rem;
+                        width: 6rem;
+                        padding-right: .5rem;
+                    }
+                    .settingsContent {
+                        min-height: 546px;
+                    }
+                    .settingsContent .triangle, .settingsContent .triangle:before {
+                        position: absolute;
+                        left: -32px;
+                        top: 393px;
+                        display: block;
+                        border: 16px solid transparent;
+                        border-right-color: lightgrey;
+                    }
+                    .settingsContent .triangle:before {
+                        content: "";
+                        position: absolute;
+                        left: -15px;
+                        border-right-color: #fafafa;
+                        top: -16px;
+                    }
+                    .settingsContent .add-gift {
+
+                    }
+                    .settingsContent .add-gift .operate-box {
+                        border: dotted 2px #f0f0f0;
+                    }
+                    .settingsContent .add-gift .operate-box:hover {
+                        border: dotted 2px #cecece;
+                    }
+                    .settingsContent .add-gift .operate-box a {
+                        display: block;
+                        padding: 70px 0;
+                        text-decoration: none;
+                        color: gray;
+                    }
+                </style>
+                <div class="member_card_preview_area">
+                    <div class="member_card_header">
+                        H5会员卡
+                    </div>
+                    <div class="member_card" ng-style="style">
+                        <img ng-if="memberCardData.logoUrlLocal" class="customer_logo" ng-src="{{memberCardData.logoUrlLocal}}">
+                        <div class="customer_info">
+                            <div class="brand_name" ng-bind="memberCardData.brandName"></div>
+                            <div class="card_title" ng-bind="memberCardData.title"></div>
+                        </div>
+                        <a href="javascript:;"><img class="qrcode" src="/assets/img/member_card_qrcode.png"></a>
+                        <div class="card_no">000 000 00000</div>
+                    </div>
+                    <div class="member_card_gift">
+                        <div class="activate-btn">激活会员卡</div>
+                        <p ng-if="memberCardData.coupon.type == 1">{{'激活赠送价值' +memberCardData.coupon.typeValue+ '元的代金券'}}</p>
+                        <p ng-if="memberCardData.coupon.type == 2">{{'激活赠送' + memberCardData.coupon.typeValue+ '折折扣券'}}</p>
+                        <p ng-if="memberCardData.coupon.type == 3">{{'激活赠送' +memberCardData.coupon.typeValue}}</p>
+                        <p ng-if="memberCardData.coupon.type == 0">{{'激活赠送' +memberCardData.coupon.typeValue}}</p>
+                        <div ng-if="memberCardData.coupon" class="coupon">
+                            <div class="circle left"></div>
+                            <div class="circle right"></div>
+                            <div class="info" ng-if="memberCardData.coupon.type == 1">
+                                <span style="color: #c4c4c4;">￥</span>
+                                <span style="color: #b0b0b0;font-size: 4rem;" ng-bind="memberCardData.coupon.typeValue"></span>
+                                <span style="color: #c4c4c4;">优惠券</span>
+                            </div>
+                            <div class="info" ng-if="memberCardData.coupon.type == 2">
+                                <span style="color: #b0b0b0;font-size: 4rem;" ng-bind="memberCardData.coupon.typeValue"></span>
+                                <span style="color: #b0b0b0;">折</span>
+                                <span style="color: #c4c4c4;">打折券</span>
+                            </div>
+                            <div class="info" ng-if="memberCardData.coupon.type == 3">
+                                <span><img src="/assets/img/gift_icon.png" style="margin-right: .5rem;width:2.5rem;vertical-align:text-bottom;position:relative;bottom:-.3rem;"></span>
+                                <span style="color: #b0b0b0;font-size: 1.23rem;" ng-bind="memberCardData.coupon.typeValue"></span>
+                            </div>
+                            <div class="info" ng-if="memberCardData.coupon.type == 0">
+                                <span style="color: #b0b0b0;font-size: 2rem;" ng-bind="memberCardData.coupon.typeValue"></span>
+                            </div>
+                            <div class="desc">激活<br>即送</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-md-6 col-lg-8 no-padding-left member-card-form-wrapper padding-bottom-50 margin-bottom-40">
+                <div class="settingsContent form-horizontal padding-top-20 bordered-1 bordered-lightgray" style="background-color: #fafafa;" novalidate>
+                    <div class="triangle"></div>
+                    <h5 class="title no-margin padding-left-20 margin-bottom-20">礼品设置</h5>
+                    <div ng-if="!memberCardData.coupon">
+                        <div class="col-xs-12 padding-left-20 padding-right-20">
+                            <div class="col-xs-12 add-gift bg-white bordered-1 bordered-lightgray padding-20">
+                                <div class="col-xs-6 no-padding-left padding-right-10">
+                                    <div class="col-xs-12 text-center operate-box">
+                                        <a href="javascript:;" ng-click="selectCoupon()">
+                                            <span style="font-size: 70px;display: block;height: 80px;line-height: 80px;">＋</span>从优惠券列表中选择</a>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 no-padding-right padding-left-10">
+                                    <div class="col-xs-12 text-center operate-box">
+                                        <a ui-sref="app.tools.coupon.createType">
+                                            <span style="font-size: 70px;display: block;height: 80px;line-height: 80px;">＋</span>新建优惠券</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="memberCardData.coupon" class="padding-left-20 padding-right-20 padding-bottom-20">
+                        <div class="well with-header bg_white no-padding margin-bottom-20 bordered-1 bordered-lightgray no-box-shadow clearfix">
+                            <table class="table">
+                                <thead class="bordered-bottom-1 bordered-gray bg-seashell">
+                                <tr style="background-color: #f8f8f8;">
+                                    <th style="font-weight: normal">
+                                        优惠券名称
+                                    </th>
+                                    <th class="text-align-center" style="font-weight: normal">
+                                        优惠券类型
+                                    </th>
+                                    <th class="text-align-center" style="font-weight: normal">
+                                        优惠内容
+                                    </th>
+                                    <th class="text-align-center" style="font-weight: normal">
+                                        使用条件
+                                    </th>
+                                    <th class="text-align-center" style="font-weight: normal">
+                                        已领取/剩余量
+                                    </th>
+                                    <th class="text-align-center" style="font-weight: normal">
+                                        状态
+                                    </th>
+                                    <th class="text-align-center" style="font-weight: normal">
+                                        有效期
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        {{memberCardData.coupon.title}}
+                                    </td>
+                                    <td class="text-align-center">
+                                        <span ng-if="memberCardData.coupon.type == 0">其他</span>
+                                        <span ng-if="memberCardData.coupon.type == 1">代金券</span>
+                                        <span ng-if="memberCardData.coupon.type == 2">折扣券</span>
+                                        <span ng-if="memberCardData.coupon.type == 3">赠品券</span>
+                                    </td>
+                                    <td class="text-align-center">
+                                        <span ng-if="memberCardData.coupon.type == 0">{{memberCardData.coupon.typeValue}}</span>
+                                        <span ng-if="memberCardData.coupon.type == 1">{{'减'+memberCardData.coupon.typeValue+'元'}}</span>
+                                        <span ng-if="memberCardData.coupon.type == 2">{{'打'+memberCardData.coupon.typeValue+'折'}}</span>
+                                        <span ng-if="memberCardData.coupon.type == 3">{{'送'+memberCardData.coupon.typeValue}}</span>
+                                    </td>
+                                    <td class="text-align-center">
+                                        <span ng-if="memberCardData.coupon.conditionConsume == 0">不限制</span>
+                                        <span ng-if="memberCardData.coupon.conditionConsume != 0">消费满{{memberCardData.coupon.conditionConsume}}元</span>
+                                    </td>
+                                    <td class="text-align-center">
+                                        {{memberCardData.coupon.sendedCount}}/{{memberCardData.coupon.status == 7 ? 0 : memberCardData.coupon.totalCount}}
+                                    </td>
+                                    <td class="text-align-center">
+                                        <span ng-if="memberCardData.coupon.status == 8">未开始</span>
+                                        <span ng-if="memberCardData.coupon.status == 9" class="green">使用中</span>
+                                        <span ng-if="memberCardData.coupon.status == 7">已结束</span>
+                                    </td>
+                                    <td class="text-align-center">
+                                        {{memberCardData.coupon.startDatetime * 1000 | date: 'yyyy-MM-dd'}}至{{memberCardData.coupon.endDatetime * 1000 | date: 'yyyy-MM-dd'}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p class="red padding-left-10" ng-if="memberCardData.coupon && memberCardData.coupon.totalCount == 0">你设置的优惠券已派完，请换一批</p>
+                        </div>
+                        <div>
+                            <ripple class="btn btn-default" ng-click="selectCoupon()">换一批</ripple>
+                            <ripple class="btn btn-default" ng-click="cancelActivateGift()">不发了</ripple>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label"></label>
+                        <div class="col-lg-8">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="action-fixed text-align-center padding-top-20 padding-bottom-20 bordered-top-1 bordered-lightgray">
+                <ripple class="btn btn-lg btn-success" ng-disabled="!needSave" ng-click="saveActivateGift()">立即发布</ripple>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="selectCouponModal.html">
+    <div class="modal-header">
+        <ripple type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</ripple>
+        <h3 class="modal-title">选择优惠券<span class="darkgray" ng-if="data.selectedCoupon">&emsp;(已选择：{{data.selectedCoupon.title}})</span></h3>
+    </div>
+    <div class="modal-body">
+        <style type="text/css" rel="stylesheet">
+            .selectCouponModal .selected td{
+                background-color: #2371f3;
+                border-color: #2371f3;
+                color: #fff;
+            }
+            .selectCouponModal input[type=radio]~.text:before {
+                width: 14px;
+                text-indent: -3px;
+            }
+            .selectCouponModal .selected td span {
+                color: #fff !important;
+            }
+            .selectCouponModal .selected td input[type=radio]:checked ~ .text:before {
+                background-color: #2371f3;
+                color: #fff;
+            }
+        </style>
+        <div class="well with-header bg_white no-padding margin-bottom-20 padding-bottom-10 bordered-1 bordered-lightgray no-box-shadow clearfix">
+            <table class="table">
+                <thead class="bordered-bottom-1 bordered-gray bg-seashell">
+                <tr style="background-color: #f8f8f8;">
+                    <th width="50"></th>
+                    <th style="font-weight: normal">
+                        优惠券名称
+                    </th>
+                    <th class="text-align-center" style="font-weight: normal">
+                        优惠券类型
+                    </th>
+                    <th class="text-align-center" style="font-weight: normal">
+                        优惠内容
+                    </th>
+                    <th class="text-align-center" style="font-weight: normal">
+                        使用条件
+                    </th>
+                    <th class="text-align-center" style="font-weight: normal">
+                        已领取/剩余量
+                    </th>
+                    <th class="text-align-center" style="font-weight: normal">
+                        状态
+                    </th>
+                    <th class="text-align-center" style="font-weight: normal">
+                        有效期
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="cursor-pointer" ng-repeat="coupon in couponList" ng-class="{selected: data.selectedCoupon.batchSequence == coupon.batchSequence}" ng-click="data.selectedCoupon = coupon">
+                    <td class="text-align-center">
+                        <div class="radio no-padding-left n-inline-block" style="width: 10px;margin: 10px auto;">
+                            <label>
+                                <input name="coupon" type="radio" ng-checked="data.selectedCoupon.batchSequence == coupon.batchSequence">
+                                <span class="text ng-binding"></span>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        {{coupon.title}}
+                    </td>
+                    <td class="text-align-center">
+                        <span ng-if="coupon.type == 0">其他</span>
+                        <span ng-if="coupon.type == 1">代金券</span>
+                        <span ng-if="coupon.type == 2">折扣券</span>
+                        <span ng-if="coupon.type == 3">赠品券</span>
+                    </td>
+                    <td class="text-align-center">
+                        <span ng-if="coupon.type == 0">{{coupon.typeValue}}</span>
+                        <span ng-if="coupon.type == 1">{{'减'+coupon.typeValue+'元'}}</span>
+                        <span ng-if="coupon.type == 2">{{'打'+coupon.typeValue+'折'}}</span>
+                        <span ng-if="coupon.type == 3">{{'送'+coupon.typeValue}}</span>
+                    </td>
+                    <td class="text-align-center">
+                        <span ng-if="coupon.conditionConsume == 0">不限制</span>
+                        <span ng-if="coupon.conditionConsume != 0">消费满{{coupon.conditionConsume}}元</span>
+                    </td>
+                    <td class="text-align-center">
+                        {{coupon.sendedCount}}/{{coupon.status == 7 ? 0 : coupon.totalCount}}
+                    </td>
+                    <td class="text-align-center">
+                        <span ng-if="coupon.status == 8">未开始</span>
+                        <span ng-if="coupon.status == 9" class="green">使用中</span>
+                        <span ng-if="coupon.status == 7">已结束</span>
+                    </td>
+                    <td class="text-align-center">
+                        {{coupon.startDatetime * 1000 | date: 'yyyy-MM-dd'}}至{{coupon.endDatetime * 1000 | date: 'yyyy-MM-dd'}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div ng-if="couponList.length == 0" class="text-align-center" style="padding-top: 80px;padding-bottom: 80px;">没有优惠券</div>
+            <div class="col-xs-12">
+                <tm-pagination conf="paginationConf"></tm-pagination>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <ripple class="btn btn-lg btn-success" ng-disabled="!data.selectedCoupon" ng-click="ok()">确定</ripple>
+    </div>
+</script>

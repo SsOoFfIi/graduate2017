@@ -1,0 +1,44 @@
+<!-- Page Container -->
+<div class="page-container">
+    <!-- Page Sidebar -->
+    <div class="page-sidebar {{settings.fixed.sidebar ? 'sidebar-fixed' : ''}}" id="sidebar">
+        <div class="sidebar-collapse">
+            <a>
+                <i class="collapse-icon fa fa-bars"></i>
+            </a>
+        </div>
+        <ul class="nav sidebar-menu">
+            <li ui-sref-active="active" class="open">
+                <a>
+                    <i class="menu-icon fa fa-graduation-cap blue"></i>
+                    <span class="menu-text"> 首页 </span>
+                </a>
+
+                <ul class="submenu">
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.manager.custom" ui-sref-opts="{reload:false}">
+                            <span class="menu-text"> 首页展示 </span>
+                        </a>
+                    </li>
+                    <!--<li ui-sref-active="active">-->
+                        <!--<a ui-sref="app.manager.support" ui-sref-opts="{reload:false}">-->
+                            <!--<span class="menu-text"> 账户管理 </span>-->
+                        <!--</a>-->
+                    <!--</li>-->
+
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- /Page Sidebar -->
+    <!-- Page Content -->
+    <div class="page-content">
+
+        <div class="page-body no-margin-right bg-white padding-20" ui-view>
+            <!-- Your Content Goes Here -->
+        </div>
+        <!-- /Page Body -->
+    </div>
+    <!-- /Page Content -->
+</div>

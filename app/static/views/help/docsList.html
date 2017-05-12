@@ -1,0 +1,28 @@
+<div class="row docsListPage">
+    <style>
+        .docsListPage .table>tbody>tr>td,
+        .docsListPage .table>tbody>tr>th,
+        .docsListPage .table>tfoot>tr>td,
+        .docsListPage .table>tfoot>tr>th,
+        .docsListPage .table>thead>tr>td,
+        .docsListPage .table>thead>tr>th {
+            border-top: none;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom bordered-bottom-1 bordered-lightgray padding-left-20" style="margin-top: -14px;">运营指南</h4>
+    </div>
+    <div class="col-xs-12">
+        <table class="table">
+            <tbody>
+            <tr ng-repeat="docs in docsList">
+                <td width="20" class="no-border"></td>
+                <td><i class="fa fa-file-o" ng-class="{'fa-file-powerpoint-o': docs.url.indexOf('.ppt')>0 || docs.url.indexOf('.pptx')>0, 'fa-file-pdf-o': docs.url.indexOf('.pdf')>0}"></i>&nbsp;<a class="has-visited-color" href="{{docs.url}}" target="_blank">{{docs.name}}</a><label ng-if="docs.isNew" class="label label-sm red" style="font-weight: normal;">New</label></td>
+                <td width="20" class="no-border"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+          

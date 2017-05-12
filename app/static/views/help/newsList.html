@@ -1,0 +1,29 @@
+<div class="row newsListPage">
+    <style>
+        .newsListPage .table>tbody>tr>td,
+        .newsListPage .table>tbody>tr>th,
+        .newsListPage .table>tfoot>tr>td,
+        .newsListPage .table>tfoot>tr>th,
+        .newsListPage .table>thead>tr>td,
+        .newsListPage .table>thead>tr>th {
+            border-top: none;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom bordered-bottom-1 bordered-lightgray padding-left-20" style="margin-top: -14px;">系统公告</h4>
+    </div>
+    <div class="col-xs-12">
+        <table class="table">
+            <tbody>
+            <tr ng-repeat="news in newsList">
+                <td width="20" class="no-border"></td>
+                <td><a class="has-visited-color" ui-sref="app.help.news.detail({id: news.id})">{{news.name}}</a><label ng-if="news.isNew" class="label label-sm red" style="font-weight: normal;">New</label></td>
+                <td width="92" class="darkgray">{{news.time * 1000 | date: 'yyyy.MM.dd'}}</td>
+                <td width="20" class="no-border"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+          

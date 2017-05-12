@@ -1,0 +1,175 @@
+<div class="row">
+    <style type="text/css">
+        .page-body {
+            background-color: #fff;
+        }
+
+        .table-header {
+            background-color: #fafafa;
+            border: solid 1px #ddd;
+            padding: 6px 0;
+            border-bottom: none;
+        }
+
+        .table.no-td-border td {
+            border-left: none;
+            border-right: none;
+        }
+    </style>
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom" style="margin-top: -14px;">粉丝管理</h4>
+    </div>
+    <div class="col-xs-12">
+        <follower-filter on-filter="onFilter(filterParams)" member-count="paginationConf.totalItems"></follower-filter>
+        <div class="widget flat">
+            <div class="widget-body bg-white no-padding">
+                <div>
+                    <div class="col-xs-12 table-header">
+                        <div class="col-xs-4" style="line-height: 32px;">
+                            <span>共有{{paginationConf.totalItems}}位粉丝</span>
+                        </div>
+                        <div class="col-xs-8">
+                            <!--<a class="btn btn-success pull-right margin-left-10 margin-right-10">同步粉丝</a>-->
+                            <form class="form-horizontal">
+                                <div class="input-group pull-right" style="width: 250px">
+                                    <input type="text" class="form-control" ng-model="filterData.nickName"
+                                           placeholder="输入昵称">
+                                    <span class="input-group-btn">
+                                        <ripple class="btn btn-default" type="submit" ng-click="load()"><i
+                                                class="fa fa-search"></i></ripple>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <table class="table table-hover bordered-1 bordered-lightgray" id="simpledatatable">
+                        <tbody>
+                        <tr ng-repeat="follower in followerList">
+                            <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                            <!--<td width="40" class="text-center">-->
+                            <!--<div class="checkbox">-->
+                            <!--<label>-->
+                            <!--<input type="checkbox">-->
+                            <!--<span class="text"></span>-->
+                            <!--</label>-->
+                            <!--</div>-->
+                            <!--</td>-->
+                            <td width="60" class="text-center">
+                                <img src="{{follower.headimgurl}}" width="50"
+                                     onerror="this.src='assets/img/defaultheadimg.png'">
+                            </td>
+                            <td>
+                                <!--<a class="btn btn-link" ng-click="editUser(follower)" ng-bind="follower.nickname"></a>-->
+                                <span ng-bind="follower.nickname" style="line-height: 26px;"></span>
+                                <div>
+                                    <span class="label label-white" ng-if="follower.cardNo">会员</span>
+                                    <span class="label label-white" ng-bind="storeMap[follower.storeId + '']"></span>
+                                    <span class="label label-white" ng-if="follower.storeUserName && follower.cardNo"
+                                          ng-bind="follower.storeUserName + '跟进'"></span>
+                                    <span class="label label-white" ng-bind="follower.sex"
+                                          ng-if="follower.sex && follower.sex != '未知'"></span>
+                                    <span class="label label-white" ng-if="follower.province">{{follower.province}} {{follower.city}}</span>
+                                    <span class="label label-white" ng-if="follower.birthday"
+                                          ng-bind="getAge(follower.birthday)"></span>
+                                    <span class="label label-white" ng-if="follower.constellation">{{follower.constellation}}</span>
+                                    <!--RFM标签-->
+                                    <span class="label label-white" ng-if="follower.recency">{{'最后一次购药距今' +toDays(follower.recency)+ '天'}}</span>
+                                    <span class="label label-white" ng-if="follower.frequency">{{'共购药'+follower.frequency + '次'}}</span>
+                                    <span class="label label-white" ng-if="follower.monetary">{{'消费总额'+follower.monetary + '元'}}</span>
+                                    <span class="label label-white" ng-if="follower.unitPrice">{{'客单价'+follower.unitPrice + '元'}}</span>
+                                    <!--慢病标签-->
+                                </div>
+                            </td>
+                            <!--修改标签功能暂时灰度,故该按钮不显示-->
+                            <td width="100" class="vertical-align-middle" ng-if="false"><a
+                                    class="btn btn-default disabled">修改标签</a></td>
+                            <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                        </tr>
+                        <tr ng-if="followerList.length == 0">
+                            <td class="text-align-center padding-top-50 padding-bottom-50">
+                                没有数据
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-12">
+                    <tm-pagination conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="editUserModalContent.html">
+    <form name="editStoreForm" class="form-horizontal" novalidate role="form">
+        <div class="modal-header">
+            <h3 class="modal-title">编辑用户信息</h3>
+        </div>
+        <div class="modal-body">
+            <div class="widget">
+                <div class="form-group"
+                     ng-class="{'has-error': (editStoreForm.$submitted || editStoreForm.name.$dirty) && editStoreForm.name.$invalid}">
+                    <label for="name" class="col-xs-2 control-label no-padding-right"><span
+                            class="red">*</span>姓名</label>
+                    <div class="col-xs-6">
+                        <input type="text" required ng-minlength="2" maxlength="30" ng-model="data.user.name"
+                               name="name"
+                               class="form-control" id="name" placeholder="姓名">
+                    </div>
+                    <p class="help-block">必填,2~30字符</p>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error': (editStoreForm.$submitted || editStoreForm.mobile.$dirty) && editStoreForm.mobile.$invalid}">
+                    <label for="mobile" class="col-xs-2 control-label no-padding-right"><span
+                            class="red">*</span>手机</label>
+                    <div class="col-xs-6">
+                        <input type="text" required maxlength="30" ng-model="data.user.mobile" name="mobile"
+                               class="form-control" id="mobile" placeholder="手机">
+                    </div>
+                    <p class="help-block">必填</p>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label no-padding-right">性别</label>
+                    <div class="col-xs-8">
+                        <div class="radio col-xs-3 no-padding-left">
+                            <label>
+                                <input name="sex" ng-model="data.user.sex" type="radio" value="1">
+                                <span class="text ng-binding">男</span>
+                            </label>
+                        </div>
+                        <div class="radio col-xs-3 no-padding-left">
+                            <label>
+                                <input name="sex" ng-model="data.user.sex" type="radio" value="2">
+                                <span class="text ng-binding">女</span>
+                            </label>
+                        </div>
+                        <div class="radio col-xs-3 no-padding-left">
+                            <label>
+                                <input name="sex" ng-model="data.user.sex" type="radio" value="0">
+                                <span class="text ng-binding">未知</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error': (editStoreForm.$submitted || editStoreForm.store.$dirty) && editStoreForm.store.$invalid}">
+                    <label class="col-xs-2 control-label no-padding-right"><span class="red">*</span>门店</label>
+                    <div class="col-xs-6">
+                        <input type="text" class="hidden" name="store" required ng-model="data.user.store">
+                        <ui-select ng-model="data.user.store" theme="select2" ng-required
+                                   class="ui-select-container ui-select-bootstrap dropdown ng-valid">
+                            <ui-select-match placeholder="--请选择--">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="item.id as item in data.storeList">
+                                {{item.name }}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <ripple class="btn btn-lg btn-success" ng-click="ok()">保存</ripple>
+            <ripple class="btn btn-lg btn-default" ng-click="cancel()">取消</ripple>
+        </div>
+    </form>
+</script>

@@ -1,0 +1,377 @@
+<div class="member-data-page">
+    <style type="text/css" rel="stylesheet">
+        .member-data-page {
+
+        }
+        .member-data-page .header-tabs {
+            display: inline-block;
+            list-style: none;
+            padding-left: 1rem;
+            font-size: 13px;
+            color: #afafaf;
+        }
+        .member-data-page .header-tabs li {
+            display: inline-block;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+        .member-data-page .header-tabs li.current {
+            color: #2372F3;
+            font-weight: bold;
+        }
+        .member-data-page .profile-header .increase-count {
+            font-size: 50px;
+            font-weight: bold;
+            color: #2372F3;
+        }
+        .member-data-page .profile-header .increase-rate {
+            color: lightgrey;
+            vertical-align: top;
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 16px;
+        }
+        .member-data-page .profile-header .increase-rate.up {
+            color: red;
+        }
+        .member-data-page .profile-header .increase-rate.down {
+            color: green;
+        }
+        .member-data-page .profile-header .total-count {
+            font-size: 50px;
+            font-weight: bold;
+            color: #2372F3;
+            vertical-align: top;
+        }
+        .member-data-page .profile-header .increase-progress {
+            color: #9d9d9d;
+            margin-top: 10px;
+        }
+        .member-data-page .profile-header .increase-progress label {
+            display: inline-block;
+            width: 100px;
+        }
+        .member-data-page .profile-header .increase-progress .progress {
+            display: inline-block;
+            height: 11px;
+            background-color: #2372F3;
+            margin: 0 10px;
+            border-radius: 0;
+            width: 0;
+            -webkit-transition: all .3s linear;
+            -moz-transition: all .3s linear;
+            -o-transition: all .3s linear;
+            transition: all .3s linear;
+        }
+        .member-data-page .well {
+            padding-top: 45px;
+        }
+        .member-data-page .well .header {
+            padding: 0;
+            background-color: #fafafa;
+        }
+        .member-data-page .pie-chart-total {
+            height: 300px;
+            position: absolute;
+            text-align: center;
+            width: 100%;
+            color: #2372F3;
+            padding-top: 135px;
+            font-size: 1.5rem;
+        }
+        .member-data-page .table>tbody>tr>td,
+        .member-data-page .table>tbody>tr>th,
+        .member-data-page .table>tfoot>tr>td,
+        .member-data-page .table>tfoot>tr>th,
+        .member-data-page .table>thead>tr>td,
+        .member-data-page .table>thead>tr>th {
+            padding: 10px;
+            border-top: none;
+            border-bottom: 1px solid #ddd;
+        }
+        .member-data-page .select2-container {
+            height: 40px;
+        }
+        .member-data-page .select2-container.open {
+            background: #e7e6eb;
+        }
+        .member-data-page .select2-container .select2-choice {
+            background: none;
+            border: none;
+            box-shadow: none;
+            cursor: pointer;
+            line-height: 40px;
+        }
+        .member-data-page .select2-container .select2-choice .select2-arrow {
+            background: none;
+        }
+        .member-data-page input[date-range-picker] {
+            border: none;
+            height: 40px;
+            background: url(/assets/img/caret-down.png) no-repeat 172px center;
+        }
+        .member-data-page input[date-range-picker]:hover {
+            background-color: transparent;
+        }
+        .member-data-page input[date-range-picker]:focus {
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            background-color: #e7e6eb;
+            background-image: url(/assets/img/caret-up.png);
+        }
+        .member-data-page .select2-result-single {
+            padding: 8px 0;
+        }
+        .member-data-page .select2-results {
+            margin: 0;
+            padding: 0;
+        }
+        .member-data-page .select2-results .select2-result-label {
+            padding: 8px 7px;
+        }
+        .member-data-page .select2-results .select2-highlighted {
+            background: #e7e6eb;
+            color: #000;
+        }
+        .member-data-page .select2-container.open .select2-choice .select2-arrow b:before {
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            transform: rotate(180deg);
+            width: auto;
+            height: auto;
+        }
+    </style>
+    <div class="row">
+        <div class="col-xs-12">
+            <h4 class="block no-margin-bottom bordered-bottom-1 bordered-lightgray" style="margin-top: -14px;">会员增长</h4>
+            <h5 class="margin-top-20">
+                增长概况
+                <ul class="header-tabs">
+                    <li ng-class="{'current': increaseSituation == 1}" ng-click="getIncreaseSituation(1)">昨日</li>
+                    <li ng-class="{'current': increaseSituation == 7}" ng-click="getIncreaseSituation(7)">最近7天</li>
+                    <li ng-class="{'current': increaseSituation == 30}" ng-click="getIncreaseSituation(30)">最近30天</li>
+                </ul>
+            </h5>
+            <div class="profile-header row">
+                <div class="col-xs-4 text-center margin-top-20 margin-bottom-20">
+                    <div>
+                        <span class="increase-count" ng-bind="increaseSituationData.totalCount">0</span>
+                        <span class="increase-rate up" ng-if="increaseSituationData.increasePercent > 0" ng-bind="'↑' + increaseSituationData.increasePercent + '%'"></span>
+                        <span class="increase-rate down" ng-if="increaseSituationData.increasePercent < 0" ng-bind="'↓' + (increaseSituationData.increasePercent*-1) + '%'"></span>
+                        <span class="increase-rate" ng-if="increaseSituationData.increasePercent == 0">—</span>
+                    </div>
+                    <h5 class="margin-bottom-20">{{increaseSituation == 1 ? '昨天' : '最近' + increaseSituation + '天'}}新增微信会员数</h5>
+                </div>
+                <div class="col-xs-4 profile-info margin-top-20 margin-bottom-20">
+                    <h5 class="margin-bottom-20">新增微信会员中：</h5>
+                    <div class="increase-progress">
+                        <table width="100%">
+                            <tr>
+                                <td width="100" style="padding: 8px 0;">新注册微信会员</td>
+                                <td><span class="progress" style="width: {{increaseSituationData.isNotErpMemberPercent*0.6 + '%'}}"></span><span>{{increaseSituationData.isNotErpMemberPercent}}%({{increaseSituationData.isNotErpMemberCount}}人)</span></td>
+                            </tr>
+                            <tr>
+                                <td>原ERP会员激活</td>
+                                <td><span class="progress" style="width: {{increaseSituationData.isErpMemberPercent*0.6 + '%'}}"></span><span>{{increaseSituationData.isErpMemberPercent}}%({{increaseSituationData.isErpMemberCount}}人)</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-xs-4 text-align-center margin-top-20 margin-bottom-20 bordered-left bordered-left-1 bordered-e3">
+                    <div class="total-count" ng-bind="increaseSituationData.sumCount">0</div>
+                    <h5 class="margin-bottom-20">微信会员总数</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row data-charts">
+        <div class="col-xs-12">
+            <h5>增长趋势</h5>
+            <div class="well with-header bg_white no-padding-left no-padding-right bordered-1 bordered-lightgray no-box-shadow">
+                <div class="header">
+                    <ui-select ng-model="increaseTendencyParams.isErpMember" theme="select2" ng-required search-enabled="false"
+                               style="width: 140px;" on-select="showChart()">
+                        <ui-select-match placeholder="--请选择--">{{$select.selected.value}}</ui-select-match>
+                        <ui-select-choices repeat="item.key as item in filterType">
+                            {{item.value }}
+                        </ui-select-choices>
+                    </ui-select>
+                    <input id="date" readonly date-range-picker class="form-control date-picker" type="text" ng-change="getIncreaseTendency()"
+                           ng-model="increaseTendencyParams.date" max="maxDate" style="display:inline-block;width: 200px;vertical-align: middle;"
+                           options="opts"/>
+                    <div class="input-group input-group-md" style="width: 200px;float: right; margin: 3px 5px;">
+                        <ui-select ng-model="increaseTendencyParams.store" theme="bootstrap" on-select="getIncreaseTendency()">
+                            <ui-select-match placeholder="搜索门店" allow-clear="true">{{$select.selected.value}}</ui-select-match>
+                            <ui-select-choices repeat="(key, value) in storeMap | filter: $select.search">
+                                {{value.value }}
+                            </ui-select-choices>
+                        </ui-select>
+                        <span class="input-group-addon" style="background: #F3F3F3;">
+                              <i class="fa fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="tab-pane in active">
+                    <div id="charts" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <h5>渠道效果</h5>
+            <div class="well with-header bg_white no-padding-left no-padding-right margin-bottom-20 bordered-1 bordered-lightgray no-box-shadow">
+                <div class="header">
+                    <input date-range-picker readonly class="form-control date-picker" type="text"
+                           ng-model="channelInfluenceParams.date" style="display:inline-block;width: 200px;" max="maxDate"
+                           options="opts2"/>
+                </div>
+                <div class="tab-pane in active">
+                    <!--<div class="pie-chart-total">扫描二维码<br>{{channelInfluenceData.fansCount}}人</div>-->
+                    <div id="pieChart" style="height: 300px;"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-6">
+            <h5>门店排名</h5>
+            <div class="well with-header bg_white no-padding-left no-padding-right margin-bottom-20 bordered-1 bordered-lightgray no-box-shadow clearfix" style="min-height: 306px">
+                <div class="header">
+                    <input date-range-picker readonly class="form-control date-picker" type="text"
+                           ng-model="storeRankParams.date" style="display:inline-block;width: 200px;" max="maxDate"
+                           options="opts3"/>
+                    <ripple class="btn btn-md btn-default margin-left-10" ng-click="exportRank()" style="float: right; margin: 4px 5px;">导出Excel</ripple>
+                </div>
+                <div style="height: 253px;">
+                    <table class="table table-hover">
+                        <thead class="bordered-bottom-1 bordered-gray">
+                        <tr>
+                            <th width="20"></th>
+                            <th width="50" class="text-align-center">
+                                排名
+                            </th>
+                            <th>
+                                门店
+                            </th>
+                            <th class="text-align-center">
+                                <span style="cursor: pointer;" ng-click="sortStoreRank()">微信会员新增&nbsp;<i class="fa" ng-class="{'fa-angle-down' : storeRankParams.sort.totalCount == 'desc', 'fa-angle-up' : storeRankParams.sort.totalCount == 'asc'}"></i></span>
+                            </th>
+                            <th class="text-align-center">
+                                最新会员总数<font style="font-weight: normal" color="#d3d3d3">(截至{{storeRankParams.date.endDate.format('YYYY-MM-DD')}})</font>
+                            </th>
+                            <th width="20"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in storeRankData">
+                            <td class="bordered-white" width="20"></td>
+                            <td class="text-align-center">
+                        <span ng-init="index=storeRankParams.sort.totalCount == 'desc' ? ((paginationConf.itemsPerPage * (paginationConf.currentPage - 1)) + $index + 1) : (paginationConf.totalItems - ((paginationConf.itemsPerPage * (paginationConf.currentPage - 1)) + $index))"
+                              ng-class="{'badge badge-square': index <= 3, 'badge-danger': index == 1, 'badge-warning': index == 2, 'badge-azure': index == 3}">
+                                                {{index}}
+                                            </span>
+                            </td>
+                            <td>
+                                {{item.storeName}}
+                            </td>
+                            <td class="text-align-center">
+                                {{item.totalCount}}
+                            </td>
+                            <td class="text-align-center">
+                                {{item.sumCount}}
+                            </td>
+                            <td class="bordered-white" width="20"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-12">
+                    <tm-pagination conf="paginationConf"></tm-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row data-charts">
+        <div class="col-xs-12">
+            <h5>增长明细</h5>
+            <div class="well with-header bg_white no-padding-left no-padding-right margin-bottom-20 bordered-1 bordered-lightgray no-box-shadow clearfix" style="min-height: 306px">
+                <div class="header">
+                    <input date-range-picker readonly class="form-control date-picker" type="text"
+                           ng-model="increaseDetailParams.date" style="display:inline-block;width: 200px;" max="maxDate"
+                           options="opts4"/>
+                    <ripple class="btn btn-md btn-default margin-left-10" ng-click="exportIncreaseDetail()" style="float: right; margin: 4px 5px;">导出Excel</ripple>
+                    <!--<div class="input-group input-group-md" style="width: 200px;float: right; margin: 3px 5px;">-->
+                        <!--<ui-select ng-model="increaseDetailParams.store" theme="bootstrap">-->
+                            <!--<ui-select-match placeholder="搜索门店" allow-clear="true">{{$select.selected.value}}</ui-select-match>-->
+                            <!--<ui-select-choices repeat="(key, value) in storeMap | filter: $select.search">-->
+                                <!--{{value.value }}-->
+                            <!--</ui-select-choices>-->
+                        <!--</ui-select>-->
+                        <!--<span class="input-group-addon" style="background: #F3F3F3;">-->
+                              <!--<i class="fa fa-search"></i>-->
+                        <!--</span>-->
+                    <!--</div>-->
+                </div>
+                <table class="table table-hover">
+                    <thead class="bordered-bottom-1 bordered-gray">
+                    <tr>
+                        <th width="20"></th>
+                        <th width="120" class="text-align-center">
+                            时间
+                        </th>
+                        <th>
+                            门店
+                        </th>
+                        <th class="text-align-center">
+                            新增微信会员
+                        </th>
+                        <th class="text-align-center">
+                            新注册微信会员
+                        </th>
+                        <th class="text-align-center">
+                            原ERP会员激活
+                        </th>
+                        <th class="text-align-center">
+                            最新会员总数
+                        </th>
+                        <th width="20"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in increaseDetailData">
+                        <td class="bordered-white" width="20"></td>
+                        <td class="text-align-center">
+                            {{item.date * 1000 | date: 'yyyy.MM.dd'}}
+                        </td>
+                        <td>
+                            {{item.storeName}}
+                        </td>
+                        <td class="text-align-center">
+                            {{item.totalCount}}
+                        </td>
+                        <td class="text-align-center">
+                            {{item.isNotErpMemberCount}}
+                        </td>
+                        <td class="text-align-center">
+                            {{item.isErpMemberCount}}
+                        </td>
+                        <td class="text-align-center">
+                            {{item.sumCount}}
+                        </td>
+                        <td class="bordered-white" width="20"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="min-height: 130px;" ng-if="increaseDetailData.length == 0">
+                    <div style="text-align: center; padding: 50px 0;" ng-if="increaseDetailData.length == 0">暂无数据</div>
+                </div>
+                <div class="col-xs-12">
+                    <tm-pagination conf="paginationConf1"></tm-pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

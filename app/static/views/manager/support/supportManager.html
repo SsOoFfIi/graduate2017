@@ -1,0 +1,224 @@
+<!--运营管理-&#45;&#45;该页面只有管理员才能看到,包含运营后台账号的管理,可以新增,修改,删除其他管理账号-->
+<div class="supportManager">
+    <style type="text/css" rel="stylesheet">
+
+    </style>
+    <div class="col-xs-12">
+        <h4 class="bordered-bottom-1 bordered-lightgray block" style="margin-top: -14px">运营管理</h4>
+        <!--<div class="row" ng-if="accountLoaded && !accountList.length">-->
+        <!--<div class="col-xs-12" >-->
+        <!--<div class="col-xs-2 text-center">您还没有录入账号，请新增账号</div>-->
+        <!--<div class="col-xs-2">-->
+        <!--<ripple type="button" class="btn btn-success pull-right" ng-click="editAccount()">-->
+        <!--<i class="fa fa-plus"></i>&nbsp;新增账号-->
+        <!--</ripple>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+    <div class="col-xs-12">
+        <div class="widget flat">
+            <div class="widget-body no-padding bg-white">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <form class="form-horizontal margin-bottom-20">
+                            <div class="input-group">
+                                <input class="form-control" ng-model="data.name" maxlength="20"
+                                       placeholder="按登录名称、用户名称或手机搜索"
+                                       type="text">
+                                <span class="input-group-btn">
+                                    <ripple class="btn" ng-click="changePath()" type="submit"><i
+                                            class="fa fa-search gray"></i></ripple>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-xs-6 pull-right">
+                        <ripple type="button" class="btn btn-success pull-right" ng-click="editAccount()"
+                                ng-disabled="permission(100000020001)">
+                            <i class="fa fa-plus"></i>&nbsp;新增运营账号
+                        </ripple>
+                    </div>
+                </div>
+                <div class="bordered-1 bordered-lightgray" style="min-height: 400px;">
+                    <table class="table table-hover">
+                        <thead class="bordered-bottom-1 bordered-lightgrey bg-seashell">
+                        <tr>
+                            <th width="20"></th>
+                            <th>
+                                昵称
+                            </th>
+                            <th class="text-align-center">
+                                用户名
+                            </th>
+                            <th class="text-align-center">
+                                创建时间
+                            </th>
+                            <th class="text-align-center">
+                                更新时间
+                            </th>
+                            <th class="text-align-center">
+                                手机号
+                            </th>
+                            <th class="text-align-center">
+                                操作
+                            </th>
+                            <th width="20"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="account in tableData">
+                            <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                            <td ng-bind="account.name"></td>
+                            <td ng-bind="account.loginName" class="text-align-center"></td>
+                            <td ng-bind="account.ctime * 1000 | date:'yyyy-MM-dd'||'-'" class="text-align-center"></td>
+                            <td ng-bind="account.ltime * 1000 | date:'yyyy-MM-dd'||'-'" class="text-align-center"></td>
+                            <td ng-bind="account.mobile || '-'" class="text-align-center"></td>
+                            <td class="text-align-center">
+                                <ripple class="btn btn-xs btn-default" ng-click="editAccount(account)"
+                                        ng-disabled="permission(100000020002)">修改
+                                </ripple>
+                                <ripple class="btn btn-xs btn-default" ng-click="resetPassword(account)"
+                                        ng-disabled="permission(100000020002)">重置密码
+                                </ripple>
+                                <ripple class="btn btn-xs btn-default" ng-click="deleteAccount(account)"
+                                        ng-disabled="permission(100000020003)">删除
+                                </ripple>
+                            </td>
+                            <td ng-class="{'no-border-top': $index != 0}" width="20"></td>
+                        </tr>
+                        <tr ng-if="!tableData||tableData.length == 0">
+                            <td class="no-data" style="padding: 200px 0;" colspan="9">没有数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <tm-pagination conf="paginationConf"></tm-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="editAccountModalContent.html">
+    <form name="editAccountForm" class="form-horizontal" novalidate role="form" autocomplete="off">
+        <div class="modal-header">
+            <h3 class="modal-title" ng-bind="title"></h3>
+        </div>
+        <div class="modal-body">
+            <div class="widget">
+                <div class="form-group"
+                     ng-class="{'has-error': (editAccountForm.$submitted || editAccountForm.name.$dirty) && editAccountForm.name.$invalid}"
+                >
+                    <label for="name" class="col-xs-3 control-label no-padding-right"><span
+                            class="red">*</span>昵称</label>
+                    <div class="col-xs-6">
+                        <input type="text" required ng-minlength="2" maxlength="30" ng-model="data.account.name"
+                               name="name"
+                               class="form-control" id="name" placeholder="昵称">
+                    </div>
+                    <p class="help-block">必填,2~30字符</p>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error': (editAccountForm.$submitted || editAccountForm.loginName.$dirty) && editAccountForm.loginName.$invalid}">
+                    <label for="loginName" class="col-xs-3 control-label no-padding-right"><span
+                            class="red">*</span>用户名</label>
+                    <div class="col-xs-6">
+                        <input type="text" required ng-minlength="2" maxlength="30" ng-model="data.account.loginName"
+                               name="loginName"
+                               class="form-control" id="loginName" placeholder="用户名">
+                    </div>
+                    <p class="help-block">必填，2~30字符</p>
+                </div>
+
+                <div ng-if="isCreate" class="form-group"
+                     ng-class="{'has-error': (editAccountForm.$submitted || editAccountForm.password.$dirty) && editAccountForm.password.$invalid}">
+
+                    <label for="mobile" class="col-xs-3 control-label no-padding-right"><span
+                            class="red">*</span>密码</label>
+                    <div class="col-xs-6">
+                        <input type="password" autocomplete="off" required ng-minlength="6" maxlength="20"
+                               ng-model="data.account.password"
+                               name="password"
+                               class="form-control" id="password" placeholder="密码">
+                    </div>
+                    <p class="help-block">必填，6~20字符</p>
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error': (editAccountForm.$submitted || editAccountForm.mobile.$dirty) && editAccountForm.mobile.$invalid}">
+                    <label for="mobile" class="col-xs-3 control-label no-padding-right"></span>手机号码</label>
+                    <div class="col-xs-6">
+                        <input type="text" ng-minlength="11" maxlength="11" ng-model="data.account.mobile"
+                               name="mobile" pattern="1\d{10}"
+                               class="form-control" id="mobile" placeholder="手机号码">
+                    </div>
+                    <p class="help-block">11位手机号码</p>
+                </div>
+                <!--权限控制-->
+                <div class="form-group">
+                    <label class="col-xs-3 control-label no-padding-right"><span class="red">*</span>授权</label>
+                    <div class="col-xs-8">
+                        <div class="checkbox col-xs-2 no-padding-left">
+                            <label>
+                                <input type="checkbox" name="power" ng-model="power.id1"
+                                       ng-false-value="100000020001"
+                                       ng-true-value="0">
+                                <span class="text ng-binding">新增账号</span>
+                            </label>
+                        </div>
+                        <div class="checkbox col-xs-2 no-padding-left">
+                            <label>
+                                <input type="checkbox" name="power" ng-model="power.id2"
+                                       ng-false-value="100000020002"
+                                       ng-true-value="0">
+                                <span class="text ng-binding">编辑账号</span>
+                            </label>
+                        </div>
+                        <div class="checkbox col-xs-2 no-padding-left">
+                            <label>
+                                <input type="checkbox" name="power" ng-model="power.id3"
+                                       ng-false-value="100000020003"
+                                       ng-true-value="0">
+                                <span class="text ng-binding">删除账号</span>
+                            </label>
+                        </div>
+                        <div class="checkbox col-xs-2 no-padding-left">
+                            <label>
+                                <input type="checkbox" name="power" ng-model="power.id4"
+                                       ng-false-value="100000010001"
+                                       ng-true-value="0">
+                                <span class="text ng-binding">新增客户</span>
+                            </label>
+                        </div>
+                        <div class="checkbox col-xs-2 no-padding-left">
+                            <label>
+                                <input type="checkbox" name="power" ng-model="power.id5"
+                                       ng-false-value="100000010002"
+                                       ng-true-value="0">
+                                <span class="text ng-binding">编辑客户</span>
+                            </label>
+                        </div>
+                        <div class="checkbox col-xs-2 no-padding-left">
+                            <label>
+                                <input type="checkbox" name="power" ng-model="power.id6"
+                                       ng-false-value="200000010001"
+                                       ng-true-value="0">
+                                <span class="text ng-binding">发布APP</span>
+                            </label>
+                        </div>
+                        <div class="checkbox col-xs-2 no-padding-left">
+                            <label>
+                                <input type="checkbox" name="power" ng-model="power.id7"
+                                       ng-false-value="200000010002"
+                                       ng-true-value="0">
+                                <span class="text ng-binding">修改APP</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <ripple class="btn btn-lg btn-success" ng-click="ok()">保存</ripple>
+            <ripple class="btn btn-lg btn-default" ng-click="cancel()">取消</ripple>
+        </div>
+    </form>
+</script>

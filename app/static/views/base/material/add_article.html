@@ -1,0 +1,378 @@
+<div class="row addArticlePage">
+    <style type="text/css">
+        .media_preview_area {
+            float: left;
+            width: 100%;
+            margin-right: 14px;
+        }
+
+        .appmsg {
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid #d0d0d0;
+            background-color: #fff;
+            color: #8d8d8d;
+            min-height: 166px;
+        }
+
+        .appmsg_content {
+            padding: 0 14px;
+            position: relative;
+        }
+
+        .multi .appmsg_content {
+            padding: 0;
+        }
+
+        .cover_appmsg_item {
+            position: relative;
+        }
+
+        .appmsg_title {
+            font-weight: 400;
+            font-style: normal;
+            font-size: 16px;
+            line-height: 28px;
+            max-height: 160px;
+            overflow: hidden;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        .cover_appmsg_item .appmsg_title {
+            position: absolute;
+            margin: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6) !important;
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#99000000', endcolorstr='#99000000');
+        }
+
+        .multi .appmsg_title {
+            font-size: 14px;
+            padding-top: 0;
+        }
+
+        .appmsg_title a {
+            display: block;
+            color: #8d8d8d;
+        }
+
+        .cover_appmsg_item .appmsg_title a {
+            padding: 8px;
+            color: #fff;
+            line-height: 30px;
+        }
+
+        .appmsg_thumb_wrp {
+            height: 160px;
+            overflow: hidden;
+        }
+
+        .appmsg .appmsg_thumb.default {
+            display: block;
+        }
+
+        .appmsg_thumb {
+            width: 100%;
+        }
+
+        .appmsg_thumb.default {
+            display: block;
+            color: #c0c0c0;
+            text-align: center;
+            line-height: 160px;
+            font-weight: 400;
+            font-style: normal;
+            background-color: #ececec;
+            font-size: 16px;
+        }
+
+        .appmsg_edit_mask {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(229, 229, 229, 0.55) !important;
+            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#d9e5e5e5', endcolorstr='#d9e5e5e5');
+            text-align: center;
+        }
+
+        .js_appmsg_item:hover .appmsg_edit_mask {
+            display: block;
+        }
+
+        .cover_appmsg_item .appmsg_edit_mask {
+            line-height: 160px;
+        }
+
+        .icon18_common {
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+            display: inline-block;
+            line-height: 100px;
+            overflow: hidden;
+        }
+
+        .appmsg_edit_mask a {
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+
+        .icon18_common.edit_gray {
+            background: url(/img/home/appmsg_icons.png) 0 0 no-repeat;
+        }
+
+        .appmsg_item {
+            position: relative;
+            padding: 20px 14px;
+            border-bottom: 1px solid #d0d0d0;
+            overflow: hidden;
+        }
+
+        .appmsg_item .appmsg_thumb {
+            float: right;
+            width: 78px;
+            height: 78px;
+            margin-left: 14px;
+        }
+
+        .appmsg_item .appmsg_thumb {
+            float: right;
+            width: 78px;
+            height: 78px;
+            margin-left: 14px;
+        }
+
+        .appmsg .appmsg_thumb.default {
+            display: block;
+        }
+
+        .appmsg_item .appmsg_thumb.default {
+            line-height: 78px;
+            font-size: 14px;
+        }
+
+        .appmsg_title {
+            font-weight: 400;
+            font-style: normal;
+            font-size: 16px;
+            line-height: 28px;
+            max-height: 160px;
+            overflow: hidden;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        .multi .appmsg_title {
+            font-size: 14px;
+            padding-top: 0;
+        }
+
+        .appmsg_item .appmsg_title {
+            line-height: 24px;
+            max-height: 48px;
+            overflow: hidden;
+        }
+
+        .appmsg_title a {
+            display: block;
+            color: #8d8d8d;
+        }
+
+        .appmsg_item .appmsg_edit_mask {
+            line-height: 118px;
+        }
+
+        .icon18_common.del_gray {
+            background: url(/img/home/appmsg_icons.png) 0 -56px no-repeat;
+        }
+
+        .appmsg_add {
+            margin: 20px 14px;
+        }
+
+        .create_access_primary {
+            display: block;
+            border: 2px dotted #d9dadc;
+            line-height: 60px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .icon20_common {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            display: inline-block;
+            line-height: 100px;
+            overflow: hidden;
+        }
+
+        .create_access_primary i {
+            cursor: pointer;
+        }
+
+        .edui-default .edui-editor {
+            z-index: 0 !important;
+            width: 100% !important;
+        }
+
+        .edui-default .edui-editor-iframeholder {
+            z-index: 0 !important;
+        }
+        .addArticlePage .widget {
+            -webkit-transition: margin-top .5s;
+            -moz-transition: margin-top .5s;
+            -ms-transition: margin-top .5s;
+            -o-transition: margin-top .5s;
+            transition: margin-top .5s;
+        }
+        .addArticlePage .widget-body {
+            background-color: #fafafa;
+            border-color: #d0d0d0;
+            position: relative;
+        }
+        .addArticlePage .articleForm .triangle, .addArticlePage .articleForm .triangle:before {
+            position: absolute;
+            left: -24px;
+            top: 40px;
+            display: block;
+            border: 12px solid transparent;
+            border-right-color: lightgrey;
+        }
+        .addArticlePage .articleForm .triangle:before {
+            content: "";
+            position: absolute;
+            left: -11px;
+            border-right-color: #fafafa;
+            top: -12px;
+        }
+
+    </style>
+    <div class="col-xs-12">
+        <div class="col-xs-12 margin-bottom-20 bordered-bottom-1 bordered-lightgray">
+            <h4 class="block no-margin-bottom" style="margin-top: -14px;">微信图文</h4>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12 padding-bottom-40 margin-bottom-30" style="padding-left: 360px;">
+                <div class="widget bordered-1 bordered-gray" style="margin-top:{{selectedArticleIndex == 0 ? 0 : 165 + 118*(selectedArticleIndex-1) }}px">
+                    <div class="widget-body padding-30" style="background: none; min-height: 560px;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;">
+                        <div>
+                            <form role="form" class="articleForm" name="articleForm">
+                                <div class="triangle"></div>
+                                <div class="form-group" ng-class="{'has-error': articleForm.title.$invalid}">
+                                    <label for="title">标题<span class="lightgray">（必填，64字符以内）</span></label>
+                                    <input type="text" class="form-control" name="title" id="title" required
+                                           ng-model="selectedArticle.title" maxlength="64">
+                                </div>
+                                <div class="form-group">
+                                    <label for="author">作者<span class="lightgray">（选填）</span></label>
+                                    <input type="text" class="form-control" id="author"
+                                           ng-model="selectedArticle.author" maxlength="8">
+                                </div>
+                                <div class="form-group">
+                                    <label>封面<span class="lightgray">（大图片建议尺寸：900像素 * 500像素）</span></label>
+                                    <div class="margin-bottom-10">
+                                        <a class="btn btn-sm uploadImageBtn">上传图片</a>
+                                        <a class="btn btn-sm" ng-click="selectImage()">从图片库选择</a>
+                                    </div>
+                                    <div ng-if="selectedArticle.thumbMediaId">
+                                        <img height="100" ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + selectedArticle.thumbMediaId}}">
+                                        <a class="btn btn-link" ng-click="deleteArticleThumb()">删除</a>
+                                    </div>
+                                    <div class="margin-bottom-10">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" checked="checked" ng-model="selectedArticle.showCoverPic">
+                                                <span class="text">封面图片显示在正文中</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>内容</label>
+                                    <div class="ueditor" style="height: 500px;"
+                                         ng-model="selectedArticle.content" required
+                                         config="ueditorConfig"></div>
+                                    <div class="margin-bottom-10">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>原文链接<span class="lightgray">（选填）</span></label>
+                                    <input type="text" ng-model="selectedArticle.contentSourceUrl" class="form-control"
+                                           placeholder="http://">
+                                </div>
+                                <div class="form-group">
+                                    <label for="digest">摘要<span class="lightgray">（选填，该摘要只在发送微信图文为单条时显示）</span></label>
+                                    <textarea rows="3" type="text" class="form-control" id="digest"
+                                              ng-model="selectedArticle.digest"
+                                              maxlength="120"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4" style="width: 350px;position: absolute;">
+                <div class="media_preview_area">
+                    <div class="appmsg multi">
+                        <div class="appmsg_content">
+                            <div id="appmsgItem1" class="js_appmsg_item" data-id="0"
+                                 editingindex="0">
+                                <!-- <div class="appmsg_info"></div> -->
+                                <div class="cover_appmsg_item">
+                                    <h4 class="appmsg_title">
+                                        <a onclick="return false;" href="javascript:void(0);"
+                                           target="_blank" ng-bind="articles[0].title"></a>
+                                    </h4>
+                                    <div class="appmsg_thumb_wrp">
+                                        <img ng-if="articles[0].thumbMediaId" class="js_appmsg_thumb appmsg_thumb wx-img-ne-deal"
+                                             ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + articles[0].thumbMediaId}}">
+                                        <i class="appmsg_thumb default">封面图片</i>
+                                    </div>
+                                    <div class="appmsg_edit_mask">
+                                        <a ng-click="selectArticle(articles[0], 0)"
+                                           class="fa fa-edit" data-id="1"
+                                           href="javascript:void(0);">编辑</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="appmsg_item js_appmsg_item" ng-repeat="article in articles"
+                                 ng-if="$index != 0">
+                                <img ng-if="article.thumbMediaId" class="js_appmsg_thumb appmsg_thumb wx-img-ne-deal" ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + article.thumbMediaId}}">
+                                <i ng-if="!article.thumbMediaId" class="appmsg_thumb default">缩略图</i>
+                                <h4 class="appmsg_title">
+                                    <a onclick="return false;" href="javascript:void(0);"
+                                       target="_blank">{{article.title}}</a>
+                                </h4>
+                                <div class="appmsg_edit_mask">
+                                    <a class="fa fa-edit" ng-click="$parent.selectArticle(article, $index)"
+                                       href="javascript:void(0);">编辑</a>
+                                    <a ng-if="!isEdit" class="fa fa-trash" ng-click="$parent.deleteArticle($index)"
+                                       href="javascript:void(0);">删除</a>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="create_access_primary appmsg_add" ng-click="addArticle()"
+                           ng-if="articles.length < 8 && !isEdit"
+                           id="js_add_appmsg" href="javascript:void(0);"> <i
+                                class="fa fa-plus">增加一条</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="action-fixed text-align-center padding-top-20 padding-bottom-20 bordered-top-1 bordered-lightgray">
+                <a class="btn btn-lg btn-success" ng-click="addNews()">保存</a>
+            </div>
+        </div>
+    </div>
+</div>
+          

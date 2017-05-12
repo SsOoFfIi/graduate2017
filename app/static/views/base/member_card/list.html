@@ -1,0 +1,209 @@
+<div class="memberCardListPage">
+    <style type="text/css">
+        .set_menu_guide, .add_card_package_guide, .add_activate_gift_guide {
+            position: relative;
+            top: -20px;
+        }
+        .set_menu_guide .triangle,
+        .set_menu_guide .triangle:before,
+        .add_activate_gift_guide .triangle,
+        .add_card_package_guide .triangle,
+        .add_card_package_guide .triangle:before,
+        .add_activate_gift_guide .triangle:before {
+            position: relative;
+            top: 0;
+            border: solid 20px transparent;
+            border-bottom-width: 0;
+            border-top-color: lightgray;
+            margin: 0 auto;
+            width: 0;
+        }
+        .set_menu_guide .triangle:before,
+        .add_card_package_guide .triangle:before,
+        .add_activate_gift_guide .triangle:before{
+            content: "";
+            left: -20px;
+            top: -21px;
+            position: absolute;
+            border-top-color: #fff;
+        }
+        .copy_link input{
+            border: none;
+            width: 550px;
+        }
+        .add_card_package_guide .member-card-id-input {
+            display: inline-block;
+            width: 400px;
+            border-radius: 1px;
+        }
+        .memberCardListPage .table td{
+            vertical-align: middle;
+        }
+        .memberCardListPage .member_card{
+            width: 200px;
+            height: 112px;
+            margin: 18px 9px 0;
+            border-radius: 5px;
+            position: relative;
+            background-color: #5164bd;
+        }
+        .memberCardListPage .member_card .customer_logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 32px;
+            position: absolute;
+            left: 15px;
+            top: 15px;
+        }
+        .memberCardListPage .member_card .customer_info {
+            padding: 13px 57px;
+            color: #fff;
+            font-size: 10px;
+        }
+        .memberCardListPage .member_card .qrcode{
+            display: block;
+            position: absolute;
+            top: 15px;
+            right: 10px;
+            width: 25px;
+        }
+        .memberCardListPage .member_card .customer_info .card_title{
+            font-size: 12px;
+        }
+        .memberCardListPage .member_card .card_no{
+            font-size: 10px;
+            color: #fff;
+            position: absolute;
+            left: 25px;
+            bottom: 15px;
+        }
+    </style>
+    <div class="col-xs-12 col-md-12">
+        <h4 class="block no-margin-bottom bordered-bottom-1 bordered-lightgray" style="margin-top: -14px;">会员卡</h4>
+        <div class="well with-header bg_white no-padding-left no-padding-right no-padding-top margin-top-20
+         margin-bottom-20 bordered-1 bordered-lightgray no-box-shadow">
+            <table class="table">
+                <thead class="bordered-bottom-1 bordered-gray bg-seashell">
+                <tr style="background-color: #f8f8f8;">
+                    <th class="padding-left-20" style="font-weight: normal">
+                        会员卡效果
+                    </th>
+                    <th style="font-weight: normal">
+                        会员卡名称
+                    </th>
+                    <th class="text-align-center" style="font-weight: normal">
+                        发放状态
+                    </th>
+                    <th class="text-align-center" style="font-weight: normal">
+                        消息推送
+                    </th>
+                    <th class="text-align-center" style="font-weight: normal">
+                        激活有礼
+                    </th>
+                    <th class="text-align-center" style="font-weight: normal">
+                        会员卡入口
+                    </th>
+                    <th class="text-align-center" style="font-weight: normal">
+                        添加卡包
+                    </th>
+                    <th width="590" class="text-align-center" style="font-weight: normal">
+                        操作
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <div class="member_card" style="background: url({{$parent.memberCardData.backgroundPicUrlLocal}}) no-repeat center;background-size: 100% 100%;">
+                            <img class="customer_logo" ng-src="{{$parent.memberCardData.logoUrlLocal}}">
+                            <div class="customer_info">
+                                <div class="brand_name" ng-bind="$parent.memberCardData.brandName"></div>
+                                <div class="card_title" ng-bind="$parent.memberCardData.title"></div>
+                            </div>
+                            <a href="javascript:;"><img class="qrcode" src="/assets/img/member_card_qrcode.png"></a>
+                            <div class="card_no">000 000 00000</div>
+                        </div>
+                    </td>
+                    <td>
+                        {{$parent.memberCardData.title}}
+                    </td>
+                    <td class="text-align-center">
+                        <span class="green">发放中</span>
+                    </td>
+                    <td class="text-align-center">
+                        已开启
+                    </td>
+                    <td class="text-align-center">
+                        <span ng-if="$parent.memberCardData.coupon">已开启</span>
+                        <span ng-if="!$parent.memberCardData.coupon" class="red">未开启</span>
+                        <span ng-if="totalCount == 0" class="red">已派完</span>
+                    </td>
+                    <td class="text-align-center">
+                        <span ng-if="$parent.memberCardData.settingMenuFlag">已开启</span>
+                        <span ng-if="!$parent.memberCardData.settingMenuFlag" class="red">未开启</span>
+                    </td>
+                    <td class="text-align-center">
+                        <span ng-show="$parent.memberCardData.stepCurrent == 6">已添加</span>
+                        <span ng-show="$parent.memberCardData.stepCurrent == 4" class="red">未添加</span>
+                    </td>
+                    <td class="text-align-center">
+                        <ripple class="btn btn-default" ng-click="edit()">编辑</ripple>
+                        <ripple class="btn btn-default" ng-if="!$parent.memberCardData.coupon" ng-click="showCoupon()">开启激活有礼</ripple>
+                        <ripple class="btn btn-default" ng-if="$parent.memberCardData.coupon" ui-sref="app.tools.activateGift">查看激活有礼</ripple>
+                        <ripple class="btn btn-default" ng-click="showMenu()">开启会员卡入口</ripple>
+                        <ripple ng-if="$parent.memberCardData.stepCurrent == 4" class="btn btn-default" ng-click="toBind()">添加卡包</ripple>
+                        <ripple ng-if="$parent.memberCardData.stepCurrent == 6" class="btn btn-default" ng-click="toBind()">重新添加卡包</ripple>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-if="showSetMemuFlag" class="set_menu_guide text-align-center">
+            <div class="triangle"></div>
+            <div>
+                <img src="/assets/img/set_member_card_menu.jpg">
+            </div>
+            <div class="copy_link">
+                会员卡链接:&emsp;<input id="memberCardUrl" readonly value="{{$parent.memberCardData.pushMsgUrl}}">&emsp;<ripple ng-click="copyUrl()" class="btn btn-sm btn-default">复制</ripple><br><br><br>
+                <ripple ng-click="copyUrlAndGo()" class="btn btn-success btn-lg">复制链接并去设置</ripple>
+            </div>
+        </div>
+        <div ng-if="showCouponFlag" class="add_activate_gift_guide text-align-center">
+            <div class="triangle"></div>
+            <div>
+                <img src="/assets/img/add_activate_gift.jpg">
+            </div>
+            <ripple class="btn btn-success btn-lg" ui-sref="app.tools.activateGift">开启激活有礼</ripple>
+        </div>
+        <div ng-if="showBindCard" class="add_card_package_guide text-align-center">
+            <div class="triangle"></div>
+            <div>
+                <img src="/assets/img/add_card_package.jpg">
+            </div>
+            <div>
+                <span class="red">*</span>会员卡ID:&emsp;<input class="member-card-id-input form-control" id="cardId" ng-model="data.cardId">&emsp;<a class="btn btn-sm btn-link" target="_blank" ui-sref="help.faq({id: 7})">如何获取会员卡ID</a><br><br><br>
+                <ripple ng-click="bindMemberCard()" ng-disabled="!data.cardId" class="btn btn-success btn-lg">添加卡包</ripple>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="reauthorizationModal.html">
+    <div class="modal-header">
+        <ripple type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</ripple>
+        <h4 class="modal-title">重新授权</h4>
+    </div>
+    <div class="modal-body">
+        <style type="text/css" rel="stylesheet">
+            .reauthorization-modal .modal-dialog {
+                width: 545px;
+            }
+        </style>
+        <h3 class="text-align-center">微信公众号重新授权</h3>
+        <div class="col-xs-12 margin-top-20 margin-bottom-20">
+            <p class="help-text text-align-center darkgray">您尚未授予我们管理微信卡券的权限，请点击按钮进入微信公众平台重新授权：</p>
+            <p class="help-text text-align-center"><a href="/cms/weixin/authorization"><img
+                    src="/assets/img/ico_weixin_open.png"></a></p>
+            <!--<p class="help-text text-align-center darkgray">授权完成后请回到本页面</p>-->
+        </div>
+    </div>
+</script>

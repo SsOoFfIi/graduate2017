@@ -1,0 +1,70 @@
+<h4 class="block no-margin-bottom" style="margin-top: -14px;">素材管理</h4>
+<div class="tabbable">
+    <ul class="nav nav-tabs tabs-flat" id="myTab">
+        <li>
+            <a ui-sref="app.base.material.mpnews">
+                微信图文
+            </a>
+        </li>
+        <li>
+            <a ui-sref="app.base.material.news">
+                高级图文
+            </a>
+        </li>
+        <li class="active">
+            <a href="javascript:;">
+                图片
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content tabs-flat no-padding-left no-padding-right padding-top-20">
+        <div id="imageMaterial" class="tab-pane active">
+            <div class="widget flat">
+                <div class="widget-body bg-white no-padding">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <form class="form-horizontal ng-pristine ng-valid" role="form">
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <ripple class="btn btn-success pull-right uploadImageBtn" ngf-select="upload($file, $invalidFiles)" ngf-accept="'.png,.jpg,.jpeg'">
+                                            <i class="fa fa-plus left"></i>上传图片
+                                        </ripple>
+                                        <!--<a class="btn btn-danger">-->
+                                        <!--<i class="fa fa-trash left"></i>删除-->
+                                        <!--</a>-->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3" ng-repeat="image in imageList">
+                            <div class="thumbnail">
+                                <img ng-src="{{'/cms/wechat/material/image/' + mpAppid + '/' + image.mediaId}}" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;" alt="{{image.name}}">
+                                <div class="caption">
+                                    <div class="clearfix">
+                                        <div class="checkbox no-margin">
+                                            <a href="javascript:;" class="pull-right" ng-click="deleteImage(image)">
+                                                <i class="fa fa-trash font-150"></i>
+                                            </a>
+                                            <label title="{{image.name}}">
+                                                <!--<input type="checkbox">-->
+                                                <span class="text" style="white-space: nowrap;text-overflow: ellipsis;display: inline-block;width: 120px;overflow: hidden;" title="{{image.name}}">{{image.name}}</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="no-data" ng-if="imageList.length == 0">没有数据</div>
+                        <div class="col-xs-12">
+                            <tm-pagination conf="paginationConf"></tm-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

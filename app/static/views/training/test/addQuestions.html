@@ -1,0 +1,255 @@
+<div class="addQuestionsPage">
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom text-align-center bordered-bottom-1 bordered-lightgray" style="margin-top: -14px;height:52px;line-height:34px;">
+            <ripple class="btn pull-left" ui-sref="app.training.test" ui-sref-opts="{reload:true}"><i class="fa fa-arrow-left"></i>&emsp;返回</ripple>
+            新建测评
+        </h4>
+    </div>
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="steps clearfix">
+                    <li>2.测评规则</li>
+                    <li class="current">1.设置题目</li>
+                </ul>
+            </div>
+            <div class="col-xs-4 test-preview-wrapper">
+                <style type="text/css">
+                    .course-form-wrapper {
+                        float: none;
+                        width: auto;
+                        margin-left: 386px;
+                        margin-top: 47px;
+                    }
+
+                    .test-preview-wrapper {
+                        max-width: 372px;
+                        position: absolute;
+                        top: 47px;
+                    }
+                    .test_preview_area {
+                        width: 340px;
+                        height: 572px;
+                        border-top: none;
+                        position: relative;
+                        background-size: cover;
+                    }
+                    .test_preview_area .preview_header {
+                        color: #fff;
+                        background-color: #383838;
+                        text-align: center;
+                        height: 45px;
+                        line-height: 45px;
+                    }
+                    .test_preview_area .test-preview-content .questions{
+                        list-style: none;
+                        margin: 0;
+                        padding: 0;
+                        max-height: 457px;
+                        overflow-y: auto;
+                    }
+                    .test_preview_area .test-preview-content .questions .question{
+                        height: 50px;
+                        line-height: 50px;
+                        white-space:nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        padding: 0 20px;
+                        position: relative;
+                    }
+                    .test_preview_area .test-preview-content .questions .question span{
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        text-align: center;
+                        left: 0;
+                        top: 0;
+                        position: absolute;
+                        background-color: rgba(240,240,240,.9);
+                        opacity: 0;
+                        -webkit-transition: opacity .3s;
+                        -moz-transition: opacity .3s;
+                        -ms-transition: opacity .3s;
+                        -o-transition: opacity .3s;
+                        transition: opacity .3s;
+                    }
+                    .test_preview_area .test-preview-content .questions .question.selected{
+                        border: solid 1px #2c78f2;
+                        border-color: #2c78f2 !important;
+                    }
+                    .test_preview_area .test-preview-content .questions .question:hover span{
+                        opacity: 1;
+                    }
+                    .test_preview_area .add-question {
+                        height: 70px;
+                        line-height: 70px;
+                        text-align: center;
+                        font-size: 18px;
+                        cursor: pointer;
+                    }
+                    .test_preview_area .add-question:hover {
+                        height: 70px;
+                        line-height: 70px;
+                        text-align: center;
+                        font-size: 18px;
+                        color: #2c78f2;
+                    }
+                    .questionForm {
+                        position: relative;
+                        min-height: 572px;
+                    }
+                    .questionForm .triangle, .questionForm .triangle:before {
+                        position: absolute;
+                        left: -32px;
+                        top: 55px;
+                        display: block;
+                        border: 16px solid transparent;
+                        border-right-color: lightgrey;
+                    }
+                    .questionForm .triangle:before {
+                        content: "";
+                        position: absolute;
+                        left: -15px;
+                        border-right-color: #fafafa;
+                        top: -16px;
+                    }
+                </style>
+
+                <div class="test_preview_area">
+                    <div class="preview_header">
+                        测试题
+                    </div>
+                    <div class="test-preview-content bordered-1 bordered-lightgray no-border-top">
+                        <ul class="questions">
+                            <li class="question bordered-bottom-1 bordered-lightgray" ng-repeat="question in questions" ng-class="{'selected': data.selectedQuestion == question}">
+                                {{question.question || '请设置题目内容'}}
+                                <span>
+                                    <a class="cursor-pointer" ng-click="data.selectedQuestion = question"><i class="fa fa-pencil"></i>编辑</a>&emsp;
+                                    <a class="cursor-pointer" ng-click="deleteQuestion($index)"><i class="fa fa-trash"></i>删除</a>
+                                </span>
+                            </li>
+                        </ul>
+                        <div class="add-question bg-seashell">
+                            <a class="cursor-pointer" ng-click="addNewQuestion()"><i class="fa fa-plus"></i>&nbsp;新建题目</a>
+                        </div>
+                    </div>
+                    <div class="text-align-center margin-top-20">
+                        <ripple class="btn btn-default" ngf-select="upload($file, $invalidFiles)" ngf-accept="'.xls,.xlsx'">批量导入题目</ripple><br>
+                        <a class="btn btn-link" target="_blank" href="http://public.cdn.sinoxk.com/cms/customer/train/files/心康云-培训题目模板.xlsx">下载批量导入模板</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 no-padding-left course-form-wrapper padding-bottom-50 margin-bottom-40">
+                <form role="form" name="questionForm" class="questionForm form-horizontal padding-top-40 bordered-1 bordered-lightgray" style="background-color: #fafafa;" novalidate>
+                    <div class="triangle"></div>
+                    <div ng-if="!questions.length">
+                        <ul style="padding-left: 60px;">
+                            <li>点击左侧新建题目按钮添加题目</li>
+                            <li>或下载题目模板，在模板中填写题目后，批量导入题目</li>
+                        </ul>
+                    </div>
+                    <div ng-if="questions.length">
+                        <div class="form-group col-xs-12" ng-class="{'has-error': questionForm.question.$invalid}">
+                            <label class="col-xs-2 control-label" for="question"><span class="red">*</span>题目</label>
+                            <div class="col-xs-8">
+                            <textarea rows="6" class="form-control" name="question" id="question" required placeholder="请输入题目内容"
+                                      ng-model="data.selectedQuestion.question" maxlength="140"></textarea>
+                            </div>
+                            <p class="help-block">140字符以内</p>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label class="col-xs-2 control-label no-padding-right"><span class="red">*</span>题目类型</label>
+                            <div class="col-xs-8">
+                                <div class="radio col-xs-3 no-padding-left">
+                                    <label>
+                                        <input name="type" ng-model="data.selectedQuestion.type" type="radio" value="2">
+                                        <span class="text ng-binding">选择题（单选/多选）</span>
+                                    </label>
+                                </div>
+                                <div class="radio col-xs-3 no-padding-left">
+                                    <label>
+                                        <input name="type" ng-model="data.selectedQuestion.type" type="radio" value="1" ng-click="data.selectedQuestion.options.splice(2)">
+                                        <span class="text ng-binding">判断题</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12">
+                            <label class="col-xs-2 control-label"><span class="red">*</span>选项</label>
+                            <div class="col-xs-8">
+                                <div ng-if="data.selectedQuestion.type == 2">
+                                    <div class="row margin-bottom-10" ng-repeat="option in data.selectedQuestion.options">
+                                        <label class="col-xs-1 control-label" style="width: 40px;">{{optionsLabel[$index]}}</label>
+                                        <div class="col-xs-7">
+                                            <input ng-class="{'has-error':  !option.text}" type="text" class="form-control" required
+                                                   ng-model="option.text" maxlength="40">
+                                        </div>
+                                        <div class="checkbox col-xs-2 no-padding-left">
+                                            <label>
+                                                <input name="isAnswer" ng-model="option.isAnswer" type="checkbox" ng-true-value="'Y'" ng-false-value="'N'">
+                                                <span class="text ng-binding">正确答案</span>
+                                            </label>
+                                        </div>
+                                        <div class="help-block" style="padding-top:3px; margin-bottom: 0;" ng-if="$index > 1">
+                                            <a class="cursor-pointer" ng-click="deleteOption($index)"><i class="fa fa-trash"></i>删除</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="data.selectedQuestion.type == 1">
+                                    <div class="row margin-bottom-10">
+                                        <label class="col-xs-1 control-label" style="width: 40px;">A</label>
+                                        <div class="col-xs-7">
+                                            <input type="text" class="form-control" required ng-class="{'has-error':  !data.selectedQuestion.options[0].text}"
+                                                   ng-model="data.selectedQuestion.options[0].text" maxlength="40">
+                                        </div>
+                                        <div class="radio col-xs-2 no-padding-left">
+                                            <label>
+                                                <input name="isAnswer" ng-model="data.selectedQuestion.options[0].isAnswer" type="radio" value="Y">
+                                                <span class="text ng-binding">正确答案</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row margin-bottom-10">
+                                        <label class="col-xs-1 control-label" style="width: 40px;">B</label>
+                                        <div class="col-xs-7">
+                                            <input type="text" class="form-control" required ng-class="{'has-error':  !data.selectedQuestion.options[1].text}"
+                                                   ng-model="data.selectedQuestion.options[1].text" maxlength="40">
+                                        </div>
+                                        <div class="radio col-xs-2 no-padding-left">
+                                            <label>
+                                                <input name="isAnswer" ng-model="data.selectedQuestion.options[1].isAnswer" type="radio" value="Y">
+                                                <span class="text ng-binding">正确答案</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row margin-bottom-10" ng-if="data.selectedQuestion.type == 2">
+                                    <label class="col-xs-1 control-label" style="width: 40px;"></label>
+                                    <div class="col-xs-7">
+                                        <a ng-if="data.selectedQuestion.options.length < 8" ng-click="addNewOption()" class="form-control text-align-center bordered-dashed cursor-pointer" style="background: none;"> + </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12" ng-class="{'has-error': questionForm.analysis.$invalid}">
+                            <label class="col-xs-2 control-label" for="analysis"><span class="red">*</span>答案解析</label>
+                            <div class="col-xs-8">
+                            <textarea rows="6" class="form-control" name="analysis" id="analysis" required placeholder="告知店员正确解题思路"
+                                      ng-model="data.selectedQuestion.analysis" maxlength="140"></textarea>
+                            </div>
+                            <p class="help-block">140字符以内</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label"></label>
+                            <div class="col-xs-8">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="action-fixed text-align-center padding-top-20 padding-bottom-20 bordered-top-1 bordered-lightgray">
+                <ripple type="submit" class="btn btn-lg" ng-click="next()">下一步</ripple>
+            </div>
+        </div>
+    </div>
+</div>

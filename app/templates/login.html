@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>登录</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.mini.css">  
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <style>
+        .form-div {
+            height: 700px;
+            padding-top: 200px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-3  col-md-6">
+            <div class="form-div">
+                <h2>用户登录</h2>
+                <form method="post" action="/auth/">
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" class="form-control" placeholder="Username" name="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="password" class="form-control" placeholder="Password" name="password">
+                    </div>
+
+                    <div class="radio-inline">
+                        <label>
+                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> 学生
+                        </label>
+                    </div>
+                    <!--<div class="radio-inline">-->
+                        <!--<label>-->
+                          <!--<input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> 管理员-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    </br>
+                    <button type="submit" class="btn btn-primary form-control">登录</button>
+                    <!--<a href="#" class="pull-right">快速注册</a>-->
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>
+
+</body>
+</html>

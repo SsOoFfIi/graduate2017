@@ -1,0 +1,29 @@
+<div class="row faqListPage">
+    <style>
+        .faqListPage .table>tbody>tr>td,
+        .faqListPage .table>tbody>tr>th,
+        .faqListPage .table>tfoot>tr>td,
+        .faqListPage .table>tfoot>tr>th,
+        .faqListPage .table>thead>tr>td,
+        .faqListPage .table>thead>tr>th {
+            border-top: none;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom bordered-bottom-1 bordered-lightgray padding-left-20" style="margin-top: -14px;">常见问题</h4>
+    </div>
+    <div class="col-xs-12">
+        <table class="table">
+            <tbody>
+            <tr ng-repeat="faq in faqList">
+                <td width="20" class="no-border"></td>
+                <td><a class="has-visited-color" ui-sref="app.help.faq.detail({id: faq.id})">{{faq.name}}</a><label ng-if="faq.isNew" class="label label-sm red" style="font-weight: normal;">New</label></td>
+                <!--<td width="92" class="darkgray">{{faq.time * 1000 | date: 'yyyy.MM.dd'}}</td>-->
+                <td width="20" class="no-border"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+          

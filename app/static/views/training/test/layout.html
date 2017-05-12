@@ -1,0 +1,21 @@
+<div class="row">
+    <div ui-view autoscroll="false"></div>
+</div>
+<script type="text/ng-template" id="testStartModal.html">
+    <div class="modal-header">
+        <ripple type="button" class="bootbox-close-button close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">×</ripple>
+        <h4 class="modal-title">测评开始提示</h4>
+    </div>
+    <div class="modal-body">
+        <style type="text/css" rel="stylesheet">
+            .course-start-modal .modal-body p {
+                line-height: 25px;
+            }
+        </style>
+        <p>开始测评任务后将不能再编辑测评。</p>
+    </div>
+    <div class="modal-footer">
+        <ripple class="btn btn-lg btn-success" ng-click="startTest()">开始测评</ripple>&emsp;
+        <ripple class="btn btn-lg" ng-click="cancel()">返回列表</ripple>
+    </div>
+</script>

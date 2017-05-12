@@ -1,0 +1,49 @@
+<!-- Page Container -->
+<div class="page-container">
+    <!-- Page Sidebar -->
+    <div class="page-sidebar {{settings.fixed.sidebar ? 'sidebar-fixed' : ''}}" id="sidebar">
+        <div class="sidebar-collapse">
+            <a>
+                <i class="collapse-icon fa fa-bars"></i>
+            </a>
+        </div>
+        <ul class="nav sidebar-menu">
+            <li ui-sref-active="active" class="open">
+                <a>
+                    <i class="menu-icon fa fa-graduation-cap blue"></i>
+                    <span class="menu-text"> 心康助手 </span>
+                </a>
+
+                <ul class="submenu">
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.xkapp.version" ui-sref-opts="{reload:false}">
+                            <span class="menu-text"> 版本管理 </span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active" ng-if="false">
+                        <a ui-sref="app.xkapp.hotfix" ui-sref-opts="{reload:false}">
+                            <span class="menu-text"> 热补丁管理 </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!-- /Page Sidebar -->
+    <!-- Page Content -->
+    <div class="page-content">
+        <!-- Page Breadcrumb -->
+        <!--<div class="page-breadcrumbs page-header {{settings.fixed.breadcrumbs ? 'breadcrumbs-fixed' : ''}}" data-ng-include=" 'view?view=/common/breadcrumbs' "></div>-->
+        <!-- /Page Breadcrumb -->
+        <!-- Page Header -->
+        <!--<div class="page-header position-relative page-header-fixed" data-ng-include=" 'view?view=/common/header' "></div>-->
+        <!-- /Page Header -->
+        <!-- Page Body -->
+        <div class="page-body no-margin-right bg-white padding-20" ui-view>
+            <!-- Your Content Goes Here -->
+        </div>
+        <!-- /Page Body -->
+    </div>
+    <!-- /Page Content -->
+</div>

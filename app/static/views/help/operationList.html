@@ -1,0 +1,59 @@
+<div class="row recordPage">
+    <style type="text/css" rel="stylesheet">
+        .recordPage .set_menu_guide {
+            position: relative;
+            top: -20px;
+        }
+        .recordPage .copy_link input{
+            border: none;
+            width: 550px;
+        }
+    </style>
+    <div class="col-xs-12">
+        <h4 class="block no-margin-bottom" style="margin-top: -14px;">购药记录</h4>
+    </div>
+    <div class="col-xs-12">
+        <div class="tabbable">
+            <ul class="nav nav-tabs tabs-flat" id="myTab">
+                <li ng-class="{active: currentTab == 1}">
+                    <a data-toggle="tab" ui-sref="app.tools.record({tab: 1})">
+                        预览购药记录入口
+                    </a>
+                </li>
+                <li ng-class="{active: currentTab == 2}">
+                    <a data-toggle="tab" ui-sref="app.tools.record({tab: 2})">
+                        自定义购药记录入口
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content tabs-flat bg-white no-padding">
+                <div id="tab1" class="tab-pane" ng-class="{active: currentTab == 1}">
+                    <div class="widget flat">
+                        <div class="widget-body bg-white no-padding">
+                            <h5 class="margin-top-30 margin-bottom-30">会员可以直接在会员卡查看他的购药记录，如果想通过查看购药记录吸引粉丝成为会员，请在自定义购药记录入口中设置。</h5>
+                            <img src="/assets/img/tools/record1.jpg">&emsp;&emsp;
+                            <img src="/assets/img/tools/record2.jpg">
+                        </div>
+                    </div>
+                </div>
+                <div id="tab2" class="tab-pane" ng-class="{active: currentTab == 2}">
+                    <div class="widget flat">
+                        <div class="widget-body bg-white padding-top-20 no-padding-left no-padding-right">
+                            <div class="set_menu_guide text-align-center">
+                                <div class="triangle"></div>
+                                <div>
+                                    <img class="margin-40" src="/assets/img/tools/record_menu_guide.png">
+                                </div>
+                                <div class="copy_link">
+                                    购药记录链接:&emsp;<input id="recordUrl" readonly value="{{userData.memberDomain + '/plugin/'+ mpAppid +'/member/record.html'}}">&emsp;<ripple ng-click="copyUrl('#recordUrl')" class="btn btn-sm btn-default">复制</ripple><br><br><br>
+                                    <ripple ng-click="copyUrlAndGo('#recordUrl', 'app.base.menu')" class="btn btn-success btn-lg">复制链接并去设置</ripple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+          
